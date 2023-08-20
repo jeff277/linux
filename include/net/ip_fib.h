@@ -169,7 +169,7 @@ struct fib_result {
 	__be32			prefix;
 	unsigned char		prefixlen;
 	unsigned char		nh_sel;
-	unsigned char		type;
+	unsigned char		type;               // 路由类型: 本地, 单播, 广播, 任播
 	unsigned char		scope;
 	u32			tclassid;
 	struct fib_nh_common	*nhc;

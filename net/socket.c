@@ -1772,6 +1772,11 @@ int __sys_bind(int fd, struct sockaddr __user *umyaddr, int addrlen)
 			err = security_socket_bind(sock,
 						   (struct sockaddr *)&address,
 						   addrlen);
+            /*
+             * 如果是udp 这个ops = inet_dgram_ops
+             * 如果是tcp 这个ops = inet_stream_ops
+             * 他们的bind函数是一样的: af_inet.c inet_bind()
+             * */
 			if (!err)
 				err = sock->ops->bind(sock,
 						      (struct sockaddr *)
@@ -1782,6 +1787,7 @@ int __sys_bind(int fd, struct sockaddr __user *umyaddr, int addrlen)
 	return err;
 }
 
+// tcp udp bind 入口. SYSCALL_DEFINE3的最后一个数字表示该系统调用有几个参数.
 SYSCALL_DEFINE3(bind, int, fd, struct sockaddr __user *, umyaddr, int, addrlen)
 {
 	return __sys_bind(fd, umyaddr, addrlen);
