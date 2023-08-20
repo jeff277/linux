@@ -1807,7 +1807,7 @@ int __sys_listen(int fd, int backlog)
 
 		err = security_socket_listen(sock, backlog);
 		if (!err)
-			err = sock->ops->listen(sock, backlog);
+			err = sock->ops->listen(sock, backlog);     // struct proto_ops inet_stream_ops中设置的. 真正的函数是 inet_listen()
 
 		fput_light(sock->file, fput_needed);
 	}

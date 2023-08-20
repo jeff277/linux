@@ -2035,7 +2035,7 @@ static struct sock *sk_prot_alloc(struct proto *prot, gfp_t priority,
 		if (!sk)
 			return sk;
 		if (want_init_on_alloc(priority))
-			sk_prot_clear_nulls(sk, prot->obj_size);
+			sk_prot_clear_nulls(sk, prot->obj_size);        // obj_size = sizeof(struct tcp_sock), 所以实际上new的是套娃中最大的娃,然后返回第4个娃.
 	} else
 		sk = kmalloc(prot->obj_size, priority);
 
@@ -2252,7 +2252,7 @@ struct sock *sk_clone_lock(const struct sock *sk, const gfp_t priority)
 	}
 	sk_node_init(&newsk->sk_node);
 	sock_lock_init(newsk);
-	bh_lock_sock(newsk);
+	bh_lock_sock(newsk);        // !!! sk_clone_lock之lock
 	newsk->sk_backlog.head	= newsk->sk_backlog.tail = NULL;
 	newsk->sk_backlog.len = 0;
 
@@ -3265,6 +3265,10 @@ EXPORT_SYMBOL(sock_no_sendpage_locked);
 /*
  *	Default Socket Callbacks
  */
+/**
+ * 检查struct sock->sk_wq上是否有阻塞的进程
+ * 唤醒struct sock->sk_wq上的进程
+ * */
 
 static void sock_def_wakeup(struct sock *sk)
 {
@@ -3272,6 +3276,12 @@ static void sock_def_wakeup(struct sock *sk)
 
 	rcu_read_lock();
 	wq = rcu_dereference(sk->sk_wq);
+    /**
+     * 1.   void __wake_up(&xq->wait, TASK_INTERRUPTIBLE, 0, NULL)
+     * 2.   EXPORT_SYMBOL(__wake_up)
+     * 3.   ep_poll_callback(), 唤醒阻塞中的epoll.
+     * 4.   tcp_poll()
+     * */
 	if (skwq_has_sleeper(wq))
 		wake_up_interruptible_all(&wq->wait);
 	rcu_read_unlock();
@@ -3295,7 +3305,10 @@ void sock_def_readable(struct sock *sk)
 
 	rcu_read_lock();
 	wq = rcu_dereference(sk->sk_wq);
+
+    // 有进程在此 socket 的等待队列
 	if (skwq_has_sleeper(wq))
+        // 唤醒等待队列上的进程
 		wake_up_interruptible_sync_poll(&wq->wait, EPOLLIN | EPOLLPRI |
 						EPOLLRDNORM | EPOLLRDBAND);
 	sk_wake_async(sk, SOCK_WAKE_WAITD, POLL_IN);
