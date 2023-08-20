@@ -153,7 +153,7 @@ struct inet_hashinfo {
 	 *          TCP_ESTABLISHED <= sk->sk_state < TCP_CLOSE
 	 *
 	 */
-	struct inet_ehash_bucket	*ehash;
+	struct inet_ehash_bucket	*ehash;     //全局hash表. 四元组俱全的hash. e = established.
 	spinlock_t			*ehash_locks;
 	unsigned int			ehash_mask;
 	unsigned int			ehash_locks_mask;
@@ -163,7 +163,7 @@ struct inet_hashinfo {
 	 */
 	struct kmem_cache		*bind_bucket_cachep;
 	/* This bind table is hashed by local port */
-	struct inet_bind_hashbucket	*bhash;
+	struct inet_bind_hashbucket	*bhash;    //全局hash表. 负责端口分配.  b = bind.
 	struct kmem_cache		*bind2_bucket_cachep;
 	/* This bind table is hashed by local port and sk->sk_rcv_saddr (ipv4)
 	 * or sk->sk_v6_rcv_saddr (ipv6). This 2nd bind table is used

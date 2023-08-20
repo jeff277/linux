@@ -133,6 +133,7 @@ static inline void sk_mark_napi_id(struct sock *sk, const struct sk_buff *skb)
 	if (unlikely(READ_ONCE(sk->sk_napi_id) != skb->napi_id))
 		WRITE_ONCE(sk->sk_napi_id, skb->napi_id);
 #endif
+    // Receive Packet Steering(数据包接收导向), 网卡多队列绑定
 	sk_rx_queue_update(sk, skb);
 }
 
