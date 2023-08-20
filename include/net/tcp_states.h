@@ -12,16 +12,16 @@
 enum {
 	TCP_ESTABLISHED = 1,
 	TCP_SYN_SENT,
-	TCP_SYN_RECV,
-	TCP_FIN_WAIT1,
-	TCP_FIN_WAIT2,
-	TCP_TIME_WAIT,
+	TCP_SYN_RECV,           // 词不达意! 被fastopen占用. (listen sock 收到第三次握手后, 创建子tcp sock的初始状态)
+	TCP_FIN_WAIT1,          // 已经发送了FIN(写关闭)
+	TCP_FIN_WAIT2,          // 收到FIN的ACK
+	TCP_TIME_WAIT,          // 收到FIN,且发送了FIN的ACK后
 	TCP_CLOSE,
-	TCP_CLOSE_WAIT,
-	TCP_LAST_ACK,
+	TCP_CLOSE_WAIT,         // 收到FIN(读关闭)
+	TCP_LAST_ACK,           // 收到FIN后,(自己的数据也发完了后), 自己也发了FIN, 等对方的最后一个ACK
 	TCP_LISTEN,
 	TCP_CLOSING,	/* Now a valid state */
-	TCP_NEW_SYN_RECV,
+	TCP_NEW_SYN_RECV,       // 三次握手的第二阶段，服务器发送synack后，会进入TCP_NEW_SYN_RECV状态，并插入ehash中
 
 	TCP_MAX_STATES	/* Leave at the end! */
 };

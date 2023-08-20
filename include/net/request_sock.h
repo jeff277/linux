@@ -66,7 +66,7 @@ struct request_sock {
 	u32				ts_recent;
 	struct timer_list		rsk_timer;
 	const struct request_sock_ops	*rsk_ops;
-	struct sock			*sk;
+	struct sock			*sk;        //自己的控制块
 	struct saved_syn		*saved_syn;
 	u32				secid;
 	u32				peer_secid;
@@ -177,10 +177,10 @@ struct request_sock_queue {
 	u8			rskq_defer_accept;
 
 	u32			synflood_warned;
-	atomic_t		qlen;
+	atomic_t		qlen;       // 半连接队列长度 （现在的内核版本已经不存在半连接队列了,只有一个长度）。 其原因是顺序不重要, 记录hash表半连接状态的tcp连接数量即可.
 	atomic_t		young;
 
-	struct request_sock	*rskq_accept_head;
+	struct request_sock	*rskq_accept_head;      // accept(全连接)FIFO
 	struct request_sock	*rskq_accept_tail;
 	struct fastopen_queue	fastopenq;  /* Check max_qlen != 0 to determine
 					     * if TFO is enabled.
@@ -219,7 +219,7 @@ static inline void reqsk_queue_removed(struct request_sock_queue *queue,
 {
 	if (req->num_timeout == 0)
 		atomic_dec(&queue->young);
-	atomic_dec(&queue->qlen);
+	atomic_dec(&queue->qlen);		// 半连接队列长度减1
 }
 
 static inline void reqsk_queue_added(struct request_sock_queue *queue)

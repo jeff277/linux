@@ -150,7 +150,7 @@ struct tcp_request_sock {
 	struct inet_request_sock 	req;
 	const struct tcp_request_sock_ops *af_specific;
 	u64				snt_synack; /* first SYNACK sent time */
-	bool				tfo_listener;
+	bool				tfo_listener;       //fastopen标记
 	bool				is_mptcp;
 #if IS_ENABLED(CONFIG_MPTCP)
 	bool				drop_req;
