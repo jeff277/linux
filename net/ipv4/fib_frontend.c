@@ -212,8 +212,11 @@ static inline unsigned int __inet_dev_addr_type(struct net *net,
 	unsigned int ret = RTN_BROADCAST;
 	struct fib_table *table;
 
+    // IP地址全0,或者全F
 	if (ipv4_is_zeronet(addr) || ipv4_is_lbcast(addr))
 		return RTN_BROADCAST;
+
+    // 广播地址
 	if (ipv4_is_multicast(addr))
 		return RTN_MULTICAST;
 

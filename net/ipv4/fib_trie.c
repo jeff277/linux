@@ -1441,6 +1441,10 @@ bool fib_lookup_good_nhc(const struct fib_nh_common *nhc, int fib_flags,
 }
 
 /* should be called with rcu_read_lock */
+/* [参数] 系统调用bind()触发到这里时
+ * tb:  查的是哪一张路由表,查的是Local路由表(目的地址是本地)
+ * flp: bind的ip地址
+ * **/
 int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
 		     struct fib_result *res, int fib_flags)
 {

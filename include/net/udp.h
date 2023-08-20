@@ -70,8 +70,8 @@ struct udp_hslot {
  *	@log:	log2(number of slots in hash table)
  */
 struct udp_table {
-	struct udp_hslot	*hash;
-	struct udp_hslot	*hash2;
+	struct udp_hslot	*hash;              // 本地端口
+	struct udp_hslot	*hash2;             // 本地端口和本地IP地址
 	unsigned int		mask;
 	unsigned int		log;
 };
