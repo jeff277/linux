@@ -192,7 +192,7 @@ void ip_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int protocol)
 resubmit:
 	raw = raw_local_deliver(skb, protocol);
 
-	ipprot = rcu_dereference(inet_protos[protocol]);
+	ipprot = rcu_dereference(inet_protos[protocol]);        // 取当前协议(TCP/UDP...)对应的操作类
 	if (ipprot) {
 		if (!ipprot->no_policy) {
 			if (!xfrm4_policy_check(NULL, XFRM_POLICY_IN, skb)) {
@@ -202,7 +202,10 @@ resubmit:
 			}
 			nf_reset_ct(skb);
 		}
-		ret = INDIRECT_CALL_2(ipprot->handler, tcp_v4_rcv, udp_rcv,
+
+        // af_inet.c
+        // static const struct net_protocol tcp_protocol中设置了 tcp_v4_rcv
+        ret = INDIRECT_CALL_2(ipprot->handler, tcp_v4_rcv, udp_rcv,
 				      skb);
 		if (ret < 0) {
 			protocol = -ret;
@@ -230,7 +233,7 @@ static int ip_local_deliver_finish(struct net *net, struct sock *sk, struct sk_b
 	__skb_pull(skb, skb_network_header_len(skb));
 
 	rcu_read_lock();
-	ip_protocol_deliver_rcu(net, skb, ip_hdr(skb)->protocol);
+	ip_protocol_deliver_rcu(net, skb, ip_hdr(skb)->protocol);   // 取IP头里面的协议号, 6-tcp, 17-udp
 	rcu_read_unlock();
 
 	return 0;
