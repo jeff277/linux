@@ -463,6 +463,7 @@ static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *s
 INDIRECT_CALLABLE_DECLARE(int ip6_input(struct sk_buff *));
 INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
 /* Input packet from network to transport.  */
+// 从三层到四层的入口
 static inline int dst_input(struct sk_buff *skb)
 {
 	return INDIRECT_CALL_INET(skb_dst(skb)->input,

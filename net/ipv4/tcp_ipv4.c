@@ -1571,6 +1571,7 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
 #endif
 	struct ip_options_rcu *inet_opt;
 
+    //accept队列满(一般是应用程序处理不过来)
 	if (sk_acceptq_is_full(sk))
 		goto exit_overflow;
 
@@ -1613,8 +1614,10 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
 	}
 	sk_setup_caps(newsk, dst);
 
+    // 设置拥塞算法，进入TCP_CA_OPEN状态
 	tcp_ca_openreq_child(newsk, dst);
 
+    // 根据pmtu，rwnd来计算mss放到tp->mss_cache
 	tcp_sync_mss(newsk, dst_mtu(dst));
 	newtp->advmss = tcp_mss_clamp(tcp_sk(sk), dst_metric_advmss(dst));
 
@@ -1634,6 +1637,8 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
 
 	if (__inet_inherit_port(sk, newsk) < 0)
 		goto put_and_exit;
+
+    // 把newsk(子控制块)加入ehash, 并把第一次握手的request_sock从ehash中删除
 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash),
 				       &found_dup_sk);
 	if (likely(*own_req)) {
@@ -2022,6 +2027,8 @@ int tcp_v4_rcv(struct sk_buff *skb)
 	th = (const struct tcphdr *)skb->data;
 	iph = ip_hdr(skb);
 lookup:
+    // [服务端第三次握手] 从ehash中找到 tcp_request_sock. 其状态: TCP_NEW_SYN_RECV
+    // git show 079096f103faca2dd87342cca6f23d4b34da8871
 	sk = __inet_lookup_skb(net->ipv4.tcp_death_row.hashinfo,
 			       skb, __tcp_hdrlen(th), th->source,
 			       th->dest, sdif, &refcounted);
@@ -2032,27 +2039,33 @@ process:
 	if (sk->sk_state == TCP_TIME_WAIT)
 		goto do_time_wait;
 
+    // [服务端第三次握手] 被动sock. 收到syn包后, 已经被添加到ehash, 且状态是 TCP_NEW_SYN_RECV
 	if (sk->sk_state == TCP_NEW_SYN_RECV) {
-		struct request_sock *req = inet_reqsk(sk);
+		struct request_sock *req = inet_reqsk(sk);       // req, 数据fd的 request sock (ipv4传输控制块)
 		bool req_stolen = false;
 		struct sock *nsk;
 
+        //!!! sk的值变回 父sock(listen sock). 目的是获取控制块
 		sk = req->rsk_listener;
 		if (!xfrm4_policy_check(sk, XFRM_POLICY_IN, skb))
 			drop_reason = SKB_DROP_REASON_XFRM_POLICY;
 		else
 			drop_reason = tcp_inbound_md5_hash(sk, skb,
 						   &iph->saddr, &iph->daddr,
-						   AF_INET, dif, sdif);
+						   AF_INET, dif, sdif);     // tcp md5选项, 安全相关, rfc2385. md5sum{伪首部,首部,载荷,秘钥}
 		if (unlikely(drop_reason)) {
 			sk_drops_add(sk, skb);
 			reqsk_put(req);
 			goto discard_it;
 		}
+
+        // 校验和
 		if (tcp_checksum_complete(skb)) {
 			reqsk_put(req);
 			goto csum_error;
 		}
+
+        // 异常: 父sock不是listen状态.
 		if (unlikely(sk->sk_state != TCP_LISTEN)) {
 			nsk = reuseport_migrate_sock(sk, req_to_sk(req), skb);
 			if (!nsk) {
@@ -2070,10 +2083,13 @@ process:
 			sock_hold(sk);
 		}
 		refcounted = true;
+
+        // 处理第三次握手, 返回新的控制块 nsk
 		nsk = NULL;
 		if (!tcp_filter(sk, skb)) {
 			th = (const struct tcphdr *)skb->data;
 			iph = ip_hdr(skb);
+            // 控制信息填充到skb的cb[], 供本层使用.
 			tcp_v4_fill_cb(skb, iph, th);
 			nsk = tcp_check_req(sk, skb, req, false, &req_stolen);
 		} else {
@@ -2097,16 +2113,16 @@ process:
 		if (nsk == sk) {
 			reqsk_put(req);
 			tcp_v4_restore_cb(skb);
-		} else if (tcp_child_process(sk, nsk, skb)) {
+		} else if (tcp_child_process(sk, nsk, skb)) {   // 初始化新控制块 nsk
 			tcp_v4_send_reset(nsk, skb);
 			goto discard_and_relse;
 		} else {
 			sock_put(sk);
 			return 0;
 		}
-	}
+	}    //! end: sk->sk_state == TCP_NEW_SYN_RECV
 
-	if (static_branch_unlikely(&ip4_min_ttl)) {
+    if (static_branch_unlikely(&ip4_min_ttl)) {
 		/* min_ttl can be changed concurrently from do_ip_setsockopt() */
 		if (unlikely(iph->ttl < READ_ONCE(inet_sk(sk)->min_ttl))) {
 			__NET_INC_STATS(net, LINUX_MIB_TCPMINTTLDROP);
@@ -3124,7 +3140,7 @@ struct proto tcp_prot = {
 	.splice_eof		= tcp_splice_eof,
 	.backlog_rcv		= tcp_v4_do_rcv,
 	.release_cb		= tcp_release_cb,
-	.hash			= inet_hash,
+	.hash			= inet_hash,                            /* 加到全局的tcphash */
 	.unhash			= inet_unhash,
 	.get_port		= inet_csk_get_port,
 	.put_port		= inet_put_port,
@@ -3145,11 +3161,11 @@ struct proto tcp_prot = {
 	.sysctl_wmem_offset	= offsetof(struct net, ipv4.sysctl_tcp_wmem),
 	.sysctl_rmem_offset	= offsetof(struct net, ipv4.sysctl_tcp_rmem),
 	.max_header		= MAX_TCP_HEADER,
-	.obj_size		= sizeof(struct tcp_sock),
+	.obj_size		= sizeof(struct tcp_sock),          /* slab对象是最外面的套娃 tcp_sock */
 	.slab_flags		= SLAB_TYPESAFE_BY_RCU,
 	.twsk_prot		= &tcp_timewait_sock_ops,
 	.rsk_prot		= &tcp_request_sock_ops,
-	.h.hashinfo		= NULL,
+	.h.hashinfo		= NULL,                             /* 全局的 tcphash*/
 	.no_autobind		= true,
 	.diag_destroy		= tcp_abort,
 };

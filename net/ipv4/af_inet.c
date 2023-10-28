@@ -437,6 +437,8 @@ int inet_release(struct socket *sock)
 }
 EXPORT_SYMBOL(inet_release);
 
+  
+// tcp udp 的bind系统调用的内核处理action部分  
 int inet_bind_sk(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 {
 	u32 flags = BIND_WITH_LOCK;
@@ -474,7 +476,7 @@ int __inet_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
 	struct net *net = sock_net(sk);
 	unsigned short snum;
 	int chk_addr_ret;
-	u32 tb_id = RT_TABLE_LOCAL;
+	u32 tb_id = RT_TABLE_LOCAL;     // 到本机其它网卡的路由表
 	int err;
 
 	if (addr->sin_family != AF_INET) {
@@ -488,7 +490,7 @@ int __inet_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
 	}
 
 	tb_id = l3mdev_fib_table_by_index(net, sk->sk_bound_dev_if) ? : tb_id;
-	chk_addr_ret = inet_addr_type_table(net, addr->sin_addr.s_addr, tb_id);
+	chk_addr_ret = inet_addr_type_table(net, addr->sin_addr.s_addr, tb_id);         // 返回值 路由类型: 本地, 单播, 广播, 任播
 
 	/* Not specified by any standard per-se, however it breaks too
 	 * many applications when removed.  It is unfortunate since
@@ -520,6 +522,7 @@ int __inet_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
 		lock_sock(sk);
 
 	/* Check these errors (active socket, double bind). */
+    // 检查重复绑定， 有发过数据 或者调用过bind, inet_num就会有src_port值. 然后就会从这里返回错误。（应用层错误提示的地方）
 	err = -EINVAL;
 	if (sk->sk_state != TCP_CLOSE || inet->inet_num)
 		goto out_release_sock;

@@ -743,7 +743,7 @@ int __inet_hash(struct sock *sk, struct sock *osk)
 		return 0;
 	}
 	WARN_ON(!sk_unhashed(sk));
-	ilb2 = inet_lhash2_bucket_sk(hashinfo, sk);
+	ilb2 = inet_lhash2_bucket_sk(hashinfo, sk);         // 确定listen hash的槽
 
 	spin_lock(&ilb2->lock);
 	if (sk->sk_reuseport) {
@@ -753,7 +753,7 @@ int __inet_hash(struct sock *sk, struct sock *osk)
 	}
 	if (IS_ENABLED(CONFIG_IPV6) && sk->sk_reuseport &&
 		sk->sk_family == AF_INET6)
-		__sk_nulls_add_node_tail_rcu(sk, &ilb2->nulls_head);
+		__sk_nulls_add_node_tail_rcu(sk, &ilb2->nulls_head);    // 将sock添加到添加到listen hash
 	else
 		__sk_nulls_add_node_rcu(sk, &ilb2->nulls_head);
 	sock_set_flag(sk, SOCK_RCU_FREE);

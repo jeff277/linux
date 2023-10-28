@@ -189,7 +189,7 @@ struct sock_common {
 	unsigned char		skc_net_refcnt:1;
 	int			skc_bound_dev_if;
 	union {
-		struct hlist_node	skc_bind_node;
+		struct hlist_node	skc_bind_node;              // 串bhash用
 		struct hlist_node	skc_portaddr_node;
 	};
 	struct proto		*skc_prot;
@@ -220,7 +220,7 @@ struct sock_common {
 	int			skc_dontcopy_begin[0];
 	/* public: */
 	union {
-		struct hlist_node	skc_node;
+		struct hlist_node	skc_node;               // 串lhash, ehash用.
 		struct hlist_nulls_node skc_nulls_node;
 	};
 	unsigned short		skc_tx_queue_mapping;
@@ -361,7 +361,7 @@ struct sock {
 	 */
 	struct sock_common	__sk_common;
 #define sk_node			__sk_common.skc_node
-#define sk_nulls_node		__sk_common.skc_nulls_node
+#define sk_nulls_node		__sk_common.skc_nulls_node          /* ehash node */
 #define sk_refcnt		__sk_common.skc_refcnt
 #define sk_tx_queue_mapping	__sk_common.skc_tx_queue_mapping
 #ifdef CONFIG_SOCK_RX_QUEUE_MAPPING
@@ -433,7 +433,7 @@ struct sock {
 
 	struct sk_filter __rcu	*sk_filter;
 	union {
-		struct socket_wq __rcu	*sk_wq;
+		struct socket_wq __rcu	*sk_wq;		// 等待此socket的进程队列
 		/* private: */
 		struct socket_wq	*sk_wq_raw;
 		/* public: */
@@ -490,7 +490,7 @@ struct sock {
 	rwlock_t		sk_callback_lock;
 	int			sk_err,
 				sk_err_soft;
-	u32			sk_ack_backlog;
+	u32			sk_ack_backlog;         // 全连接队列的长度计数器
 	u32			sk_max_ack_backlog;
 	kuid_t			sk_uid;
 	u8			sk_txrehash;

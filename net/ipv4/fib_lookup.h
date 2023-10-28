@@ -12,7 +12,7 @@ struct fib_alias {
 	struct hlist_node	fa_list;
 	struct fib_info		*fa_info;
 	dscp_t			fa_dscp;
-	u8			fa_type;
+	u8			fa_type;        // 路由类型: 本地, 单播, 广播, 任播
 	u8			fa_state;
 	u8			fa_slen;
 	u32			tb_id;
