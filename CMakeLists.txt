@@ -26092,1350 +26092,6 @@ add_executable(linux_kernel
         include/clocksource/timer-riscv.h
         include/clocksource/timer-ti-dm.h
         include/clocksource/timer-xilinx.h
-        include/config/8139too/pio.h
-        include/config/acpi/cppc/lib.h
-        include/config/acpi/cpu/freq/pss.h
-        include/config/acpi/hotplug/cpu.h
-        include/config/acpi/hotplug/ioapic.h
-        include/config/acpi/i2c/opregion.h
-        include/config/acpi/legacy/tables/lookup.h
-        include/config/acpi/processor/cstate.h
-        include/config/acpi/processor/idle.h
-        include/config/acpi/rev/override/possible.h
-        include/config/acpi/system/power/states/support.h
-        include/config/acpi/table/upgrade.h
-        include/config/acpi/ac.h
-        include/config/acpi/battery.h
-        include/config/acpi/button.h
-        include/config/acpi/container.h
-        include/config/acpi/dock.h
-        include/config/acpi/fan.h
-        include/config/acpi/lpit.h
-        include/config/acpi/numa.h
-        include/config/acpi/processor.h
-        include/config/acpi/sleep.h
-        include/config/acpi/thermal.h
-        include/config/acpi/video.h
-        include/config/advise/syscalls.h
-        include/config/agp/amd64.h
-        include/config/agp/intel.h
-        include/config/allow/dev/coredump.h
-        include/config/amd/iommu.h
-        include/config/amd/nb.h
-        include/config/amd/numa.h
-        include/config/amiga/partition.h
-        include/config/anon/inodes.h
-        include/config/arch/clocksource/data.h
-        include/config/arch/discard/memblock.h
-        include/config/arch/dma/addr/t/64bit.h
-        include/config/arch/enable/hugepage/migration.h
-        include/config/arch/enable/memory/hotplug.h
-        include/config/arch/enable/split/pmd/ptlock.h
-        include/config/arch/has/acpi/table/upgrade.h
-        include/config/arch/has/add/pages.h
-        include/config/arch/has/cache/line/size.h
-        include/config/arch/has/cpu/relax.h
-        include/config/arch/has/debug/virtual.h
-        include/config/arch/has/devmem/is/allowed.h
-        include/config/arch/has/elf/randomize.h
-        include/config/arch/has/fast/multiplier.h
-        include/config/arch/has/fortify/source.h
-        include/config/arch/has/gcov/profile/all.h
-        include/config/arch/has/mem/encrypt.h
-        include/config/arch/has/pmem/api.h
-        include/config/arch/has/set/memory.h
-        include/config/arch/has/sg/chain.h
-        include/config/arch/has/strict/kernel/rwx.h
-        include/config/arch/has/strict/module/rwx.h
-        include/config/arch/has/uaccess/flushcache.h
-        include/config/arch/has/ubsan/sanitize/all.h
-        include/config/arch/has/zone/device.h
-        include/config/arch/has/kcov.h
-        include/config/arch/has/pkeys.h
-        include/config/arch/has/refcount.h
-        include/config/arch/have/nmi/safe/cmpxchg.h
-        include/config/arch/hibernation/header.h
-        include/config/arch/hibernation/possible.h
-        include/config/arch/may/have/pc/fdc.h
-        include/config/arch/might/have/acpi/pdc.h
-        include/config/arch/might/have/pc/parport.h
-        include/config/arch/might/have/pc/serio.h
-        include/config/arch/mmap/rnd/bits/max.h
-        include/config/arch/mmap/rnd/bits/min.h
-        include/config/arch/mmap/rnd/compat/bits/max.h
-        include/config/arch/mmap/rnd/compat/bits/min.h
-        include/config/arch/mmap/rnd/compat/bits.h
-        include/config/arch/mmap/rnd/bits.h
-        include/config/arch/phys/addr/t/64bit.h
-        include/config/arch/proc/kcore/text.h
-        include/config/arch/select/memory/model.h
-        include/config/arch/sparsemem/default.h
-        include/config/arch/sparsemem/enable.h
-        include/config/arch/supports/atomic/rmw.h
-        include/config/arch/supports/debug/pagealloc.h
-        include/config/arch/supports/deferred/struct/page/init.h
-        include/config/arch/supports/memory/failure.h
-        include/config/arch/supports/numa/balancing.h
-        include/config/arch/supports/optimized/inlining.h
-        include/config/arch/supports/int128.h
-        include/config/arch/supports/uprobes.h
-        include/config/arch/suspend/possible.h
-        include/config/arch/use/builtin/bswap.h
-        include/config/arch/use/cmpxchg/lockref.h
-        include/config/arch/use/queued/rwlocks.h
-        include/config/arch/use/queued/spinlocks.h
-        include/config/arch/uses/high/vma/flags.h
-        include/config/arch/uses/pg/uncached.h
-        include/config/arch/want/batched/unmap/tlb/flush.h
-        include/config/arch/want/compat/ipc/parse/version.h
-        include/config/arch/want/general/hugetlb.h
-        include/config/arch/want/huge/pmd/share.h
-        include/config/arch/want/old/compat/ipc.h
-        include/config/arch/wants/dynamic/task/struct.h
-        include/config/arch/wants/thp/swap.h
-        include/config/arch/defconfig.h
-        include/config/arch/random.h
-        include/config/arm/gic/max/nr.h
-        include/config/associative/array.h
-        include/config/asymmetric/key/type.h
-        include/config/asymmetric/public/key/subtype.h
-        include/config/ata/verbose/error.h
-        include/config/ata/acpi.h
-        include/config/ata/bmdma.h
-        include/config/ata/piix.h
-        include/config/ata/sff.h
-        include/config/audit/arch.h
-        include/config/audit/tree.h
-        include/config/audit/watch.h
-        include/config/autofs4/fs.h
-        include/config/backlight/class/device.h
-        include/config/backlight/lcd/support.h
-        include/config/backlight/generic.h
-        include/config/base/full.h
-        include/config/base/small.h
-        include/config/bcma/possible.h
-        include/config/binary/printf.h
-        include/config/binfmt/elf.h
-        include/config/binfmt/misc.h
-        include/config/binfmt/script.h
-        include/config/blk/debug/fs.h
-        include/config/blk/dev/dm/builtin.h
-        include/config/blk/dev/io/trace.h
-        include/config/blk/dev/loop/min/count.h
-        include/config/blk/dev/sr/vendor.h
-        include/config/blk/dev/bsg.h
-        include/config/blk/dev/dm.h
-        include/config/blk/dev/initrd.h
-        include/config/blk/dev/loop.h
-        include/config/blk/dev/md.h
-        include/config/blk/dev/sd.h
-        include/config/blk/dev/sr.h
-        include/config/blk/mq/pci.h
-        include/config/blk/scsi/request.h
-        include/config/blk/dev.h
-        include/config/block/compat.h
-        include/config/branch/profile/none.h
-        include/config/bsd/process/acct.h
-        include/config/bsd/disklabel.h
-        include/config/buildtime/extable/sort.h
-        include/config/calgary/iommu/enabled/by/default.h
-        include/config/calgary/iommu.h
-        include/config/cc/optimize/for/performance.h
-        include/config/cc/stackprotector/none.h
-        include/config/cfg80211/crda/support.h
-        include/config/cfg80211/default/ps.h
-        include/config/cfg80211/require/signed/regdb.h
-        include/config/cfg80211/use/kernel/regdb/keys.h
-        include/config/cgroup/cpuacct.h
-        include/config/cgroup/freezer.h
-        include/config/cgroup/sched.h
-        include/config/check/signature.h
-        include/config/chr/dev/sg.h
-        include/config/clkbld/i8253.h
-        include/config/clkdev/lookup.h
-        include/config/clkevt/i8253.h
-        include/config/clocksource/validate/last/cycle.h
-        include/config/clocksource/watchdog.h
-        include/config/clz/tab.h
-        include/config/common/clk.h
-        include/config/compat/binfmt/elf.h
-        include/config/compat/for/u64/alignment.h
-        include/config/compat/old/sigaction.h
-        include/config/compat/32.h
-        include/config/console/loglevel/default.h
-        include/config/console/translations.h
-        include/config/context/switch/tracer.h
-        include/config/core/dump/default/elf/headers.h
-        include/config/cpu/freq/default/gov/userspace.h
-        include/config/cpu/freq/gov/attr/set.h
-        include/config/cpu/freq/gov/common.h
-        include/config/cpu/freq/gov/ondemand.h
-        include/config/cpu/freq/gov/performance.h
-        include/config/cpu/freq/gov/userspace.h
-        include/config/cpu/idle/gov/menu.h
-        include/config/cpu/sup/amd.h
-        include/config/cpu/sup/centaur.h
-        include/config/cpu/sup/intel.h
-        include/config/cpu/freq.h
-        include/config/cpu/idle.h
-        include/config/cpu/isolation.h
-        include/config/cpu/rmap.h
-        include/config/crash/core.h
-        include/config/crash/dump.h
-        include/config/crc/ccitt.h
-        include/config/crc32/sliceby8.h
-        include/config/cross/memory/attach.h
-        include/config/cross/compile.h
-        include/config/crypto/drbg/hmac.h
-        include/config/crypto/drbg/menu.h
-        include/config/crypto/hash/info.h
-        include/config/crypto/manager/disable/tests.h
-        include/config/crypto/rng/default.h
-        include/config/crypto/acomp2.h
-        include/config/crypto/aead.h
-        include/config/crypto/aead2.h
-        include/config/crypto/aes.h
-        include/config/crypto/akcipher.h
-        include/config/crypto/akcipher2.h
-        include/config/crypto/algapi.h
-        include/config/crypto/algapi2.h
-        include/config/crypto/arc4.h
-        include/config/crypto/authenc.h
-        include/config/crypto/blkcipher.h
-        include/config/crypto/blkcipher2.h
-        include/config/crypto/cbc.h
-        include/config/crypto/ccm.h
-        include/config/crypto/cmac.h
-        include/config/crypto/crc32c.h
-        include/config/crypto/ctr.h
-        include/config/crypto/des.h
-        include/config/crypto/drbg.h
-        include/config/crypto/echainiv.h
-        include/config/crypto/gcm.h
-        include/config/crypto/gf128mul.h
-        include/config/crypto/ghash.h
-        include/config/crypto/hash.h
-        include/config/crypto/hash2.h
-        include/config/crypto/hmac.h
-        include/config/crypto/hw.h
-        include/config/crypto/jitterentropy.h
-        include/config/crypto/kpp2.h
-        include/config/crypto/manager.h
-        include/config/crypto/manager2.h
-        include/config/crypto/md5.h
-        include/config/crypto/null.h
-        include/config/crypto/null2.h
-        include/config/crypto/rng.h
-        include/config/crypto/rng2.h
-        include/config/crypto/rsa.h
-        include/config/crypto/seqiv.h
-        include/config/crypto/sha1.h
-        include/config/crypto/sha256.h
-        include/config/crypto/workqueue.h
-        include/config/dcache/word/access.h
-        include/config/debug/boot/params.h
-        include/config/debug/memory/init.h
-        include/config/debug/stack/usage.h
-        include/config/debug/bugverbose.h
-        include/config/debug/devres.h
-        include/config/debug/fs.h
-        include/config/debug/kernel.h
-        include/config/debug/stackoverflow.h
-        include/config/decompress/bzip2.h
-        include/config/decompress/gzip.h
-        include/config/decompress/lz4.h
-        include/config/decompress/lzma.h
-        include/config/decompress/lzo.h
-        include/config/decompress/xz.h
-        include/config/default/io/delay/type.h
-        include/config/default/mmap/min/addr.h
-        include/config/default/security/selinux.h
-        include/config/default/tcp/cong.h
-        include/config/default/cfq.h
-        include/config/default/cubic.h
-        include/config/default/hostname.h
-        include/config/default/iosched.h
-        include/config/default/security.h
-        include/config/defconfig/list.h
-        include/config/devtmpfs/mount.h
-        include/config/dm/mirror.h
-        include/config/dm/zero.h
-        include/config/dma/shared/buffer.h
-        include/config/dma/virtual/channels.h
-        include/config/dma/acpi.h
-        include/config/dma/engine.h
-        include/config/dmar/table.h
-        include/config/dmi/scan/machine/non/efi/fallback.h
-        include/config/dns/resolver.h
-        include/config/drm/fbdev/emulation.h
-        include/config/drm/fbdev/overalloc.h
-        include/config/drm/i915/capture/error.h
-        include/config/drm/i915/compress/error.h
-        include/config/drm/i915/userptr.h
-        include/config/drm/kms/fb/helper.h
-        include/config/drm/kms/helper.h
-        include/config/drm/mipi/dsi.h
-        include/config/drm/panel/bridge.h
-        include/config/drm/bridge.h
-        include/config/drm/i915.h
-        include/config/drm/panel.h
-        include/config/dst/cache.h
-        include/config/dummy/console/columns.h
-        include/config/dummy/console/rows.h
-        include/config/dummy/console.h
-        include/config/dw/dmac/core.h
-        include/config/e1000e/hwts.h
-        include/config/early/printk/dbgp.h
-        include/config/early/printk/usb.h
-        include/config/early/printk.h
-        include/config/edac/atomic/scrub.h
-        include/config/edac/decode/mce.h
-        include/config/edac/legacy/sysfs.h
-        include/config/edac/support.h
-        include/config/eeepc/laptop.h
-        include/config/efi/runtime/map.h
-        include/config/efi/runtime/wrappers.h
-        include/config/efi/esrt.h
-        include/config/efi/partition.h
-        include/config/efi/vars.h
-        include/config/efivar/fs.h
-        include/config/elf/core.h
-        include/config/enable/must/check.h
-        include/config/event/tracing.h
-        include/config/ext4/fs/posix/acl.h
-        include/config/ext4/fs/security.h
-        include/config/ext4/use/for/ext2.h
-        include/config/ext4/fs.h
-        include/config/extra/firmware.h
-        include/config/fair/group/sched.h
-        include/config/fat/default/codepage.h
-        include/config/fat/default/iocharset.h
-        include/config/fat/fs.h
-        include/config/fb/cfb/copyarea.h
-        include/config/fb/cfb/fillrect.h
-        include/config/fb/cfb/imageblit.h
-        include/config/fb/deferred/io.h
-        include/config/fb/mode/helpers.h
-        include/config/fb/sys/copyarea.h
-        include/config/fb/sys/fillrect.h
-        include/config/fb/sys/fops.h
-        include/config/fb/sys/imageblit.h
-        include/config/fb/cmdline.h
-        include/config/fb/efi.h
-        include/config/fb/notify.h
-        include/config/fb/tileblitting.h
-        include/config/fib/rules.h
-        include/config/file/locking.h
-        include/config/firmware/in/kernel.h
-        include/config/firmware/memmap.h
-        include/config/fix/earlycon/mem.h
-        include/config/font/8x16.h
-        include/config/font/8x8.h
-        include/config/font/support.h
-        include/config/frame/warn.h
-        include/config/framebuffer/console/detect/primary.h
-        include/config/framebuffer/console.h
-        include/config/fs/posix/acl.h
-        include/config/fs/iomap.h
-        include/config/fs/mbcache.h
-        include/config/futex/pi.h
-        include/config/fw/loader.h
-        include/config/generic/bug/relative/pointers.h
-        include/config/generic/calibrate/delay.h
-        include/config/generic/clockevents/min/adjust.h
-        include/config/generic/clockevents/broadcast.h
-        include/config/generic/cmos/update.h
-        include/config/generic/cpu/autoprobe.h
-        include/config/generic/cpu/vulnerabilities.h
-        include/config/generic/early/ioremap.h
-        include/config/generic/find/first/bit.h
-        include/config/generic/irq/effective/aff/mask.h
-        include/config/generic/irq/matrix/allocator.h
-        include/config/generic/irq/reservation/mode.h
-        include/config/generic/irq/migration.h
-        include/config/generic/irq/probe.h
-        include/config/generic/irq/show.h
-        include/config/generic/isa/dma.h
-        include/config/generic/msi/irq/domain.h
-        include/config/generic/msi/irq.h
-        include/config/generic/net/utils.h
-        include/config/generic/pci/iomap.h
-        include/config/generic/pending/irq.h
-        include/config/generic/smp/idle/thread.h
-        include/config/generic/strncpy/from/user.h
-        include/config/generic/strnlen/user.h
-        include/config/generic/time/vsyscall.h
-        include/config/generic/allocator.h
-        include/config/generic/bug.h
-        include/config/generic/clockevents.h
-        include/config/generic/cpu.h
-        include/config/generic/hweight.h
-        include/config/generic/iomap.h
-        include/config/generic/tracer.h
-        include/config/grace/period.h
-        include/config/gro/cells.h
-        include/config/hardlockup/check/timestamp.h
-        include/config/has/ioport/map.h
-        include/config/has/dma.h
-        include/config/has/iomem.h
-        include/config/have/acpi/apei/nmi.h
-        include/config/have/acpi/apei.h
-        include/config/have/aligned/struct/page.h
-        include/config/have/arch/compat/mmap/bases.h
-        include/config/have/arch/huge/vmap.h
-        include/config/have/arch/jump/label.h
-        include/config/have/arch/mmap/rnd/compat/bits.h
-        include/config/have/arch/mmap/rnd/bits.h
-        include/config/have/arch/seccomp/filter.h
-        include/config/have/arch/soft/dirty.h
-        include/config/have/arch/transparent/hugepage/pud.h
-        include/config/have/arch/transparent/hugepage.h
-        include/config/have/arch/vmap/stack.h
-        include/config/have/arch/within/stack/frames.h
-        include/config/have/arch/auditsyscall.h
-        include/config/have/arch/kasan.h
-        include/config/have/arch/kgdb.h
-        include/config/have/arch/tracehook.h
-        include/config/have/c/recordmcount.h
-        include/config/have/cc/stackprotector.h
-        include/config/have/clk/prepare.h
-        include/config/have/cmpxchg/double.h
-        include/config/have/cmpxchg/local.h
-        include/config/have/context/tracking.h
-        include/config/have/copy/thread/tls.h
-        include/config/have/debug/kmemleak.h
-        include/config/have/debug/stackoverflow.h
-        include/config/have/dma/api/debug.h
-        include/config/have/dma/contiguous.h
-        include/config/have/dynamic/ftrace/with/regs.h
-        include/config/have/dynamic/ftrace.h
-        include/config/have/ebpf/jit.h
-        include/config/have/efficient/unaligned/access.h
-        include/config/have/exit/thread.h
-        include/config/have/ftrace/mcount/record.h
-        include/config/have/function/graph/tracer.h
-        include/config/have/function/tracer.h
-        include/config/have/gcc/plugins.h
-        include/config/have/generic/gup.h
-        include/config/have/hardened/usercopy/allocator.h
-        include/config/have/hardlockup/detector/perf.h
-        include/config/have/hw/breakpoint.h
-        include/config/have/intel/txt.h
-        include/config/have/ioremap/prot.h
-        include/config/have/irq/exit/on/irq/stack.h
-        include/config/have/irq/time/accounting.h
-        include/config/have/kernel/bzip2.h
-        include/config/have/kernel/gzip.h
-        include/config/have/kernel/lz4.h
-        include/config/have/kernel/lzma.h
-        include/config/have/kernel/lzo.h
-        include/config/have/kernel/xz.h
-        include/config/have/kprobes/on/ftrace.h
-        include/config/have/memblock/node/map.h
-        include/config/have/memory/present.h
-        include/config/have/mixed/breakpoints/regs.h
-        include/config/have/mmiotrace/support.h
-        include/config/have/mod/arch/specific.h
-        include/config/have/net/dsa.h
-        include/config/have/pcspkr/platform.h
-        include/config/have/perf/events/nmi.h
-        include/config/have/perf/user/stack/dump.h
-        include/config/have/perf/events.h
-        include/config/have/perf/regs.h
-        include/config/have/rcu/table/free.h
-        include/config/have/regs/and/stack/access/api.h
-        include/config/have/setup/per/cpu/area.h
-        include/config/have/stack/validation.h
-        include/config/have/syscall/tracepoints.h
-        include/config/have/unstable/sched/clock.h
-        include/config/have/user/return/notifier.h
-        include/config/have/virt/cpu/accounting/gen.h
-        include/config/have/clk.h
-        include/config/have/fentry.h
-        include/config/have/ide.h
-        include/config/have/kprobes.h
-        include/config/have/kretprobes.h
-        include/config/have/kvm.h
-        include/config/have/livepatch.h
-        include/config/have/memblock.h
-        include/config/have/nmi.h
-        include/config/have/oprofile.h
-        include/config/have/optprobes.h
-        include/config/have/uid16.h
-        include/config/hibernate/callbacks.h
-        include/config/hid/a4tech.h
-        include/config/hid/apple.h
-        include/config/hid/belkin.h
-        include/config/hid/cherry.h
-        include/config/hid/chicony.h
-        include/config/hid/cypress.h
-        include/config/hid/ezkey.h
-        include/config/hid/generic.h
-        include/config/hid/gyration.h
-        include/config/hid/ite.h
-        include/config/hid/kensington.h
-        include/config/hid/logitech.h
-        include/config/hid/microsoft.h
-        include/config/hid/monterey.h
-        include/config/hid/ntrig.h
-        include/config/hid/pantherlord.h
-        include/config/hid/petalynx.h
-        include/config/hid/pid.h
-        include/config/hid/samsung.h
-        include/config/hid/sony.h
-        include/config/hid/sunplus.h
-        include/config/hid/topseed.h
-        include/config/high/res/timers.h
-        include/config/hotplug/cpu.h
-        include/config/hotplug/pci.h
-        include/config/hpet/emulate/rtc.h
-        include/config/hpet/timer.h
-        include/config/hsu/dma.h
-        include/config/hugetlb/page.h
-        include/config/hw/random/via.h
-        include/config/hw/console.h
-        include/config/hw/random.h
-        include/config/hz/1000.h
-        include/config/i2c/helper/auto.h
-        include/config/i2c/algobit.h
-        include/config/i2c/boardinfo.h
-        include/config/i2c/compat.h
-        include/config/i2c/i801.h
-        include/config/i2c/smbus.h
-        include/config/i8253/lock.h
-        include/config/ia32/emulation.h
-        include/config/illegal/pointer/value.h
-        include/config/inet/tunnel.h
-        include/config/inet6/xfrm/mode/beet.h
-        include/config/inet6/xfrm/mode/transport.h
-        include/config/inet6/xfrm/mode/tunnel.h
-        include/config/inet6/ah.h
-        include/config/inet6/esp.h
-        include/config/init/env/arg/limit.h
-        include/config/initramfs/source.h
-        include/config/inline/read/unlock/irq.h
-        include/config/inline/read/unlock.h
-        include/config/inline/spin/unlock/irq.h
-        include/config/inline/write/unlock/irq.h
-        include/config/inline/write/unlock.h
-        include/config/inotify/user.h
-        include/config/input/ff/memless.h
-        include/config/input/evdev.h
-        include/config/input/joystick.h
-        include/config/input/keyboard.h
-        include/config/input/leds.h
-        include/config/input/misc.h
-        include/config/input/mouse.h
-        include/config/input/polldev.h
-        include/config/input/sparsekmap.h
-        include/config/input/tablet.h
-        include/config/input/touchscreen.h
-        include/config/instruction/decoder.h
-        include/config/integrity/audit.h
-        include/config/intel/iommu/floppy/wa.h
-        include/config/intel/gtt.h
-        include/config/intel/iommu.h
-        include/config/interval/tree.h
-        include/config/io/delay/type/0x80.h
-        include/config/io/delay/type/0xed.h
-        include/config/io/delay/type/none.h
-        include/config/io/delay/type/udelay.h
-        include/config/io/delay/0x80.h
-        include/config/iommu/api.h
-        include/config/iommu/helper.h
-        include/config/iommu/iova.h
-        include/config/iommu/support.h
-        include/config/iosched/cfq.h
-        include/config/iosched/deadline.h
-        include/config/iosched/noop.h
-        include/config/iosf/mbi.h
-        include/config/ip/advanced/router.h
-        include/config/ip/multiple/tables.h
-        include/config/ip/nf/target/masquerade.h
-        include/config/ip/nf/target/reject.h
-        include/config/ip/nf/filter.h
-        include/config/ip/nf/iptables.h
-        include/config/ip/nf/mangle.h
-        include/config/ip/nf/nat.h
-        include/config/ip/pimsm/v1.h
-        include/config/ip/pimsm/v2.h
-        include/config/ip/pnp/bootp.h
-        include/config/ip/pnp/dhcp.h
-        include/config/ip/pnp/rarp.h
-        include/config/ip/route/multipath.h
-        include/config/ip/route/verbose.h
-        include/config/ip/mroute.h
-        include/config/ip/multicast.h
-        include/config/ip/pnp.h
-        include/config/ip6/nf/match/ipv6header.h
-        include/config/ip6/nf/target/reject.h
-        include/config/ip6/nf/filter.h
-        include/config/ip6/nf/iptables.h
-        include/config/ip6/nf/mangle.h
-        include/config/ipc/ns.h
-        include/config/ipv6/ndisc/nodetype.h
-        include/config/ipv6/sit.h
-        include/config/irq/domain/hierarchy.h
-        include/config/irq/forced/threading.h
-        include/config/irq/domain.h
-        include/config/irq/work.h
-        include/config/isa/dma/api.h
-        include/config/iso9660/fs.h
-        include/config/jump/label.h
-        include/config/kallsyms/absolute/percpu.h
-        include/config/kallsyms/base/relative.h
-        include/config/karma/partition.h
-        include/config/kernel/gzip.h
-        include/config/kexec/core.h
-        include/config/keyboard/atkbd.h
-        include/config/keys/compat.h
-        include/config/kprobe/events.h
-        include/config/leds/class.h
-        include/config/leds/triggers.h
-        include/config/legacy/vsyscall/emulate.h
-        include/config/lock/spin/on/owner.h
-        include/config/lockd/v4.h
-        include/config/lockdep/support.h
-        include/config/log/buf/shift.h
-        include/config/log/cpu/max/buf/shift.h
-        include/config/logitech/ff.h
-        include/config/logiwheels/ff.h
-        include/config/logo/linux/clut224.h
-        include/config/lsm/mmap/min/addr.h
-        include/config/lz4/decompress.h
-        include/config/lzo/compress.h
-        include/config/lzo/decompress.h
-        include/config/mac/emumousebtn.h
-        include/config/mac/partition.h
-        include/config/mac80211/has/rc.h
-        include/config/mac80211/rc/default/minstrel.h
-        include/config/mac80211/rc/minstrel/ht.h
-        include/config/mac80211/rc/default.h
-        include/config/mac80211/rc/minstrel.h
-        include/config/mac80211/sta/hash/max/size.h
-        include/config/mac80211/leds.h
-        include/config/macintosh/drivers.h
-        include/config/magic/sysrq/default/enable.h
-        include/config/magic/sysrq/serial.h
-        include/config/magic/sysrq.h
-        include/config/mandatory/file/locking.h
-        include/config/may/use/devlink.h
-        include/config/md/autodetect.h
-        include/config/mdio/bus.h
-        include/config/mdio/device.h
-        include/config/message/loglevel/default.h
-        include/config/microcode/old/interface.h
-        include/config/microcode/amd.h
-        include/config/microcode/intel.h
-        include/config/minix/subpartition.h
-        include/config/misc/filesystems.h
-        include/config/mmu/notifier.h
-        include/config/modify/ldt/syscall.h
-        include/config/module/force/unload.h
-        include/config/module/unload.h
-        include/config/modules/tree/lookup.h
-        include/config/modules/use/elf/rela.h
-        include/config/mouse/ps2/synaptics/smbus.h
-        include/config/mouse/ps2/alps.h
-        include/config/mouse/ps2/byd.h
-        include/config/mouse/ps2/cypress.h
-        include/config/mouse/ps2/focaltech.h
-        include/config/mouse/ps2/lifebook.h
-        include/config/mouse/ps2/logips2pp.h
-        include/config/mouse/ps2/smbus.h
-        include/config/mouse/ps2/synaptics.h
-        include/config/mouse/ps2/trackpoint.h
-        include/config/mouse/ps2.h
-        include/config/mq/iosched/deadline.h
-        include/config/mq/iosched/kyber.h
-        include/config/msdos/fs.h
-        include/config/msdos/partition.h
-        include/config/mutex/spin/on/owner.h
-        include/config/need/dma/map/state.h
-        include/config/need/multiple/nodes.h
-        include/config/need/per/cpu/embed/first/chunk.h
-        include/config/need/per/cpu/page/first/chunk.h
-        include/config/need/sg/dma/length.h
-        include/config/net/cls/act.h
-        include/config/net/ematch/stack.h
-        include/config/net/flow/limit.h
-        include/config/net/ip/tunnel.h
-        include/config/net/packet/engine.h
-        include/config/net/poll/controller.h
-        include/config/net/ptp/classify.h
-        include/config/net/rx/busy/poll.h
-        include/config/net/sch/fifo.h
-        include/config/net/vendor/3com.h
-        include/config/net/vendor/8390.h
-        include/config/net/vendor/adaptec.h
-        include/config/net/vendor/agere.h
-        include/config/net/vendor/alacritech.h
-        include/config/net/vendor/alteon.h
-        include/config/net/vendor/amazon.h
-        include/config/net/vendor/amd.h
-        include/config/net/vendor/aquantia.h
-        include/config/net/vendor/arc.h
-        include/config/net/vendor/atheros.h
-        include/config/net/vendor/broadcom.h
-        include/config/net/vendor/brocade.h
-        include/config/net/vendor/cavium.h
-        include/config/net/vendor/chelsio.h
-        include/config/net/vendor/cisco.h
-        include/config/net/vendor/dec.h
-        include/config/net/vendor/dlink.h
-        include/config/net/vendor/emulex.h
-        include/config/net/vendor/exar.h
-        include/config/net/vendor/ezchip.h
-        include/config/net/vendor/fujitsu.h
-        include/config/net/vendor/hp.h
-        include/config/net/vendor/huawei.h
-        include/config/net/vendor/i825xx.h
-        include/config/net/vendor/intel.h
-        include/config/net/vendor/marvell.h
-        include/config/net/vendor/mellanox.h
-        include/config/net/vendor/micrel.h
-        include/config/net/vendor/myri.h
-        include/config/net/vendor/natsemi.h
-        include/config/net/vendor/netronome.h
-        include/config/net/vendor/nvidia.h
-        include/config/net/vendor/oki.h
-        include/config/net/vendor/qlogic.h
-        include/config/net/vendor/qualcomm.h
-        include/config/net/vendor/rdc.h
-        include/config/net/vendor/realtek.h
-        include/config/net/vendor/renesas.h
-        include/config/net/vendor/rocker.h
-        include/config/net/vendor/samsung.h
-        include/config/net/vendor/seeq.h
-        include/config/net/vendor/silan.h
-        include/config/net/vendor/sis.h
-        include/config/net/vendor/smsc.h
-        include/config/net/vendor/solarflare.h
-        include/config/net/vendor/stmicro.h
-        include/config/net/vendor/sun.h
-        include/config/net/vendor/synopsys.h
-        include/config/net/vendor/tehuti.h
-        include/config/net/vendor/ti.h
-        include/config/net/vendor/via.h
-        include/config/net/vendor/wiznet.h
-        include/config/net/vendor/xircom.h
-        include/config/net/cadence.h
-        include/config/net/cls.h
-        include/config/net/core.h
-        include/config/net/ematch.h
-        include/config/net/ingress.h
-        include/config/net/ns.h
-        include/config/net/sched.h
-        include/config/net/tulip.h
-        include/config/netfilter/netlink/log.h
-        include/config/netfilter/xt/match/addrtype.h
-        include/config/netfilter/xt/match/conntrack.h
-        include/config/netfilter/xt/match/policy.h
-        include/config/netfilter/xt/match/state.h
-        include/config/netfilter/xt/target/connsecmark.h
-        include/config/netfilter/xt/target/log.h
-        include/config/netfilter/xt/target/nflog.h
-        include/config/netfilter/xt/target/secmark.h
-        include/config/netfilter/xt/target/tcpmss.h
-        include/config/netfilter/xt/mark.h
-        include/config/netfilter/xt/nat.h
-        include/config/netfilter/ingress.h
-        include/config/netfilter/netlink.h
-        include/config/netfilter/xtables.h
-        include/config/network/filesystems.h
-        include/config/network/secmark.h
-        include/config/new/leds.h
-        include/config/nf/conntrack/ftp.h
-        include/config/nf/conntrack/ipv4.h
-        include/config/nf/conntrack/ipv6.h
-        include/config/nf/conntrack/irc.h
-        include/config/nf/conntrack/procfs.h
-        include/config/nf/conntrack/secmark.h
-        include/config/nf/conntrack/sip.h
-        include/config/nf/ct/netlink.h
-        include/config/nf/defrag/ipv4.h
-        include/config/nf/defrag/ipv6.h
-        include/config/nf/log/arp.h
-        include/config/nf/log/common.h
-        include/config/nf/log/ipv4.h
-        include/config/nf/log/ipv6.h
-        include/config/nf/nat/masquerade/ipv4.h
-        include/config/nf/nat/ftp.h
-        include/config/nf/nat/ipv4.h
-        include/config/nf/nat/irc.h
-        include/config/nf/nat/needed.h
-        include/config/nf/nat/sip.h
-        include/config/nf/reject/ipv4.h
-        include/config/nf/reject/ipv6.h
-        include/config/nf/conntrack.h
-        include/config/nf/nat.h
-        include/config/nfs/acl/support.h
-        include/config/nfs/use/kernel/dns.h
-        include/config/nfs/v3/acl.h
-        include/config/nfs/common.h
-        include/config/nfs/fs.h
-        include/config/nfs/v2.h
-        include/config/nfs/v3.h
-        include/config/nfs/v4.h
-        include/config/nls/codepage/437.h
-        include/config/nls/iso8859/1.h
-        include/config/nls/ascii.h
-        include/config/nls/default.h
-        include/config/nls/utf8.h
-        include/config/no/hz/common.h
-        include/config/no/hz/idle.h
-        include/config/no/bootmem.h
-        include/config/no/hz.h
-        include/config/nodes/span/other/nodes.h
-        include/config/nodes/shift.h
-        include/config/nop/tracer.h
-        include/config/nr/cpus.h
-        include/config/oid/registry.h
-        include/config/old/sigsuspend3.h
-        include/config/oprofile/nmi/timer.h
-        include/config/optimize/inlining.h
-        include/config/osf/partition.h
-        include/config/output/format.h
-        include/config/page/table/isolation.h
-        include/config/panic/on/oops/value.h
-        include/config/panic/timeout.h
-        include/config/pantherlord/ff.h
-        include/config/partition/advanced.h
-        include/config/pata/amd.h
-        include/config/pata/oldpiix.h
-        include/config/pata/sch.h
-        include/config/pccard/nonstatic.h
-        include/config/pci/bus/addr/t/64bit.h
-        include/config/pci/lockless/config.h
-        include/config/pci/msi/irq/domain.h
-        include/config/pci/ats.h
-        include/config/pci/direct.h
-        include/config/pci/domains.h
-        include/config/pci/label.h
-        include/config/pci/mmconfig.h
-        include/config/pci/msi.h
-        include/config/pci/pasid.h
-        include/config/pci/pri.h
-        include/config/pci/quirks.h
-        include/config/pcie/pme.h
-        include/config/pcieaspm/default.h
-        include/config/pcmcia/load/cis.h
-        include/config/pcspkr/platform.h
-        include/config/perf/events/intel/cstate.h
-        include/config/perf/events/intel/rapl.h
-        include/config/perf/events/intel/uncore.h
-        include/config/perf/events.h
-        include/config/pgtable/levels.h
-        include/config/phys/addr/t/64bit.h
-        include/config/physical/align.h
-        include/config/physical/start.h
-        include/config/pid/ns.h
-        include/config/pkcs7/message/parser.h
-        include/config/pm/sleep/debug.h
-        include/config/pm/sleep/smp.h
-        include/config/pm/std/partition.h
-        include/config/pm/trace/rtc.h
-        include/config/pm/clk.h
-        include/config/pm/debug.h
-        include/config/pm/sleep.h
-        include/config/pm/trace.h
-        include/config/pmc/atom.h
-        include/config/pnp/debug/messages.h
-        include/config/posix/mqueue/sysctl.h
-        include/config/posix/mqueue.h
-        include/config/posix/timers.h
-        include/config/power/supply.h
-        include/config/preempt/voluntary.h
-        include/config/prevent/firmware/build.h
-        include/config/printk/safe/log/buf/shift.h
-        include/config/printk/nmi.h
-        include/config/printk/time.h
-        include/config/probe/events.h
-        include/config/proc/page/monitor.h
-        include/config/proc/pid/cpuset.h
-        include/config/proc/events.h
-        include/config/proc/fs.h
-        include/config/proc/kcore.h
-        include/config/proc/sysctl.h
-        include/config/proc/vmcore.h
-        include/config/provide/ohci1394/dma/init.h
-        include/config/ptp/1588/clock.h
-        include/config/qfmt/v2.h
-        include/config/queued/rwlocks.h
-        include/config/queued/spinlocks.h
-        include/config/quota/netlink/interface.h
-        include/config/quota/tree.h
-        include/config/quotactl/compat.h
-        include/config/randomize/memory/physical/padding.h
-        include/config/randomize/base.h
-        include/config/randomize/memory.h
-        include/config/rcu/cpu/stall/timeout.h
-        include/config/rcu/need/segcblist.h
-        include/config/rcu/stall/common.h
-        include/config/rcu/trace.h
-        include/config/rd/bzip2.h
-        include/config/rd/gzip.h
-        include/config/rd/lz4.h
-        include/config/rd/lzma.h
-        include/config/rd/lzo.h
-        include/config/rd/xz.h
-        include/config/regmap/i2c.h
-        include/config/rfkill/input.h
-        include/config/rfkill/leds.h
-        include/config/rfs/accel.h
-        include/config/ring/buffer.h
-        include/config/root/nfs.h
-        include/config/rt/mutexes.h
-        include/config/rtc/drv/cmos.h
-        include/config/rtc/i2c/and/spi.h
-        include/config/rtc/intf/dev.h
-        include/config/rtc/intf/proc.h
-        include/config/rtc/intf/sysfs.h
-        include/config/rtc/mc146818/lib.h
-        include/config/rtc/systohc/device.h
-        include/config/rtc/class.h
-        include/config/rtc/lib.h
-        include/config/rtc/nvmem.h
-        include/config/rtc/systohc.h
-        include/config/rtl/cards.h
-        include/config/rwsem/spin/on/owner.h
-        include/config/rwsem/xchgadd/algorithm.h
-        include/config/sata/ahci.h
-        include/config/sata/pmp.h
-        include/config/sched/mc/prio.h
-        include/config/sched/omit/frame/pointer.h
-        include/config/sched/hrtick.h
-        include/config/sched/info.h
-        include/config/sched/mc.h
-        include/config/sched/smt.h
-        include/config/scsi/proc/fs.h
-        include/config/scsi/spi/attrs.h
-        include/config/scsi/constants.h
-        include/config/scsi/dma.h
-        include/config/scsi/mod.h
-        include/config/seccomp/filter.h
-        include/config/section/mismatch/warn/only.h
-        include/config/security/selinux/avc/stats.h
-        include/config/security/selinux/bootparam/value.h
-        include/config/security/selinux/checkreqprot/value.h
-        include/config/security/selinux/bootparam.h
-        include/config/security/selinux/develop.h
-        include/config/security/selinux/disable.h
-        include/config/security/writable/hooks.h
-        include/config/security/network.h
-        include/config/security/selinux.h
-        include/config/select/memory/model.h
-        include/config/serial/8250/deprecated/options.h
-        include/config/serial/8250/detect/irq.h
-        include/config/serial/8250/many/ports.h
-        include/config/serial/8250/nr/uarts.h
-        include/config/serial/8250/runtime/uarts.h
-        include/config/serial/8250/share/irq.h
-        include/config/serial/8250/console.h
-        include/config/serial/8250/dma.h
-        include/config/serial/8250/exar.h
-        include/config/serial/8250/extended.h
-        include/config/serial/8250/lpss.h
-        include/config/serial/8250/mid.h
-        include/config/serial/8250/pci.h
-        include/config/serial/8250/pnp.h
-        include/config/serial/8250/rsa.h
-        include/config/serial/core/console.h
-        include/config/serial/8250.h
-        include/config/serial/core.h
-        include/config/serial/earlycon.h
-        include/config/serial/nonstandard.h
-        include/config/serio/i8042.h
-        include/config/serio/libps2.h
-        include/config/serio/serport.h
-        include/config/sg/pool.h
-        include/config/sgetmask/syscall.h
-        include/config/sgi/partition.h
-        include/config/slab/merge/default.h
-        include/config/slub/cpu/partial.h
-        include/config/slub/debug.h
-        include/config/snd/dma/sgbuf.h
-        include/config/snd/hda/power/save/default.h
-        include/config/snd/hda/prealloc/size.h
-        include/config/snd/hda/core.h
-        include/config/snd/hda/hwdep.h
-        include/config/snd/hda/i915.h
-        include/config/snd/hda/intel.h
-        include/config/snd/jack/input/dev.h
-        include/config/snd/pcm/timer.h
-        include/config/snd/proc/fs.h
-        include/config/snd/seq/hrtimer/default.h
-        include/config/snd/seq/device.h
-        include/config/snd/seq/dummy.h
-        include/config/snd/support/old/api.h
-        include/config/snd/verbose/procfs.h
-        include/config/snd/drivers.h
-        include/config/snd/hda.h
-        include/config/snd/hrtimer.h
-        include/config/snd/hwdep.h
-        include/config/snd/jack.h
-        include/config/snd/pci.h
-        include/config/snd/pcm.h
-        include/config/snd/pcmcia.h
-        include/config/snd/sequencer.h
-        include/config/snd/timer.h
-        include/config/snd/usb.h
-        include/config/snd/vmaster.h
-        include/config/snd/x86.h
-        include/config/solaris/x86/partition.h
-        include/config/sparse/irq.h
-        include/config/sparsemem/alloc/mem/map/together.h
-        include/config/sparsemem/vmemmap/enable.h
-        include/config/sparsemem/extreme.h
-        include/config/sparsemem/manual.h
-        include/config/sparsemem/vmemmap.h
-        include/config/split/ptlock/cpus.h
-        include/config/ssb/possible.h
-        include/config/stack/validation.h
-        include/config/stacktrace/support.h
-        include/config/strict/kernel/rwx.h
-        include/config/strict/module/rwx.h
-        include/config/sun/partition.h
-        include/config/sunrpc/gss.h
-        include/config/suspend/freezer.h
-        include/config/syn/cookies.h
-        include/config/sync/file.h
-        include/config/sysctl/exception/trace.h
-        include/config/sysfs/syscall.h
-        include/config/system/data/verification.h
-        include/config/system/trusted/keyring.h
-        include/config/system/trusted/keys.h
-        include/config/sysvipc/compat.h
-        include/config/sysvipc/sysctl.h
-        include/config/task/delay/acct.h
-        include/config/task/io/accounting.h
-        include/config/task/xacct.h
-        include/config/tcp/cong/advanced.h
-        include/config/tcp/cong/cubic.h
-        include/config/tcp/md5sig.h
-        include/config/thermal/default/gov/step/wise.h
-        include/config/thermal/emergency/poweroff/delay/ms.h
-        include/config/thermal/gov/step/wise.h
-        include/config/thermal/gov/user/space.h
-        include/config/thermal/writable/trips.h
-        include/config/thermal/hwmon.h
-        include/config/thin/archives.h
-        include/config/thread/info/in/task.h
-        include/config/tick/cpu/accounting.h
-        include/config/tick/oneshot.h
-        include/config/tigon3/hwmon.h
-        include/config/tmpfs/posix/acl.h
-        include/config/tmpfs/xattr.h
-        include/config/touchscreen/properties.h
-        include/config/trace/irqflags/support.h
-        include/config/trace/clock.h
-        include/config/tracing/support.h
-        include/config/tree/rcu.h
-        include/config/tree/srcu.h
-        include/config/ucs2/string.h
-        include/config/uevent/helper/path.h
-        include/config/uevent/helper.h
-        include/config/unix98/ptys.h
-        include/config/unixware/disklabel.h
-        include/config/unwinder/orc.h
-        include/config/uprobe/events.h
-        include/config/usb/announce/new/devices.h
-        include/config/usb/arch/has/hcd.h
-        include/config/usb/default/persist.h
-        include/config/usb/ehci/tt/newsched.h
-        include/config/usb/ehci/hcd.h
-        include/config/usb/ehci/pci.h
-        include/config/usb/net/drivers.h
-        include/config/usb/ohci/hcd/pci.h
-        include/config/usb/ohci/little/endian.h
-        include/config/usb/ohci/hcd.h
-        include/config/usb/uhci/hcd.h
-        include/config/usb/common.h
-        include/config/usb/hid.h
-        include/config/usb/hiddev.h
-        include/config/usb/mon.h
-        include/config/usb/pci.h
-        include/config/usb/printer.h
-        include/config/usb/storage.h
-        include/config/usb/support.h
-        include/config/use/percpu/numa/node/id.h
-        include/config/user/stacktrace/support.h
-        include/config/uts/ns.h
-        include/config/vfat/fs.h
-        include/config/vga/arb/max/gpus.h
-        include/config/vga/arb.h
-        include/config/vga/console.h
-        include/config/vgacon/soft/scrollback/size.h
-        include/config/vgacon/soft/scrollback.h
-        include/config/virt/to/bus.h
-        include/config/vm/event/counters.h
-        include/config/vmap/stack.h
-        include/config/vt/console/sleep.h
-        include/config/vt/hw/console/binding.h
-        include/config/vt/console.h
-        include/config/watchdog/handle/boot/enabled.h
-        include/config/wlan/vendor/admtek.h
-        include/config/wlan/vendor/ath.h
-        include/config/wlan/vendor/atmel.h
-        include/config/wlan/vendor/broadcom.h
-        include/config/wlan/vendor/cisco.h
-        include/config/wlan/vendor/intel.h
-        include/config/wlan/vendor/intersil.h
-        include/config/wlan/vendor/marvell.h
-        include/config/wlan/vendor/mediatek.h
-        include/config/wlan/vendor/quantenna.h
-        include/config/wlan/vendor/ralink.h
-        include/config/wlan/vendor/realtek.h
-        include/config/wlan/vendor/rsi.h
-        include/config/wlan/vendor/st.h
-        include/config/wlan/vendor/ti.h
-        include/config/wlan/vendor/zydas.h
-        include/config/x509/certificate/parser.h
-        include/config/x86/64/acpi/numa.h
-        include/config/x86/64/smp.h
-        include/config/x86/acpi/cpufreq/cpb.h
-        include/config/x86/acpi/cpufreq.h
-        include/config/x86/bootparam/memory/corruption/check.h
-        include/config/x86/check/bios/corruption.h
-        include/config/x86/debug/fpu.h
-        include/config/x86/dev/dma/ops.h
-        include/config/x86/direct/gbpages.h
-        include/config/x86/extended/platform.h
-        include/config/x86/fast/feature/tests.h
-        include/config/x86/feature/names.h
-        include/config/x86/intel/memory/protection/keys.h
-        include/config/x86/intel/pstate.h
-        include/config/x86/intel/umip.h
-        include/config/x86/internode/cache/shift.h
-        include/config/x86/io/apic.h
-        include/config/x86/l1/cache/shift.h
-        include/config/x86/local/apic.h
-        include/config/x86/mce/amd.h
-        include/config/x86/mce/intel.h
-        include/config/x86/mce/threshold.h
-        include/config/x86/minimum/cpu/family.h
-        include/config/x86/need/relocs.h
-        include/config/x86/pkg/temp/thermal.h
-        include/config/x86/platform/devices.h
-        include/config/x86/pm/timer.h
-        include/config/x86/reroute/for/broken/boot/irqs.h
-        include/config/x86/reserve/low.h
-        include/config/x86/supports/memory/failure.h
-        include/config/x86/thermal/vector.h
-        include/config/x86/verbose/bootup.h
-        include/config/x86/vsyscall/emulation.h
-        include/config/x86/16bit.h
-        include/config/x86/64.h
-        include/config/x86/cmov.h
-        include/config/x86/cmpxchg64.h
-        include/config/x86/cpuid.h
-        include/config/x86/debugctlmsr.h
-        include/config/x86/espfix64.h
-        include/config/x86/mce.h
-        include/config/x86/mpparse.h
-        include/config/x86/msr.h
-        include/config/x86/pat.h
-        include/config/x86/smap.h
-        include/config/x86/tsc.h
-        include/config/xfrm/algo.h
-        include/config/xfrm/user.h
-        include/config/xz/dec/arm.h
-        include/config/xz/dec/armthumb.h
-        include/config/xz/dec/bcj.h
-        include/config/xz/dec/ia64.h
-        include/config/xz/dec/powerpc.h
-        include/config/xz/dec/sparc.h
-        include/config/xz/dec/x86.h
-        include/config/xz/dec.h
-        include/config/yenta/ene/tune.h
-        include/config/yenta/o2.h
-        include/config/yenta/ricoh.h
-        include/config/yenta/ti.h
-        include/config/yenta/toshiba.h
-        include/config/zlib/deflate.h
-        include/config/zlib/inflate.h
-        include/config/zone/dma.h
-        include/config/zone/dma32.h
-        include/config/64bit.h
-        include/config/8139too.h
-        include/config/acpi.h
-        include/config/agp.h
-        include/config/aio.h
-        include/config/asn1.h
-        include/config/ata.h
-        include/config/audit.h
-        include/config/auditsyscall.h
-        include/config/bitreverse.h
-        include/config/block.h
-        include/config/bounce.h
-        include/config/bpf.h
-        include/config/bql.h
-        include/config/bug.h
-        include/config/cardbus.h
-        include/config/cdrom.h
-        include/config/cfg80211.h
-        include/config/cgroups.h
-        include/config/compaction.h
-        include/config/compat.h
-        include/config/connector.h
-        include/config/coredump.h
-        include/config/cpusets.h
-        include/config/crc16.h
-        include/config/crc32.h
-        include/config/crypto.h
-        include/config/dax.h
-        include/config/devmem.h
-        include/config/devport.h
-        include/config/devtmpfs.h
-        include/config/dmadevices.h
-        include/config/dmi.h
-        include/config/dmiid.h
-        include/config/dnotify.h
-        include/config/doublefault.h
-        include/config/dql.h
-        include/config/drm.h
-        include/config/e100.h
-        include/config/e1000.h
-        include/config/e1000e.h
-        include/config/edac.h
-        include/config/efi.h
-        include/config/elfcore.h
-        include/config/epoll.h
-        include/config/ethernet.h
-        include/config/eventfd.h
-        include/config/exportfs.h
-        include/config/fb.h
-        include/config/fddi.h
-        include/config/fhandle.h
-        include/config/forcedeth.h
-        include/config/freezer.h
-        include/config/fsnotify.h
-        include/config/ftrace.h
-        include/config/futex.h
-        include/config/glob.h
-        include/config/hamradio.h
-        include/config/hdmi.h
-        include/config/hibernation.h
-        include/config/hid.h
-        include/config/hidraw.h
-        include/config/hpet.h
-        include/config/hugetlbfs.h
-        include/config/hwmon.h
-        include/config/hz.h
-        include/config/i2c.h
-        include/config/inet.h
-        include/config/input.h
-        include/config/integrity.h
-        include/config/ipv6.h
-        include/config/jbd2.h
-        include/config/joliet.h
-        include/config/kallsyms.h
-        include/config/kernfs.h
-        include/config/kexec.h
-        include/config/keys.h
-        include/config/kprobes.h
-        include/config/kretprobes.h
-        include/config/localversion.h
-        include/config/lockd.h
-        include/config/logo.h
-        include/config/mac80211.h
-        include/config/mailbox.h
-        include/config/md.h
-        include/config/membarrier.h
-        include/config/microcode.h
-        include/config/migration.h
-        include/config/mii.h
-        include/config/mmu.h
-        include/config/modules.h
-        include/config/mpilib.h
-        include/config/mtrr.h
-        include/config/multiuser.h
-        include/config/namespaces.h
-        include/config/net.h
-        include/config/netconsole.h
-        include/config/netdevices.h
-        include/config/netfilter.h
-        include/config/netlabel.h
-        include/config/netpoll.h
-        include/config/nlattr.h
-        include/config/nls.h
-        include/config/numa.h
-        include/config/nvmem.h
-        include/config/nvram.h
-        include/config/optprobes.h
-        include/config/packet.h
-        include/config/pcc.h
-        include/config/pccard.h
-        include/config/pci.h
-        include/config/pcieaer.h
-        include/config/pcieaspm.h
-        include/config/pcieportbus.h
-        include/config/pcmcia.h
-        include/config/phylib.h
-        include/config/pm.h
-        include/config/pnp.h
-        include/config/pnpacpi.h
-        include/config/pps.h
-        include/config/printk.h
-        include/config/profiling.h
-        include/config/quota.h
-        include/config/quotactl.h
-        include/config/r8169.h
-        include/config/ras.h
-        include/config/rational.h
-        include/config/regmap.h
-        include/config/relay.h
-        include/config/relocatable.h
-        include/config/retpoline.h
-        include/config/rfkill.h
-        include/config/rps.h
-        include/config/sbitmap.h
-        include/config/schedstats.h
-        include/config/scsi.h
-        include/config/seccomp.h
-        include/config/security.h
-        include/config/serio.h
-        include/config/shmem.h
-        include/config/signalfd.h
-        include/config/sky2.h
-        include/config/slub.h
-        include/config/smp.h
-        include/config/snd.h
-        include/config/sound.h
-        include/config/sparsemem.h
-        include/config/srcu.h
-        include/config/stacktrace.h
-        include/config/standalone.h
-        include/config/sunrpc.h
-        include/config/suspend.h
-        include/config/swap.h
-        include/config/swiotlb.h
-        include/config/sysctl.h
-        include/config/sysfs.h
-        include/config/sysvipc.h
-        include/config/taskstats.h
-        include/config/thermal.h
-        include/config/tigon3.h
-        include/config/timerfd.h
-        include/config/tmpfs.h
-        include/config/tracepoints.h
-        include/config/tracing.h
-        include/config/tty.h
-        include/config/uid16.h
-        include/config/unix.h
-        include/config/uprobes.h
-        include/config/usb.h
-        include/config/uselib.h
-        include/config/virtualization.h
-        include/config/vt.h
-        include/config/watchdog.h
-        include/config/wireless.h
-        include/config/wlan.h
-        include/config/x86.h
-        include/config/xfrm.h
-        include/config/xps.h
-        include/config/yenta.h
-        include/config/zisofs.h
         include/crypto/internal/acompress.h
         include/crypto/internal/aead.h
         include/crypto/internal/akcipher.h
@@ -28452,7 +27108,6 @@ add_executable(linux_kernel
         include/dt-bindings/thermal/thermal.h
         include/dt-bindings/thermal/thermal_exynos.h
         include/dt-bindings/usb/pd.h
-        include/generated/autoksyms.h
         include/keys/asymmetric-parser.h
         include/keys/asymmetric-subtype.h
         include/keys/asymmetric-type.h
@@ -31011,33 +29666,10 @@ add_executable(linux_kernel
         include/media/i2c/lm3560.h
         include/media/i2c/lm3646.h
         include/media/i2c/m52790.h
-        include/media/i2c/m5mols.h
-        include/media/i2c/mt9m032.h
-        include/media/i2c/mt9p031.h
-        include/media/i2c/mt9t001.h
-        include/media/i2c/mt9t112.h
-        include/media/i2c/mt9v011.h
-        include/media/i2c/mt9v022.h
-        include/media/i2c/mt9v032.h
-        include/media/i2c/noon010pc30.h
         include/media/i2c/ov2659.h
         include/media/i2c/ov7670.h
         include/media/i2c/ov772x.h
-        include/media/i2c/ov9650.h
-        include/media/i2c/rj54n1cb0c.h
-        include/media/i2c/s5c73m3.h
-        include/media/i2c/s5k4ecgx.h
-        include/media/i2c/s5k6aa.h
-        include/media/i2c/saa6588.h
-        include/media/i2c/saa7115.h
-        include/media/i2c/saa7127.h
-        include/media/i2c/sr030pc30.h
-        include/media/i2c/tc358743.h
-        include/media/i2c/tda1997x.h
-        include/media/i2c/ths7303.h
-        include/media/i2c/tvaudio.h
-        include/media/i2c/tvp514x.h
-        include/media/i2c/tvp7002.h
+
         include/media/i2c/tw9910.h
         include/media/i2c/uda1342.h
         include/media/i2c/upd64031a.h
@@ -31053,7 +29685,6 @@ add_executable(linux_kernel
         include/media/dvb_ca_en50221.h
         include/media/dvb_demux.h
         include/media/dvb_frontend.h
-        include/media/dvb_math.h
         include/media/dvb_net.h
         include/media/dvb_ringbuffer.h
         include/media/dvb_vb2.h
@@ -31091,7 +29722,6 @@ add_executable(linux_kernel
         include/media/v4l2-mem2mem.h
         include/media/v4l2-rect.h
         include/media/v4l2-subdev.h
-        include/media/v4l2-uvc.h
         include/media/v4l2-vp9.h
         include/media/videobuf-core.h
         include/media/videobuf-dma-contig.h
@@ -31323,7 +29953,6 @@ add_executable(linux_kernel
         include/net/ieee802154_netdev.h
         include/net/if_inet6.h
         include/net/ife.h
-        include/net/ila.h
         include/net/inet6_connection_sock.h
         include/net/inet6_hashtables.h
         include/net/inet_common.h
@@ -31395,7 +30024,6 @@ add_executable(linux_kernel
         include/net/nl802154.h
         include/net/nsh.h
         include/net/p8022.h
-        include/net/page_pool.h
         include/net/pie.h
         include/net/ping.h
         include/net/pkt_cls.h
@@ -31577,7 +30205,6 @@ add_executable(linux_kernel
         include/soc/imx/cpu.h
         include/soc/imx/cpuidle.h
         include/soc/imx/revision.h
-        include/soc/imx/timer.h
         include/soc/mediatek/smi.h
         include/soc/microchip/mpfs.h
         include/soc/mscc/ocelot.h
@@ -31638,7 +30265,6 @@ add_executable(linux_kernel
         include/sound/sof/xtensa.h
         include/sound/ac97_codec.h
         include/sound/aci.h
-        include/sound/acp62_chip_offset_byte.h
         include/sound/ad1816a.h
         include/sound/ad1843.h
         include/sound/adau1373.h
@@ -31702,7 +30328,6 @@ add_executable(linux_kernel
         include/sound/intel-dsp-config.h
         include/sound/intel-nhlt.h
         include/sound/jack.h
-        include/sound/l3.h
         include/sound/madera-pdata.h
         include/sound/max9768.h
         include/sound/max98088.h
@@ -31771,11 +30396,7 @@ add_executable(linux_kernel
         include/sound/timer.h
         include/sound/tlv.h
         include/sound/tlv320aic32x4.h
-        include/sound/tlv320aic3x.h
-        include/sound/tlv320dac33-plat.h
-        include/sound/tpa6130a2-plat.h
-        include/sound/uda134x.h
-        include/sound/uda1380.h
+
         include/sound/util_mem.h
         include/sound/vx_core.h
         include/sound/wavefront.h
@@ -31830,7 +30451,6 @@ add_executable(linux_kernel
         include/trace/events/fib6.h
         include/trace/events/filelock.h
         include/trace/events/filemap.h
-        include/trace/events/fs.h
         include/trace/events/fs_dax.h
         include/trace/events/fscache.h
         include/trace/events/fsi.h
@@ -31883,8 +30503,7 @@ add_executable(linux_kernel
         include/trace/events/net_probe_common.h
         include/trace/events/netfs.h
         include/trace/events/netlink.h
-        include/trace/events/nfs.h
-        include/trace/events/nilfs2.h
+
         include/trace/events/nmi.h
         include/trace/events/objagg.h
         include/trace/events/oom.h
@@ -31904,7 +30523,6 @@ add_executable(linux_kernel
         include/trace/events/qla.h
         include/trace/events/qrtr.h
         include/trace/events/rcu.h
-        include/trace/events/rdma.h
         include/trace/events/rdma_core.h
         include/trace/events/regulator.h
         include/trace/events/rpcgss.h
@@ -31929,17 +30547,12 @@ add_executable(linux_kernel
         include/trace/events/spi.h
         include/trace/events/spmi.h
         include/trace/events/sunrpc.h
-        include/trace/events/sunrpc_base.h
-        include/trace/events/sunvnet.h
         include/trace/events/swiotlb.h
         include/trace/events/syscalls.h
         include/trace/events/target.h
         include/trace/events/task.h
         include/trace/events/tcp.h
         include/trace/events/tegra_apb_dma.h
-        include/trace/events/thermal.h
-        include/trace/events/thermal_power_allocator.h
-        include/trace/events/thermal_pressure.h
         include/trace/events/thp.h
         include/trace/events/timer.h
         include/trace/events/tlb.h
@@ -32015,28 +30628,17 @@ add_executable(linux_kernel
         include/uapi/drm/drm_sarea.h
         include/uapi/drm/etnaviv_drm.h
         include/uapi/drm/exynos_drm.h
-        include/uapi/drm/i810_drm.h
-        include/uapi/drm/i915_drm.h
         include/uapi/drm/lima_drm.h
-        include/uapi/drm/mga_drm.h
-        include/uapi/drm/msm_drm.h
+
         include/uapi/drm/nouveau_drm.h
         include/uapi/drm/omap_drm.h
         include/uapi/drm/panfrost_drm.h
         include/uapi/drm/qxl_drm.h
-        include/uapi/drm/r128_drm.h
         include/uapi/drm/radeon_drm.h
-        include/uapi/drm/savage_drm.h
-        include/uapi/drm/sis_drm.h
-        include/uapi/drm/tegra_drm.h
+
         include/uapi/drm/v3d_drm.h
         include/uapi/drm/vc4_drm.h
         include/uapi/drm/vgem_drm.h
-        include/uapi/drm/via_drm.h
-        include/uapi/drm/virtgpu_drm.h
-        include/uapi/drm/vmwgfx_drm.h
-        include/uapi/linux/android/binder.h
-        include/uapi/linux/android/binderfs.h
         include/uapi/linux/byteorder/big_endian.h
         include/uapi/linux/byteorder/little_endian.h
         include/uapi/linux/caif/caif_socket.h
@@ -32346,7 +30948,6 @@ add_executable(linux_kernel
         include/uapi/linux/devlink.h
         include/uapi/linux/dlm.h
         include/uapi/linux/dlm_device.h
-        include/uapi/linux/dlm_netlink.h
         include/uapi/linux/dlm_plock.h
         include/uapi/linux/dlmconstants.h
         include/uapi/linux/dm-ioctl.h
@@ -32520,7 +31121,6 @@ add_executable(linux_kernel
         include/uapi/linux/membarrier.h
         include/uapi/linux/memfd.h
         include/uapi/linux/mempolicy.h
-        include/uapi/linux/meye.h
         include/uapi/linux/mii.h
         include/uapi/linux/minix_fs.h
         include/uapi/linux/mman.h
@@ -32800,7 +31400,6 @@ add_executable(linux_kernel
         include/uapi/misc/uacce/uacce.h
         include/uapi/misc/cxl.h
         include/uapi/misc/fastrpc.h
-        include/uapi/misc/habanalabs.h
         include/uapi/misc/ocxl.h
         include/uapi/misc/pvpanic.h
         include/uapi/misc/xilinx_sdfec.h
@@ -32918,7 +31517,6 @@ add_executable(linux_kernel
         include/video/newport.h
         include/video/of_display_timing.h
         include/video/of_videomode.h
-        include/video/omap-panel-data.h
         include/video/omapfb_dss.h
         include/video/omapvrfb.h
         include/video/permedia2.h
@@ -32941,7 +31539,6 @@ add_executable(linux_kernel
         include/video/uvesafb.h
         include/video/vga.h
         include/video/videomode.h
-        include/video/w100fb.h
         include/xen/arm/hypercall.h
         include/xen/arm/hypervisor.h
         include/xen/arm/interface.h
@@ -33081,7 +31678,6 @@ add_executable(linux_kernel
         ipc/util.c
         ipc/util.h
         kernel/bpf/preload/iterators/iterators.bpf.c
-        kernel/bpf/preload/iterators/iterators.lskel.h
         kernel/bpf/preload/bpf_preload.h
         kernel/bpf/preload/bpf_preload_kern.c
         kernel/bpf/arraymap.c
@@ -33518,7 +32114,6 @@ add_executable(linux_kernel
         kernel/kexec_file.c
         kernel/kexec_internal.h
         kernel/kheaders.c
-        kernel/kmod.c
         kernel/kprobes.c
         kernel/ksysfs.c
         kernel/kthread.c
@@ -33575,7 +32170,6 @@ add_executable(linux_kernel
         kernel/utsname_sysctl.c
         kernel/watch_queue.c
         kernel/watchdog.c
-        kernel/watchdog_hld.c
         kernel/workqueue.c
         kernel/workqueue_internal.h
         lib/842/842.h
@@ -33663,31 +32257,6 @@ add_executable(linux_kernel
         lib/math/rational.c
         lib/math/reciprocal_div.c
         lib/math/test_div64.c
-        lib/mpi/ec.c
-        lib/mpi/generic_mpih-add1.c
-        lib/mpi/generic_mpih-lshift.c
-        lib/mpi/generic_mpih-mul1.c
-        lib/mpi/generic_mpih-mul2.c
-        lib/mpi/generic_mpih-mul3.c
-        lib/mpi/generic_mpih-rshift.c
-        lib/mpi/generic_mpih-sub1.c
-        lib/mpi/longlong.h
-        lib/mpi/mpi-add.c
-        lib/mpi/mpi-bit.c
-        lib/mpi/mpi-cmp.c
-        lib/mpi/mpi-div.c
-        lib/mpi/mpi-inline.h
-        lib/mpi/mpi-internal.h
-        lib/mpi/mpi-inv.c
-        lib/mpi/mpi-mod.c
-        lib/mpi/mpi-mul.c
-        lib/mpi/mpi-pow.c
-        lib/mpi/mpi-sub-ui.c
-        lib/mpi/mpicoder.c
-        lib/mpi/mpih-cmp.c
-        lib/mpi/mpih-div.c
-        lib/mpi/mpih-mul.c
-        lib/mpi/mpiutil.c
         lib/pldmfw/pldmfw.c
         lib/pldmfw/pldmfw_private.h
         lib/raid6/test/test.c
@@ -33990,7 +32559,6 @@ add_executable(linux_kernel
         lib/seq_buf.c
         lib/sg_pool.c
         lib/sg_split.c
-        lib/show_mem.c
         lib/siphash.c
         lib/slub_kunit.c
         lib/smp_processor_id.c
@@ -34037,18 +32605,9 @@ add_executable(linux_kernel
         lib/test_ref_tracker.c
         lib/test_rhashtable.c
         lib/test_scanf.c
-        lib/test_siphash.c
         lib/test_sort.c
         lib/test_static_key_base.c
         lib/test_static_keys.c
-        lib/test_string.c
-        lib/test_strscpy.c
-        lib/test_sysctl.c
-        lib/test_ubsan.c
-        lib/test_user_copy.c
-        lib/test_uuid.c
-        lib/test_vmalloc.c
-        lib/test_xarray.c
         lib/textsearch.c
         lib/timerqueue.c
         lib/trace_readwrite.c
@@ -34123,7 +32682,6 @@ add_executable(linux_kernel
         mm/failslab.c
         mm/filemap.c
         mm/folio-compat.c
-        mm/frontswap.c
         mm/gup.c
         mm/gup_test.c
         mm/gup_test.h
@@ -34208,7 +32766,6 @@ add_executable(linux_kernel
         mm/slab.c
         mm/slab.h
         mm/slab_common.c
-        mm/slob.c
         mm/slub.c
         mm/sparse-vmemmap.c
         mm/sparse.c
@@ -34575,7 +33132,6 @@ add_executable(linux_kernel
         net/core/dev_addr_lists.c
         net/core/dev_addr_lists_test.c
         net/core/dev_ioctl.c
-        net/core/devlink.c
         net/core/drop_monitor.c
         net/core/dst.c
         net/core/dst_cache.c
@@ -34662,8 +33218,6 @@ add_executable(linux_kernel
         net/dns_resolver/dns_query.c
         net/dns_resolver/internal.h
         net/dsa/dsa.c
-        net/dsa/dsa2.c
-        net/dsa/dsa_priv.h
         net/dsa/master.c
         net/dsa/netlink.c
         net/dsa/port.c
@@ -34758,7 +33312,6 @@ add_executable(linux_kernel
         net/ipv4/netfilter/arptable_filter.c
         net/ipv4/netfilter/ip_tables.c
         net/ipv4/netfilter/ipt_ah.c
-        net/ipv4/netfilter/ipt_CLUSTERIP.c
         net/ipv4/netfilter/ipt_ECN.c
         net/ipv4/netfilter/ipt_REJECT.c
         net/ipv4/netfilter/ipt_rpfilter.c
@@ -34794,7 +33347,7 @@ add_executable(linux_kernel
         net/ipv4/fib_rules.c
         net/ipv4/fib_semantics.c
         net/ipv4/fib_trie.c
-        net/ipv4/fou.c
+
         net/ipv4/gre_demux.c
         net/ipv4/gre_offload.c
         net/ipv4/icmp.c
@@ -35621,10 +34174,6 @@ add_executable(linux_kernel
         net/sched/cls_fw.c
         net/sched/cls_matchall.c
         net/sched/cls_route.c
-        net/sched/cls_rsvp.c
-        net/sched/cls_rsvp.h
-        net/sched/cls_rsvp6.c
-        net/sched/cls_tcindex.c
         net/sched/cls_u32.c
         net/sched/em_canid.c
         net/sched/em_cmp.c
@@ -35636,15 +34185,12 @@ add_executable(linux_kernel
         net/sched/em_u32.c
         net/sched/ematch.c
         net/sched/sch_api.c
-        net/sched/sch_atm.c
         net/sched/sch_blackhole.c
         net/sched/sch_cake.c
-        net/sched/sch_cbq.c
         net/sched/sch_cbs.c
         net/sched/sch_choke.c
         net/sched/sch_codel.c
         net/sched/sch_drr.c
-        net/sched/sch_dsmark.c
         net/sched/sch_etf.c
         net/sched/sch_ets.c
         net/sched/sch_fifo.c
@@ -35747,7 +34293,6 @@ add_executable(linux_kernel
         net/sunrpc/auth_gss/gss_krb5_keys.c
         net/sunrpc/auth_gss/gss_krb5_mech.c
         net/sunrpc/auth_gss/gss_krb5_seal.c
-        net/sunrpc/auth_gss/gss_krb5_seqnum.c
         net/sunrpc/auth_gss/gss_krb5_unseal.c
         net/sunrpc/auth_gss/gss_krb5_wrap.c
         net/sunrpc/auth_gss/gss_mech_switch.c
@@ -35944,7 +34489,6 @@ add_executable(linux_kernel
         net/xfrm/xfrm_hash.h
         net/xfrm/xfrm_inout.h
         net/xfrm/xfrm_input.c
-        net/xfrm/xfrm_interface.c
         net/xfrm/xfrm_ipcomp.c
         net/xfrm/xfrm_output.c
         net/xfrm/xfrm_policy.c
@@ -35979,12 +34523,7 @@ add_executable(linux_kernel
         samples/bpf/ibumad_user.c
         samples/bpf/lathist_kern.c
         samples/bpf/lathist_user.c
-        samples/bpf/lwt_len_hist_kern.c
         samples/bpf/lwt_len_hist_user.c
-        samples/bpf/map_perf_test_kern.c
-        samples/bpf/map_perf_test_user.c
-        samples/bpf/offwaketime_kern.c
-        samples/bpf/offwaketime_user.c
         samples/bpf/parse_ldabs.c
         samples/bpf/parse_simple.c
         samples/bpf/parse_varlen.c
@@ -35992,15 +34531,12 @@ add_executable(linux_kernel
         samples/bpf/sampleip_user.c
         samples/bpf/sock_example.c
         samples/bpf/sock_example.h
-        samples/bpf/sock_flags_kern.c
         samples/bpf/sockex1_kern.c
         samples/bpf/sockex1_user.c
         samples/bpf/sockex2_kern.c
         samples/bpf/sockex2_user.c
         samples/bpf/sockex3_kern.c
         samples/bpf/sockex3_user.c
-        samples/bpf/spintest_kern.c
-        samples/bpf/spintest_user.c
         samples/bpf/syscall_nrs.c
         samples/bpf/syscall_tp_kern.c
         samples/bpf/syscall_tp_user.c
@@ -36022,70 +34558,10 @@ add_executable(linux_kernel
         samples/bpf/test_cgrp2_attach.c
         samples/bpf/test_cgrp2_sock.c
         samples/bpf/test_cgrp2_sock2.c
-        samples/bpf/test_cgrp2_tc_kern.c
-        samples/bpf/test_current_task_under_cgroup_kern.c
-        samples/bpf/test_current_task_under_cgroup_user.c
         samples/bpf/test_lru_dist.c
         samples/bpf/test_lwt_bpf.c
-        samples/bpf/test_map_in_map_kern.c
-        samples/bpf/test_map_in_map_user.c
-        samples/bpf/test_overhead_kprobe_kern.c
-        samples/bpf/test_overhead_raw_tp_kern.c
-        samples/bpf/test_overhead_tp_kern.c
-        samples/bpf/test_overhead_user.c
-        samples/bpf/test_probe_write_user_kern.c
-        samples/bpf/test_probe_write_user_user.c
-        samples/bpf/trace_common.h
         samples/bpf/trace_event_kern.c
         samples/bpf/trace_event_user.c
-        samples/bpf/trace_output_kern.c
-        samples/bpf/trace_output_user.c
-        samples/bpf/tracex1_kern.c
-        samples/bpf/tracex1_user.c
-        samples/bpf/tracex2_kern.c
-        samples/bpf/tracex2_user.c
-        samples/bpf/tracex3_kern.c
-        samples/bpf/tracex3_user.c
-        samples/bpf/tracex4_kern.c
-        samples/bpf/tracex4_user.c
-        samples/bpf/tracex5_kern.c
-        samples/bpf/tracex5_user.c
-        samples/bpf/tracex6_kern.c
-        samples/bpf/tracex6_user.c
-        samples/bpf/tracex7_kern.c
-        samples/bpf/tracex7_user.c
-        samples/bpf/xdp1_kern.c
-        samples/bpf/xdp1_user.c
-        samples/bpf/xdp2_kern.c
-        samples/bpf/xdp2skb_meta_kern.c
-        samples/bpf/xdp_adjust_tail_kern.c
-        samples/bpf/xdp_adjust_tail_user.c
-        samples/bpf/xdp_fwd_kern.c
-        samples/bpf/xdp_fwd_user.c
-        samples/bpf/xdp_monitor.bpf.c
-        samples/bpf/xdp_monitor_user.c
-        samples/bpf/xdp_redirect.bpf.c
-        samples/bpf/xdp_redirect_cpu.bpf.c
-        samples/bpf/xdp_redirect_cpu_user.c
-        samples/bpf/xdp_redirect_map.bpf.c
-        samples/bpf/xdp_redirect_map_multi.bpf.c
-        samples/bpf/xdp_redirect_map_multi_user.c
-        samples/bpf/xdp_redirect_map_user.c
-        samples/bpf/xdp_redirect_user.c
-        samples/bpf/xdp_router_ipv4.bpf.c
-        samples/bpf/xdp_router_ipv4_user.c
-        samples/bpf/xdp_rxq_info_kern.c
-        samples/bpf/xdp_rxq_info_user.c
-        samples/bpf/xdp_sample.bpf.c
-        samples/bpf/xdp_sample.bpf.h
-        samples/bpf/xdp_sample_pkts_kern.c
-        samples/bpf/xdp_sample_pkts_user.c
-        samples/bpf/xdp_sample_shared.h
-        samples/bpf/xdp_sample_user.c
-        samples/bpf/xdp_sample_user.h
-        samples/bpf/xdp_tx_iptunnel_common.h
-        samples/bpf/xdp_tx_iptunnel_kern.c
-        samples/bpf/xdp_tx_iptunnel_user.c
         samples/configfs/configfs_sample.c
         samples/connector/cn_test.c
         samples/connector/ucon.c
@@ -36254,11 +34730,6 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/clock/imx8ulp-clock.h
         scripts/dtc/include-prefixes/dt-bindings/clock/imx93-clock.h
         scripts/dtc/include-prefixes/dt-bindings/clock/imxrt1050-clock.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,jz4725b-cgu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,jz4740-cgu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,jz4760-cgu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,jz4770-cgu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,jz4780-cgu.h
         scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,sysost.h
         scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,tcu.h
         scripts/dtc/include-prefixes/dt-bindings/clock/ingenic,x1000-cgu.h
@@ -36373,8 +34844,7 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,gpucc-sm8250.h
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,gpucc-sm8350.h
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lcc-ipq806x.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lcc-mdm9615.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lcc-msm8960.h
+
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lpass-sc7280.h
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lpass-sdm845.h
         scripts/dtc/include-prefixes/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
@@ -36478,18 +34948,6 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/clock/ste-db8500-clkout.h
         scripts/dtc/include-prefixes/dt-bindings/clock/stih407-clks.h
         scripts/dtc/include-prefixes/dt-bindings/clock/stih410-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stih416-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stih418-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stm32fx-clock.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stm32h7-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stm32mp1-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stm32mp13-clks.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/stratix10-clock.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/sun20i-d1-ccu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/sun20i-d1-r-ccu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/sun4i-a10-ccu.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/sun4i-a10-pll2.h
-        scripts/dtc/include-prefixes/dt-bindings/clock/sun50i-a100-ccu.h
         scripts/dtc/include-prefixes/dt-bindings/clock/sun50i-a100-r-ccu.h
         scripts/dtc/include-prefixes/dt-bindings/clock/sun50i-a64-ccu.h
         scripts/dtc/include-prefixes/dt-bindings/clock/sun50i-h6-ccu.h
@@ -36695,7 +35153,7 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/dra.h
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/hisi.h
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/k210-fpioa.h
-        scripts/dtc/include-prefixes/dt-bindings/pinctrl/k3.h
+
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/keystone.h
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/lochnagar.h
         scripts/dtc/include-prefixes/dt-bindings/pinctrl/mediatek,mt8188-pinfunc.h
@@ -36899,8 +35357,6 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/reset/starfive-jh7100.h
         scripts/dtc/include-prefixes/dt-bindings/reset/stericsson,db8500-prcc-reset.h
         scripts/dtc/include-prefixes/dt-bindings/reset/stih407-resets.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/stih415-resets.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/stih416-resets.h
         scripts/dtc/include-prefixes/dt-bindings/reset/stm32mp1-resets.h
         scripts/dtc/include-prefixes/dt-bindings/reset/stm32mp13-resets.h
         scripts/dtc/include-prefixes/dt-bindings/reset/sun20i-d1-ccu.h
@@ -36926,15 +35382,7 @@ add_executable(linux_kernel
         scripts/dtc/include-prefixes/dt-bindings/reset/sun9i-a80-usb.h
         scripts/dtc/include-prefixes/dt-bindings/reset/suniv-ccu-f1c100s.h
         scripts/dtc/include-prefixes/dt-bindings/reset/sunplus,sp7021-reset.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/tegra124-car.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/tegra186-reset.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/tegra194-reset.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/tegra210-car.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/tegra234-reset.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/ti-syscon.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/toshiba,tmpv770x.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/xlnx-versal-resets.h
-        scripts/dtc/include-prefixes/dt-bindings/reset/xlnx-zynqmp-resets.h
+
         scripts/dtc/include-prefixes/dt-bindings/soc/bcm-pmb.h
         scripts/dtc/include-prefixes/dt-bindings/soc/bcm2835-pm.h
         scripts/dtc/include-prefixes/dt-bindings/soc/bcm6318-pm.h
@@ -37043,7 +35491,6 @@ add_executable(linux_kernel
         scripts/kconfig/images.c
         scripts/kconfig/images.h
         scripts/kconfig/internal.h
-        scripts/kconfig/lexer.lex.c
         scripts/kconfig/list.h
         scripts/kconfig/lkc.h
         scripts/kconfig/lkc_proto.h
@@ -37052,15 +35499,12 @@ add_executable(linux_kernel
         scripts/kconfig/nconf.c
         scripts/kconfig/nconf.gui.c
         scripts/kconfig/nconf.h
-        scripts/kconfig/parser.tab.c
-        scripts/kconfig/parser.tab.h
         scripts/kconfig/preprocess.c
         scripts/kconfig/qconf.cc
         scripts/kconfig/qconf.h
         scripts/kconfig/symbol.c
         scripts/kconfig/util.c
-        scripts/kconfig/zconf.lex.c
-        scripts/kconfig/zconf.tab.c
+
         scripts/mod/devicetable-offsets.c
         scripts/mod/empty.c
         scripts/mod/file2alias.c
@@ -37072,7 +35516,6 @@ add_executable(linux_kernel
         scripts/selinux/genheaders/genheaders.c
         scripts/selinux/mdp/mdp.c
         scripts/asn1_compiler.c
-        scripts/bin2c.c
         scripts/insert-sys-cert.c
         scripts/kallsyms.c
         scripts/recordmcount.c
@@ -38081,7 +36524,7 @@ add_executable(linux_kernel
         sound/soc/amd/include/acp_2_2_d.h
         sound/soc/amd/include/acp_2_2_enum.h
         sound/soc/amd/include/acp_2_2_sh_mask.h
-        sound/soc/amd/ps/acp62.h
+
         sound/soc/amd/ps/pci-ps.c
         sound/soc/amd/ps/ps-mach.c
         sound/soc/amd/ps/ps-pdm-dma.c
@@ -38154,603 +36597,6 @@ add_executable(linux_kernel
         sound/soc/bcm/cygnus-ssp.c
         sound/soc/bcm/cygnus-ssp.h
         sound/soc/cirrus/edb93xx.c
-        sound/soc/cirrus/ep93xx-ac97.c
-        sound/soc/cirrus/ep93xx-i2s.c
-        sound/soc/cirrus/ep93xx-pcm.c
-        sound/soc/cirrus/ep93xx-pcm.h
-        sound/soc/cirrus/simone.c
-        sound/soc/cirrus/snappercl15.c
-        sound/soc/codecs/88pm860x-codec.c
-        sound/soc/codecs/88pm860x-codec.h
-        sound/soc/codecs/ab8500-codec.c
-        sound/soc/codecs/ab8500-codec.h
-        sound/soc/codecs/ac97.c
-        sound/soc/codecs/ad1836.c
-        sound/soc/codecs/ad1836.h
-        sound/soc/codecs/ad193x-i2c.c
-        sound/soc/codecs/ad193x-spi.c
-        sound/soc/codecs/ad193x.c
-        sound/soc/codecs/ad193x.h
-        sound/soc/codecs/ad1980.c
-        sound/soc/codecs/ad73311.c
-        sound/soc/codecs/ad73311.h
-        sound/soc/codecs/adau-utils.c
-        sound/soc/codecs/adau-utils.h
-        sound/soc/codecs/adau1372-i2c.c
-        sound/soc/codecs/adau1372-spi.c
-        sound/soc/codecs/adau1372.c
-        sound/soc/codecs/adau1372.h
-        sound/soc/codecs/adau1373.c
-        sound/soc/codecs/adau1373.h
-        sound/soc/codecs/adau1701.c
-        sound/soc/codecs/adau1701.h
-        sound/soc/codecs/adau1761-i2c.c
-        sound/soc/codecs/adau1761-spi.c
-        sound/soc/codecs/adau1761.c
-        sound/soc/codecs/adau1761.h
-        sound/soc/codecs/adau1781-i2c.c
-        sound/soc/codecs/adau1781-spi.c
-        sound/soc/codecs/adau1781.c
-        sound/soc/codecs/adau1781.h
-        sound/soc/codecs/adau17x1.c
-        sound/soc/codecs/adau17x1.h
-        sound/soc/codecs/adau1977-i2c.c
-        sound/soc/codecs/adau1977-spi.c
-        sound/soc/codecs/adau1977.c
-        sound/soc/codecs/adau1977.h
-        sound/soc/codecs/adau7002.c
-        sound/soc/codecs/adau7118-hw.c
-        sound/soc/codecs/adau7118-i2c.c
-        sound/soc/codecs/adau7118.c
-        sound/soc/codecs/adau7118.h
-        sound/soc/codecs/adav801.c
-        sound/soc/codecs/adav803.c
-        sound/soc/codecs/adav80x.c
-        sound/soc/codecs/adav80x.h
-        sound/soc/codecs/ads117x.c
-        sound/soc/codecs/ak4104.c
-        sound/soc/codecs/ak4118.c
-        sound/soc/codecs/ak4375.c
-        sound/soc/codecs/ak4458.c
-        sound/soc/codecs/ak4458.h
-        sound/soc/codecs/ak4535.c
-        sound/soc/codecs/ak4535.h
-        sound/soc/codecs/ak4554.c
-        sound/soc/codecs/ak4613.c
-        sound/soc/codecs/ak4641.c
-        sound/soc/codecs/ak4642.c
-        sound/soc/codecs/ak4671.c
-        sound/soc/codecs/ak4671.h
-        sound/soc/codecs/ak5386.c
-        sound/soc/codecs/ak5558.c
-        sound/soc/codecs/ak5558.h
-        sound/soc/codecs/alc5623.c
-        sound/soc/codecs/alc5623.h
-        sound/soc/codecs/alc5632.c
-        sound/soc/codecs/alc5632.h
-        sound/soc/codecs/arizona-jack.c
-        sound/soc/codecs/arizona.c
-        sound/soc/codecs/arizona.h
-        sound/soc/codecs/aw8738.c
-        sound/soc/codecs/bd28623.c
-        sound/soc/codecs/bt-sco.c
-        sound/soc/codecs/cirrus_legacy.h
-        sound/soc/codecs/cpcap.c
-        sound/soc/codecs/cq93vc.c
-        sound/soc/codecs/cros_ec_codec.c
-        sound/soc/codecs/cs35l32.c
-        sound/soc/codecs/cs35l32.h
-        sound/soc/codecs/cs35l33.c
-        sound/soc/codecs/cs35l33.h
-        sound/soc/codecs/cs35l34.c
-        sound/soc/codecs/cs35l34.h
-        sound/soc/codecs/cs35l35.c
-        sound/soc/codecs/cs35l35.h
-        sound/soc/codecs/cs35l36.c
-        sound/soc/codecs/cs35l36.h
-        sound/soc/codecs/cs35l41-i2c.c
-        sound/soc/codecs/cs35l41-lib.c
-        sound/soc/codecs/cs35l41-spi.c
-        sound/soc/codecs/cs35l41.c
-        sound/soc/codecs/cs35l41.h
-        sound/soc/codecs/cs35l45-i2c.c
-        sound/soc/codecs/cs35l45-spi.c
-        sound/soc/codecs/cs35l45-tables.c
-        sound/soc/codecs/cs35l45.c
-        sound/soc/codecs/cs35l45.h
-        sound/soc/codecs/cs4234.c
-        sound/soc/codecs/cs4234.h
-        sound/soc/codecs/cs4265.c
-        sound/soc/codecs/cs4265.h
-        sound/soc/codecs/cs4270.c
-        sound/soc/codecs/cs4271-i2c.c
-        sound/soc/codecs/cs4271-spi.c
-        sound/soc/codecs/cs4271.c
-        sound/soc/codecs/cs4271.h
-        sound/soc/codecs/cs42l42-i2c.c
-        sound/soc/codecs/cs42l42.c
-        sound/soc/codecs/cs42l42.h
-        sound/soc/codecs/cs42l51-i2c.c
-        sound/soc/codecs/cs42l51.c
-        sound/soc/codecs/cs42l51.h
-        sound/soc/codecs/cs42l52.c
-        sound/soc/codecs/cs42l52.h
-        sound/soc/codecs/cs42l56.c
-        sound/soc/codecs/cs42l56.h
-        sound/soc/codecs/cs42l73.c
-        sound/soc/codecs/cs42l73.h
-        sound/soc/codecs/cs42l83-i2c.c
-        sound/soc/codecs/cs42xx8-i2c.c
-        sound/soc/codecs/cs42xx8.c
-        sound/soc/codecs/cs42xx8.h
-        sound/soc/codecs/cs43130.c
-        sound/soc/codecs/cs43130.h
-        sound/soc/codecs/cs4341.c
-        sound/soc/codecs/cs4349.c
-        sound/soc/codecs/cs4349.h
-        sound/soc/codecs/cs47l15.c
-        sound/soc/codecs/cs47l24.c
-        sound/soc/codecs/cs47l24.h
-        sound/soc/codecs/cs47l35.c
-        sound/soc/codecs/cs47l85.c
-        sound/soc/codecs/cs47l90.c
-        sound/soc/codecs/cs47l92.c
-        sound/soc/codecs/cs53l30.c
-        sound/soc/codecs/cs53l30.h
-        sound/soc/codecs/cx20442.c
-        sound/soc/codecs/cx20442.h
-        sound/soc/codecs/cx2072x.c
-        sound/soc/codecs/cx2072x.h
-        sound/soc/codecs/da7210.c
-        sound/soc/codecs/da7213.c
-        sound/soc/codecs/da7213.h
-        sound/soc/codecs/da7218.c
-        sound/soc/codecs/da7218.h
-        sound/soc/codecs/da7219-aad.c
-        sound/soc/codecs/da7219-aad.h
-        sound/soc/codecs/da7219.c
-        sound/soc/codecs/da7219.h
-        sound/soc/codecs/da732x.c
-        sound/soc/codecs/da732x.h
-        sound/soc/codecs/da732x_reg.h
-        sound/soc/codecs/da9055.c
-        sound/soc/codecs/dmic.c
-        sound/soc/codecs/es7134.c
-        sound/soc/codecs/es7241.c
-        sound/soc/codecs/es8316.c
-        sound/soc/codecs/es8316.h
-        sound/soc/codecs/es8326.c
-        sound/soc/codecs/es8326.h
-        sound/soc/codecs/es8328-i2c.c
-        sound/soc/codecs/es8328-spi.c
-        sound/soc/codecs/es8328.c
-        sound/soc/codecs/es8328.h
-        sound/soc/codecs/gtm601.c
-        sound/soc/codecs/hda-dai.c
-        sound/soc/codecs/hda.c
-        sound/soc/codecs/hda.h
-        sound/soc/codecs/hdac_hda.c
-        sound/soc/codecs/hdac_hda.h
-        sound/soc/codecs/hdac_hdmi.c
-        sound/soc/codecs/hdac_hdmi.h
-        sound/soc/codecs/hdmi-codec.c
-        sound/soc/codecs/ics43432.c
-        sound/soc/codecs/inno_rk3036.c
-        sound/soc/codecs/inno_rk3036.h
-        sound/soc/codecs/isabelle.c
-        sound/soc/codecs/isabelle.h
-        sound/soc/codecs/jz4725b.c
-        sound/soc/codecs/jz4740.c
-        sound/soc/codecs/jz4760.c
-        sound/soc/codecs/jz4770.c
-        sound/soc/codecs/l3.c
-        sound/soc/codecs/lm4857.c
-        sound/soc/codecs/lm49453.c
-        sound/soc/codecs/lm49453.h
-        sound/soc/codecs/lochnagar-sc.c
-        sound/soc/codecs/lpass-macro-common.c
-        sound/soc/codecs/lpass-macro-common.h
-        sound/soc/codecs/lpass-rx-macro.c
-        sound/soc/codecs/lpass-tx-macro.c
-        sound/soc/codecs/lpass-va-macro.c
-        sound/soc/codecs/lpass-wsa-macro.c
-        sound/soc/codecs/lpass-wsa-macro.h
-        sound/soc/codecs/madera.c
-        sound/soc/codecs/madera.h
-        sound/soc/codecs/max9759.c
-        sound/soc/codecs/max9768.c
-        sound/soc/codecs/max98088.c
-        sound/soc/codecs/max98088.h
-        sound/soc/codecs/max98090.c
-        sound/soc/codecs/max98090.h
-        sound/soc/codecs/max98095.c
-        sound/soc/codecs/max98095.h
-        sound/soc/codecs/max98357a.c
-        sound/soc/codecs/max98371.c
-        sound/soc/codecs/max98371.h
-        sound/soc/codecs/max98373-i2c.c
-        sound/soc/codecs/max98373-sdw.c
-        sound/soc/codecs/max98373-sdw.h
-        sound/soc/codecs/max98373.c
-        sound/soc/codecs/max98373.h
-        sound/soc/codecs/max98390.c
-        sound/soc/codecs/max98390.h
-        sound/soc/codecs/max98396.c
-        sound/soc/codecs/max98396.h
-        sound/soc/codecs/max9850.c
-        sound/soc/codecs/max9850.h
-        sound/soc/codecs/max98504.c
-        sound/soc/codecs/max98504.h
-        sound/soc/codecs/max98520.c
-        sound/soc/codecs/max98520.h
-        sound/soc/codecs/max9860.c
-        sound/soc/codecs/max9860.h
-        sound/soc/codecs/max9867.c
-        sound/soc/codecs/max9867.h
-        sound/soc/codecs/max9877.c
-        sound/soc/codecs/max9877.h
-        sound/soc/codecs/max98925.c
-        sound/soc/codecs/max98925.h
-        sound/soc/codecs/max98926.c
-        sound/soc/codecs/max98926.h
-        sound/soc/codecs/max98927.c
-        sound/soc/codecs/max98927.h
-        sound/soc/codecs/mc13783.c
-        sound/soc/codecs/mc13783.h
-        sound/soc/codecs/ml26124.c
-        sound/soc/codecs/ml26124.h
-        sound/soc/codecs/msm8916-wcd-analog.c
-        sound/soc/codecs/msm8916-wcd-digital.c
-        sound/soc/codecs/mt6351.c
-        sound/soc/codecs/mt6351.h
-        sound/soc/codecs/mt6358.c
-        sound/soc/codecs/mt6358.h
-        sound/soc/codecs/mt6359-accdet.c
-        sound/soc/codecs/mt6359-accdet.h
-        sound/soc/codecs/mt6359.c
-        sound/soc/codecs/mt6359.h
-        sound/soc/codecs/mt6660.c
-        sound/soc/codecs/mt6660.h
-        sound/soc/codecs/nau8315.c
-        sound/soc/codecs/nau8540.c
-        sound/soc/codecs/nau8540.h
-        sound/soc/codecs/nau8810.c
-        sound/soc/codecs/nau8810.h
-        sound/soc/codecs/nau8821.c
-        sound/soc/codecs/nau8821.h
-        sound/soc/codecs/nau8822.c
-        sound/soc/codecs/nau8822.h
-        sound/soc/codecs/nau8824.c
-        sound/soc/codecs/nau8824.h
-        sound/soc/codecs/nau8825.c
-        sound/soc/codecs/nau8825.h
-        sound/soc/codecs/pcm1681.c
-        sound/soc/codecs/pcm1789-i2c.c
-        sound/soc/codecs/pcm1789.c
-        sound/soc/codecs/pcm1789.h
-        sound/soc/codecs/pcm179x-i2c.c
-        sound/soc/codecs/pcm179x-spi.c
-        sound/soc/codecs/pcm179x.c
-        sound/soc/codecs/pcm179x.h
-        sound/soc/codecs/pcm186x-i2c.c
-        sound/soc/codecs/pcm186x-spi.c
-        sound/soc/codecs/pcm186x.c
-        sound/soc/codecs/pcm186x.h
-        sound/soc/codecs/pcm3008.c
-        sound/soc/codecs/pcm3008.h
-        sound/soc/codecs/pcm3060-i2c.c
-        sound/soc/codecs/pcm3060-spi.c
-        sound/soc/codecs/pcm3060.c
-        sound/soc/codecs/pcm3060.h
-        sound/soc/codecs/pcm3168a-i2c.c
-        sound/soc/codecs/pcm3168a-spi.c
-        sound/soc/codecs/pcm3168a.c
-        sound/soc/codecs/pcm3168a.h
-        sound/soc/codecs/pcm5102a.c
-        sound/soc/codecs/pcm512x-i2c.c
-        sound/soc/codecs/pcm512x-spi.c
-        sound/soc/codecs/pcm512x.c
-        sound/soc/codecs/pcm512x.h
-        sound/soc/codecs/rk3328_codec.c
-        sound/soc/codecs/rk3328_codec.h
-        sound/soc/codecs/rk817_codec.c
-        sound/soc/codecs/rl6231.c
-        sound/soc/codecs/rl6231.h
-        sound/soc/codecs/rl6347a.c
-        sound/soc/codecs/rl6347a.h
-        sound/soc/codecs/rt1011.c
-        sound/soc/codecs/rt1011.h
-        sound/soc/codecs/rt1015.c
-        sound/soc/codecs/rt1015.h
-        sound/soc/codecs/rt1015p.c
-        sound/soc/codecs/rt1016.c
-        sound/soc/codecs/rt1016.h
-        sound/soc/codecs/rt1019.c
-        sound/soc/codecs/rt1019.h
-        sound/soc/codecs/rt1305.c
-        sound/soc/codecs/rt1305.h
-        sound/soc/codecs/rt1308-sdw.c
-        sound/soc/codecs/rt1308-sdw.h
-        sound/soc/codecs/rt1308.c
-        sound/soc/codecs/rt1308.h
-        sound/soc/codecs/rt1316-sdw.c
-        sound/soc/codecs/rt1316-sdw.h
-        sound/soc/codecs/rt274.c
-        sound/soc/codecs/rt274.h
-        sound/soc/codecs/rt286.c
-        sound/soc/codecs/rt286.h
-        sound/soc/codecs/rt298.c
-        sound/soc/codecs/rt298.h
-        sound/soc/codecs/rt5514-spi.c
-        sound/soc/codecs/rt5514-spi.h
-        sound/soc/codecs/rt5514.c
-        sound/soc/codecs/rt5514.h
-        sound/soc/codecs/rt5616.c
-        sound/soc/codecs/rt5616.h
-        sound/soc/codecs/rt5631.c
-        sound/soc/codecs/rt5631.h
-        sound/soc/codecs/rt5640.c
-        sound/soc/codecs/rt5640.h
-        sound/soc/codecs/rt5645.c
-        sound/soc/codecs/rt5645.h
-        sound/soc/codecs/rt5651.c
-        sound/soc/codecs/rt5651.h
-        sound/soc/codecs/rt5659.c
-        sound/soc/codecs/rt5659.h
-        sound/soc/codecs/rt5660.c
-        sound/soc/codecs/rt5660.h
-        sound/soc/codecs/rt5663.c
-        sound/soc/codecs/rt5663.h
-        sound/soc/codecs/rt5665.c
-        sound/soc/codecs/rt5665.h
-        sound/soc/codecs/rt5668.c
-        sound/soc/codecs/rt5668.h
-        sound/soc/codecs/rt5670-dsp.h
-        sound/soc/codecs/rt5670.c
-        sound/soc/codecs/rt5670.h
-        sound/soc/codecs/rt5677-spi.c
-        sound/soc/codecs/rt5677-spi.h
-        sound/soc/codecs/rt5677.c
-        sound/soc/codecs/rt5677.h
-        sound/soc/codecs/rt5682-i2c.c
-        sound/soc/codecs/rt5682-sdw.c
-        sound/soc/codecs/rt5682.c
-        sound/soc/codecs/rt5682.h
-        sound/soc/codecs/rt5682s.c
-        sound/soc/codecs/rt5682s.h
-        sound/soc/codecs/rt700-sdw.c
-        sound/soc/codecs/rt700-sdw.h
-        sound/soc/codecs/rt700.c
-        sound/soc/codecs/rt700.h
-        sound/soc/codecs/rt711-sdca-sdw.c
-        sound/soc/codecs/rt711-sdca-sdw.h
-        sound/soc/codecs/rt711-sdca.c
-        sound/soc/codecs/rt711-sdca.h
-        sound/soc/codecs/rt711-sdw.c
-        sound/soc/codecs/rt711-sdw.h
-        sound/soc/codecs/rt711.c
-        sound/soc/codecs/rt711.h
-        sound/soc/codecs/rt715-sdca-sdw.c
-        sound/soc/codecs/rt715-sdca-sdw.h
-        sound/soc/codecs/rt715-sdca.c
-        sound/soc/codecs/rt715-sdca.h
-        sound/soc/codecs/rt715-sdw.c
-        sound/soc/codecs/rt715-sdw.h
-        sound/soc/codecs/rt715.c
-        sound/soc/codecs/rt715.h
-        sound/soc/codecs/rt9120.c
-        sound/soc/codecs/sdw-mockup.c
-        sound/soc/codecs/sgtl5000.c
-        sound/soc/codecs/sgtl5000.h
-        sound/soc/codecs/si476x.c
-        sound/soc/codecs/sigmadsp-i2c.c
-        sound/soc/codecs/sigmadsp-regmap.c
-        sound/soc/codecs/sigmadsp.c
-        sound/soc/codecs/sigmadsp.h
-        sound/soc/codecs/simple-amplifier.c
-        sound/soc/codecs/simple-mux.c
-        sound/soc/codecs/spdif_receiver.c
-        sound/soc/codecs/spdif_transmitter.c
-        sound/soc/codecs/src4xxx-i2c.c
-        sound/soc/codecs/src4xxx.c
-        sound/soc/codecs/src4xxx.h
-        sound/soc/codecs/ssm2305.c
-        sound/soc/codecs/ssm2518.c
-        sound/soc/codecs/ssm2518.h
-        sound/soc/codecs/ssm2602-i2c.c
-        sound/soc/codecs/ssm2602-spi.c
-        sound/soc/codecs/ssm2602.c
-        sound/soc/codecs/ssm2602.h
-        sound/soc/codecs/ssm4567.c
-        sound/soc/codecs/sta32x.c
-        sound/soc/codecs/sta32x.h
-        sound/soc/codecs/sta350.c
-        sound/soc/codecs/sta350.h
-        sound/soc/codecs/sta529.c
-        sound/soc/codecs/stac9766.c
-        sound/soc/codecs/sti-sas.c
-        sound/soc/codecs/tas2552.c
-        sound/soc/codecs/tas2552.h
-        sound/soc/codecs/tas2562.c
-        sound/soc/codecs/tas2562.h
-        sound/soc/codecs/tas2764.c
-        sound/soc/codecs/tas2764.h
-        sound/soc/codecs/tas2770.c
-        sound/soc/codecs/tas2770.h
-        sound/soc/codecs/tas2780.c
-        sound/soc/codecs/tas2780.h
-        sound/soc/codecs/tas5086.c
-        sound/soc/codecs/tas571x.c
-        sound/soc/codecs/tas571x.h
-        sound/soc/codecs/tas5720.c
-        sound/soc/codecs/tas5720.h
-        sound/soc/codecs/tas5805m.c
-        sound/soc/codecs/tas6424.c
-        sound/soc/codecs/tas6424.h
-        sound/soc/codecs/tda7419.c
-        sound/soc/codecs/tfa9879.c
-        sound/soc/codecs/tfa9879.h
-        sound/soc/codecs/tfa989x.c
-        sound/soc/codecs/tlv320adc3xxx.c
-        sound/soc/codecs/tlv320adcx140.c
-        sound/soc/codecs/tlv320adcx140.h
-        sound/soc/codecs/tlv320aic23-i2c.c
-        sound/soc/codecs/tlv320aic23-spi.c
-        sound/soc/codecs/tlv320aic23.c
-        sound/soc/codecs/tlv320aic23.h
-        sound/soc/codecs/tlv320aic26.c
-        sound/soc/codecs/tlv320aic26.h
-        sound/soc/codecs/tlv320aic31xx.c
-        sound/soc/codecs/tlv320aic31xx.h
-        sound/soc/codecs/tlv320aic32x4-clk.c
-        sound/soc/codecs/tlv320aic32x4-i2c.c
-        sound/soc/codecs/tlv320aic32x4-spi.c
-        sound/soc/codecs/tlv320aic32x4.c
-        sound/soc/codecs/tlv320aic32x4.h
-        sound/soc/codecs/tlv320aic3x-i2c.c
-        sound/soc/codecs/tlv320aic3x-spi.c
-        sound/soc/codecs/tlv320aic3x.c
-        sound/soc/codecs/tlv320aic3x.h
-        sound/soc/codecs/tlv320dac33.c
-        sound/soc/codecs/tlv320dac33.h
-        sound/soc/codecs/tpa6130a2.c
-        sound/soc/codecs/tpa6130a2.h
-        sound/soc/codecs/ts3a227e.c
-        sound/soc/codecs/ts3a227e.h
-        sound/soc/codecs/tscs42xx.c
-        sound/soc/codecs/tscs42xx.h
-        sound/soc/codecs/tscs454.c
-        sound/soc/codecs/tscs454.h
-        sound/soc/codecs/twl4030.c
-        sound/soc/codecs/twl6040.c
-        sound/soc/codecs/twl6040.h
-        sound/soc/codecs/uda1334.c
-        sound/soc/codecs/uda134x.c
-        sound/soc/codecs/uda134x.h
-        sound/soc/codecs/uda1380.c
-        sound/soc/codecs/uda1380.h
-        sound/soc/codecs/wcd-clsh-v2.c
-        sound/soc/codecs/wcd-clsh-v2.h
-        sound/soc/codecs/wcd-mbhc-v2.c
-        sound/soc/codecs/wcd-mbhc-v2.h
-        sound/soc/codecs/wcd9335.c
-        sound/soc/codecs/wcd9335.h
-        sound/soc/codecs/wcd934x.c
-        sound/soc/codecs/wcd938x-sdw.c
-        sound/soc/codecs/wcd938x.c
-        sound/soc/codecs/wcd938x.h
-        sound/soc/codecs/wl1273.c
-        sound/soc/codecs/wl1273.h
-        sound/soc/codecs/wm0010.c
-        sound/soc/codecs/wm1250-ev1.c
-        sound/soc/codecs/wm2000.c
-        sound/soc/codecs/wm2000.h
-        sound/soc/codecs/wm2200.c
-        sound/soc/codecs/wm2200.h
-        sound/soc/codecs/wm5100-tables.c
-        sound/soc/codecs/wm5100.c
-        sound/soc/codecs/wm5100.h
-        sound/soc/codecs/wm5102.c
-        sound/soc/codecs/wm5102.h
-        sound/soc/codecs/wm5110.c
-        sound/soc/codecs/wm5110.h
-        sound/soc/codecs/wm8350.c
-        sound/soc/codecs/wm8350.h
-        sound/soc/codecs/wm8400.c
-        sound/soc/codecs/wm8400.h
-        sound/soc/codecs/wm8510.c
-        sound/soc/codecs/wm8510.h
-        sound/soc/codecs/wm8523.c
-        sound/soc/codecs/wm8523.h
-        sound/soc/codecs/wm8524.c
-        sound/soc/codecs/wm8580.c
-        sound/soc/codecs/wm8580.h
-        sound/soc/codecs/wm8711.c
-        sound/soc/codecs/wm8711.h
-        sound/soc/codecs/wm8727.c
-        sound/soc/codecs/wm8728.c
-        sound/soc/codecs/wm8728.h
-        sound/soc/codecs/wm8731-i2c.c
-        sound/soc/codecs/wm8731-spi.c
-        sound/soc/codecs/wm8731.c
-        sound/soc/codecs/wm8731.h
-        sound/soc/codecs/wm8737.c
-        sound/soc/codecs/wm8737.h
-        sound/soc/codecs/wm8741.c
-        sound/soc/codecs/wm8741.h
-        sound/soc/codecs/wm8750.c
-        sound/soc/codecs/wm8750.h
-        sound/soc/codecs/wm8753.c
-        sound/soc/codecs/wm8753.h
-        sound/soc/codecs/wm8770.c
-        sound/soc/codecs/wm8770.h
-        sound/soc/codecs/wm8776.c
-        sound/soc/codecs/wm8776.h
-        sound/soc/codecs/wm8782.c
-        sound/soc/codecs/wm8804-i2c.c
-        sound/soc/codecs/wm8804-spi.c
-        sound/soc/codecs/wm8804.c
-        sound/soc/codecs/wm8804.h
-        sound/soc/codecs/wm8900.c
-        sound/soc/codecs/wm8900.h
-        sound/soc/codecs/wm8903.c
-        sound/soc/codecs/wm8903.h
-        sound/soc/codecs/wm8904.c
-        sound/soc/codecs/wm8904.h
-        sound/soc/codecs/wm8940.c
-        sound/soc/codecs/wm8940.h
-        sound/soc/codecs/wm8955.c
-        sound/soc/codecs/wm8955.h
-        sound/soc/codecs/wm8958-dsp2.c
-        sound/soc/codecs/wm8960.c
-        sound/soc/codecs/wm8960.h
-        sound/soc/codecs/wm8961.c
-        sound/soc/codecs/wm8961.h
-        sound/soc/codecs/wm8962.c
-        sound/soc/codecs/wm8962.h
-        sound/soc/codecs/wm8971.c
-        sound/soc/codecs/wm8971.h
-        sound/soc/codecs/wm8974.c
-        sound/soc/codecs/wm8974.h
-        sound/soc/codecs/wm8978.c
-        sound/soc/codecs/wm8978.h
-        sound/soc/codecs/wm8983.c
-        sound/soc/codecs/wm8983.h
-        sound/soc/codecs/wm8985.c
-        sound/soc/codecs/wm8985.h
-        sound/soc/codecs/wm8988.c
-        sound/soc/codecs/wm8988.h
-        sound/soc/codecs/wm8990.c
-        sound/soc/codecs/wm8990.h
-        sound/soc/codecs/wm8991.c
-        sound/soc/codecs/wm8991.h
-        sound/soc/codecs/wm8993.c
-        sound/soc/codecs/wm8993.h
-        sound/soc/codecs/wm8994.c
-        sound/soc/codecs/wm8994.h
-        sound/soc/codecs/wm8995.c
-        sound/soc/codecs/wm8995.h
-        sound/soc/codecs/wm8996.c
-        sound/soc/codecs/wm8996.h
-        sound/soc/codecs/wm8997.c
-        sound/soc/codecs/wm8997.h
-        sound/soc/codecs/wm8998.c
-        sound/soc/codecs/wm8998.h
-        sound/soc/codecs/wm9081.c
-        sound/soc/codecs/wm9081.h
-        sound/soc/codecs/wm9090.c
-        sound/soc/codecs/wm9090.h
-        sound/soc/codecs/wm9705.c
-        sound/soc/codecs/wm9712.c
-        sound/soc/codecs/wm9713.c
-        sound/soc/codecs/wm9713.h
-        sound/soc/codecs/wm_adsp.c
-        sound/soc/codecs/wm_adsp.h
-        sound/soc/codecs/wm_hubs.c
-        sound/soc/codecs/wm_hubs.h
-        sound/soc/codecs/wsa881x.c
-        sound/soc/codecs/wsa883x.c
-        sound/soc/codecs/zl38060.c
         sound/soc/dwc/dwc-i2s.c
         sound/soc/dwc/dwc-pcm.c
         sound/soc/dwc/local.h
@@ -38921,18 +36767,6 @@ add_executable(linux_kernel
         sound/soc/intel/boards/sof_sdw.c
         sound/soc/intel/boards/sof_sdw_common.h
         sound/soc/intel/boards/sof_sdw_dmic.c
-        sound/soc/intel/boards/sof_sdw_hdmi.c
-        sound/soc/intel/boards/sof_sdw_max98373.c
-        sound/soc/intel/boards/sof_sdw_rt1308.c
-        sound/soc/intel/boards/sof_sdw_rt1316.c
-        sound/soc/intel/boards/sof_sdw_rt5682.c
-        sound/soc/intel/boards/sof_sdw_rt700.c
-        sound/soc/intel/boards/sof_sdw_rt711.c
-        sound/soc/intel/boards/sof_sdw_rt711_sdca.c
-        sound/soc/intel/boards/sof_sdw_rt715.c
-        sound/soc/intel/boards/sof_sdw_rt715_sdca.c
-        sound/soc/intel/boards/sof_ssp_amp.c
-        sound/soc/intel/boards/sof_wm8804.c
         sound/soc/intel/catpt/core.h
         sound/soc/intel/catpt/device.c
         sound/soc/intel/catpt/dsp.c
@@ -38995,8 +36829,7 @@ add_executable(linux_kernel
         sound/soc/intel/skylake/skl-topology.h
         sound/soc/intel/skylake/skl.c
         sound/soc/intel/skylake/skl.h
-        sound/soc/jz4740/jz4740-i2s.c
-        sound/soc/jz4740/jz4740-i2s.h
+
         sound/soc/kirkwood/armada-370-db.c
         sound/soc/kirkwood/kirkwood-dma.c
         sound/soc/kirkwood/kirkwood-i2s.c
@@ -39132,32 +36965,6 @@ add_executable(linux_kernel
         sound/soc/mxs/mxs-pcm.h
         sound/soc/mxs/mxs-saif.c
         sound/soc/mxs/mxs-saif.h
-        sound/soc/mxs/mxs-sgtl5000.c
-        sound/soc/pxa/brownstone.c
-        sound/soc/pxa/corgi.c
-        sound/soc/pxa/e740_wm9705.c
-        sound/soc/pxa/e750_wm9705.c
-        sound/soc/pxa/e800_wm9712.c
-        sound/soc/pxa/em-x270.c
-        sound/soc/pxa/hx4700.c
-        sound/soc/pxa/magician.c
-        sound/soc/pxa/mioa701_wm9713.c
-        sound/soc/pxa/mmp-pcm.c
-        sound/soc/pxa/mmp-sspa.c
-        sound/soc/pxa/mmp-sspa.h
-        sound/soc/pxa/palm27x.c
-        sound/soc/pxa/poodle.c
-        sound/soc/pxa/pxa-ssp.c
-        sound/soc/pxa/pxa-ssp.h
-        sound/soc/pxa/pxa2xx-ac97.c
-        sound/soc/pxa/pxa2xx-i2s.c
-        sound/soc/pxa/pxa2xx-i2s.h
-        sound/soc/pxa/pxa2xx-pcm.c
-        sound/soc/pxa/spitz.c
-        sound/soc/pxa/tosa.c
-        sound/soc/pxa/ttc-dkb.c
-        sound/soc/pxa/z2.c
-        sound/soc/pxa/zylonite.c
         sound/soc/qcom/qdsp6/audioreach.c
         sound/soc/qcom/qdsp6/audioreach.h
         sound/soc/qcom/qdsp6/q6adm.c
@@ -39226,299 +37033,6 @@ add_executable(linux_kernel
         sound/soc/samsung/bells.c
         sound/soc/samsung/dma.h
         sound/soc/samsung/dmaengine.c
-        sound/soc/samsung/h1940_uda1380.c
-        sound/soc/samsung/i2s-regs.h
-        sound/soc/samsung/i2s.c
-        sound/soc/samsung/i2s.h
-        sound/soc/samsung/idma.c
-        sound/soc/samsung/idma.h
-        sound/soc/samsung/jive_wm8750.c
-        sound/soc/samsung/littlemill.c
-        sound/soc/samsung/lowland.c
-        sound/soc/samsung/midas_wm1811.c
-        sound/soc/samsung/neo1973_wm8753.c
-        sound/soc/samsung/odroid.c
-        sound/soc/samsung/pcm.c
-        sound/soc/samsung/pcm.h
-        sound/soc/samsung/regs-i2s-v2.h
-        sound/soc/samsung/regs-iis.h
-        sound/soc/samsung/rx1950_uda1380.c
-        sound/soc/samsung/smartq_wm8987.c
-        sound/soc/samsung/smdk_spdif.c
-        sound/soc/samsung/smdk_wm8580.c
-        sound/soc/samsung/smdk_wm8994.c
-        sound/soc/samsung/smdk_wm8994pcm.c
-        sound/soc/samsung/snow.c
-        sound/soc/samsung/spdif.c
-        sound/soc/samsung/spdif.h
-        sound/soc/samsung/speyside.c
-        sound/soc/samsung/tm2_wm5110.c
-        sound/soc/samsung/tobermory.c
-        sound/soc/sh/rcar/adg.c
-        sound/soc/sh/rcar/cmd.c
-        sound/soc/sh/rcar/core.c
-        sound/soc/sh/rcar/ctu.c
-        sound/soc/sh/rcar/debugfs.c
-        sound/soc/sh/rcar/dma.c
-        sound/soc/sh/rcar/dvc.c
-        sound/soc/sh/rcar/gen.c
-        sound/soc/sh/rcar/mix.c
-        sound/soc/sh/rcar/rsnd.h
-        sound/soc/sh/rcar/src.c
-        sound/soc/sh/rcar/ssi.c
-        sound/soc/sh/rcar/ssiu.c
-        sound/soc/sh/dma-sh7760.c
-        sound/soc/sh/fsi.c
-        sound/soc/sh/hac.c
-        sound/soc/sh/migor.c
-        sound/soc/sh/rz-ssi.c
-        sound/soc/sh/sh7760-ac97.c
-        sound/soc/sh/siu.h
-        sound/soc/sh/siu_dai.c
-        sound/soc/sh/siu_pcm.c
-        sound/soc/sh/ssi.c
-        sound/soc/sof/amd/acp-common.c
-        sound/soc/sof/amd/acp-dsp-offset.h
-        sound/soc/sof/amd/acp-ipc.c
-        sound/soc/sof/amd/acp-loader.c
-        sound/soc/sof/amd/acp-pcm.c
-        sound/soc/sof/amd/acp-stream.c
-        sound/soc/sof/amd/acp-trace.c
-        sound/soc/sof/amd/acp.c
-        sound/soc/sof/amd/acp.h
-        sound/soc/sof/amd/pci-rmb.c
-        sound/soc/sof/amd/pci-rn.c
-        sound/soc/sof/amd/rembrandt.c
-        sound/soc/sof/amd/renoir.c
-        sound/soc/sof/imx/imx-common.c
-        sound/soc/sof/imx/imx-common.h
-        sound/soc/sof/imx/imx8.c
-        sound/soc/sof/imx/imx8m.c
-        sound/soc/sof/imx/imx8ulp.c
-        sound/soc/sof/intel/apl.c
-        sound/soc/sof/intel/atom.c
-        sound/soc/sof/intel/atom.h
-        sound/soc/sof/intel/bdw.c
-        sound/soc/sof/intel/byt.c
-        sound/soc/sof/intel/cnl.c
-        sound/soc/sof/intel/ext_manifest.h
-        sound/soc/sof/intel/hda-bus.c
-        sound/soc/sof/intel/hda-codec.c
-        sound/soc/sof/intel/hda-common-ops.c
-        sound/soc/sof/intel/hda-ctrl.c
-        sound/soc/sof/intel/hda-dai.c
-        sound/soc/sof/intel/hda-dsp.c
-        sound/soc/sof/intel/hda-ipc.c
-        sound/soc/sof/intel/hda-ipc.h
-        sound/soc/sof/intel/hda-loader-skl.c
-        sound/soc/sof/intel/hda-loader.c
-        sound/soc/sof/intel/hda-pcm.c
-        sound/soc/sof/intel/hda-probes.c
-        sound/soc/sof/intel/hda-stream.c
-        sound/soc/sof/intel/hda-trace.c
-        sound/soc/sof/intel/hda.c
-        sound/soc/sof/intel/hda.h
-        sound/soc/sof/intel/icl.c
-        sound/soc/sof/intel/mtl.c
-        sound/soc/sof/intel/mtl.h
-        sound/soc/sof/intel/pci-apl.c
-        sound/soc/sof/intel/pci-cnl.c
-        sound/soc/sof/intel/pci-icl.c
-        sound/soc/sof/intel/pci-mtl.c
-        sound/soc/sof/intel/pci-skl.c
-        sound/soc/sof/intel/pci-tgl.c
-        sound/soc/sof/intel/pci-tng.c
-        sound/soc/sof/intel/shim.h
-        sound/soc/sof/intel/skl.c
-        sound/soc/sof/intel/tgl.c
-        sound/soc/sof/mediatek/mt8186/mt8186-clk.c
-        sound/soc/sof/mediatek/mt8186/mt8186-clk.h
-        sound/soc/sof/mediatek/mt8186/mt8186-loader.c
-        sound/soc/sof/mediatek/mt8186/mt8186.c
-        sound/soc/sof/mediatek/mt8186/mt8186.h
-        sound/soc/sof/mediatek/mt8195/mt8195-clk.c
-        sound/soc/sof/mediatek/mt8195/mt8195-clk.h
-        sound/soc/sof/mediatek/mt8195/mt8195-loader.c
-        sound/soc/sof/mediatek/mt8195/mt8195.c
-        sound/soc/sof/mediatek/mt8195/mt8195.h
-        sound/soc/sof/mediatek/adsp_helper.h
-        sound/soc/sof/mediatek/mtk-adsp-common.c
-        sound/soc/sof/mediatek/mtk-adsp-common.h
-        sound/soc/sof/xtensa/core.c
-        sound/soc/sof/compress.c
-        sound/soc/sof/control.c
-        sound/soc/sof/core.c
-        sound/soc/sof/debug.c
-        sound/soc/sof/iomem-utils.c
-        sound/soc/sof/ipc.c
-        sound/soc/sof/ipc3-control.c
-        sound/soc/sof/ipc3-dtrace.c
-        sound/soc/sof/ipc3-loader.c
-        sound/soc/sof/ipc3-pcm.c
-        sound/soc/sof/ipc3-priv.h
-        sound/soc/sof/ipc3-topology.c
-        sound/soc/sof/ipc3.c
-        sound/soc/sof/ipc4-control.c
-        sound/soc/sof/ipc4-loader.c
-        sound/soc/sof/ipc4-mtrace.c
-        sound/soc/sof/ipc4-pcm.c
-        sound/soc/sof/ipc4-priv.h
-        sound/soc/sof/ipc4-topology.c
-        sound/soc/sof/ipc4-topology.h
-        sound/soc/sof/ipc4.c
-        sound/soc/sof/loader.c
-        sound/soc/sof/nocodec.c
-        sound/soc/sof/ops.c
-        sound/soc/sof/ops.h
-        sound/soc/sof/pcm.c
-        sound/soc/sof/pm.c
-        sound/soc/sof/sof-acpi-dev.c
-        sound/soc/sof/sof-acpi-dev.h
-        sound/soc/sof/sof-audio.c
-        sound/soc/sof/sof-audio.h
-        sound/soc/sof/sof-client-ipc-flood-test.c
-        sound/soc/sof/sof-client-ipc-msg-injector.c
-        sound/soc/sof/sof-client-probes.c
-        sound/soc/sof/sof-client-probes.h
-        sound/soc/sof/sof-client.c
-        sound/soc/sof/sof-client.h
-        sound/soc/sof/sof-of-dev.c
-        sound/soc/sof/sof-of-dev.h
-        sound/soc/sof/sof-pci-dev.c
-        sound/soc/sof/sof-pci-dev.h
-        sound/soc/sof/sof-priv.h
-        sound/soc/sof/sof-utils.c
-        sound/soc/sof/sof-utils.h
-        sound/soc/sof/stream-ipc.c
-        sound/soc/sof/topology.c
-        sound/soc/sof/trace.c
-        sound/soc/spear/spdif_in.c
-        sound/soc/spear/spdif_in_regs.h
-        sound/soc/spear/spdif_out.c
-        sound/soc/spear/spdif_out_regs.h
-        sound/soc/spear/spear_pcm.c
-        sound/soc/spear/spear_pcm.h
-        sound/soc/sprd/sprd-mcdt.c
-        sound/soc/sprd/sprd-mcdt.h
-        sound/soc/sprd/sprd-pcm-compress.c
-        sound/soc/sprd/sprd-pcm-dma.c
-        sound/soc/sprd/sprd-pcm-dma.h
-        sound/soc/sti/sti_uniperif.c
-        sound/soc/sti/uniperif.h
-        sound/soc/sti/uniperif_player.c
-        sound/soc/sti/uniperif_reader.c
-        sound/soc/stm/stm32_adfsdm.c
-        sound/soc/stm/stm32_i2s.c
-        sound/soc/stm/stm32_sai.c
-        sound/soc/stm/stm32_sai.h
-        sound/soc/stm/stm32_sai_sub.c
-        sound/soc/stm/stm32_spdifrx.c
-        sound/soc/sunxi/sun4i-codec.c
-        sound/soc/sunxi/sun4i-i2s.c
-        sound/soc/sunxi/sun4i-spdif.c
-        sound/soc/sunxi/sun50i-codec-analog.c
-        sound/soc/sunxi/sun50i-dmic.c
-        sound/soc/sunxi/sun8i-adda-pr-regmap.c
-        sound/soc/sunxi/sun8i-adda-pr-regmap.h
-        sound/soc/sunxi/sun8i-codec-analog.c
-        sound/soc/sunxi/sun8i-codec.c
-        sound/soc/tegra/tegra186_asrc.c
-        sound/soc/tegra/tegra186_asrc.h
-        sound/soc/tegra/tegra186_dspk.c
-        sound/soc/tegra/tegra186_dspk.h
-        sound/soc/tegra/tegra20_ac97.c
-        sound/soc/tegra/tegra20_ac97.h
-        sound/soc/tegra/tegra20_das.c
-        sound/soc/tegra/tegra20_i2s.c
-        sound/soc/tegra/tegra20_i2s.h
-        sound/soc/tegra/tegra20_spdif.c
-        sound/soc/tegra/tegra20_spdif.h
-        sound/soc/tegra/tegra210_admaif.c
-        sound/soc/tegra/tegra210_admaif.h
-        sound/soc/tegra/tegra210_adx.c
-        sound/soc/tegra/tegra210_adx.h
-        sound/soc/tegra/tegra210_ahub.c
-        sound/soc/tegra/tegra210_ahub.h
-        sound/soc/tegra/tegra210_amx.c
-        sound/soc/tegra/tegra210_amx.h
-        sound/soc/tegra/tegra210_dmic.c
-        sound/soc/tegra/tegra210_dmic.h
-        sound/soc/tegra/tegra210_i2s.c
-        sound/soc/tegra/tegra210_i2s.h
-        sound/soc/tegra/tegra210_mbdrc.c
-        sound/soc/tegra/tegra210_mbdrc.h
-        sound/soc/tegra/tegra210_mixer.c
-        sound/soc/tegra/tegra210_mixer.h
-        sound/soc/tegra/tegra210_mvc.c
-        sound/soc/tegra/tegra210_mvc.h
-        sound/soc/tegra/tegra210_ope.c
-        sound/soc/tegra/tegra210_ope.h
-        sound/soc/tegra/tegra210_peq.c
-        sound/soc/tegra/tegra210_peq.h
-        sound/soc/tegra/tegra210_sfc.c
-        sound/soc/tegra/tegra210_sfc.h
-        sound/soc/tegra/tegra30_ahub.c
-        sound/soc/tegra/tegra30_ahub.h
-        sound/soc/tegra/tegra30_i2s.c
-        sound/soc/tegra/tegra30_i2s.h
-        sound/soc/tegra/tegra_asoc_machine.c
-        sound/soc/tegra/tegra_asoc_machine.h
-        sound/soc/tegra/tegra_audio_graph_card.c
-        sound/soc/tegra/tegra_cif.h
-        sound/soc/tegra/tegra_pcm.c
-        sound/soc/tegra/tegra_pcm.h
-        sound/soc/tegra/tegra_wm8903.c
-        sound/soc/ti/ams-delta.c
-        sound/soc/ti/davinci-evm.c
-        sound/soc/ti/davinci-i2s.c
-        sound/soc/ti/davinci-i2s.h
-        sound/soc/ti/davinci-mcasp.c
-        sound/soc/ti/davinci-mcasp.h
-        sound/soc/ti/davinci-vcif.c
-        sound/soc/ti/edma-pcm.c
-        sound/soc/ti/edma-pcm.h
-        sound/soc/ti/j721e-evm.c
-        sound/soc/ti/n810.c
-        sound/soc/ti/omap-abe-twl6040.c
-        sound/soc/ti/omap-dmic.c
-        sound/soc/ti/omap-dmic.h
-        sound/soc/ti/omap-hdmi.c
-        sound/soc/ti/omap-mcbsp-priv.h
-        sound/soc/ti/omap-mcbsp-st.c
-        sound/soc/ti/omap-mcbsp.c
-        sound/soc/ti/omap-mcbsp.h
-        sound/soc/ti/omap-mcpdm.c
-        sound/soc/ti/omap-mcpdm.h
-        sound/soc/ti/omap-twl4030.c
-        sound/soc/ti/omap3pandora.c
-        sound/soc/ti/osk5912.c
-        sound/soc/ti/rx51.c
-        sound/soc/ti/sdma-pcm.c
-        sound/soc/ti/sdma-pcm.h
-        sound/soc/ti/udma-pcm.c
-        sound/soc/ti/udma-pcm.h
-        sound/soc/uniphier/aio-compress.c
-        sound/soc/uniphier/aio-core.c
-        sound/soc/uniphier/aio-cpu.c
-        sound/soc/uniphier/aio-dma.c
-        sound/soc/uniphier/aio-ld11.c
-        sound/soc/uniphier/aio-pxs2.c
-        sound/soc/uniphier/aio-reg.h
-        sound/soc/uniphier/aio.h
-        sound/soc/uniphier/evea.c
-        sound/soc/ux500/mop500.c
-        sound/soc/ux500/mop500_ab8500.c
-        sound/soc/ux500/mop500_ab8500.h
-        sound/soc/ux500/ux500_msp_dai.c
-        sound/soc/ux500/ux500_msp_dai.h
-        sound/soc/ux500/ux500_msp_i2s.c
-        sound/soc/ux500/ux500_msp_i2s.h
-        sound/soc/ux500/ux500_pcm.c
-        sound/soc/ux500/ux500_pcm.h
-        sound/soc/xilinx/xlnx_formatter_pcm.c
-        sound/soc/xilinx/xlnx_i2s.c
-        sound/soc/xilinx/xlnx_spdif.c
-        sound/soc/xtensa/xtfpga-i2s.c
         sound/soc/soc-ac97.c
         sound/soc/soc-acpi.c
         sound/soc/soc-card.c
@@ -39693,20 +37207,17 @@ add_executable(linux_kernel
         tools/arch/arm64/include/asm/cputype.h
         tools/arch/arm64/include/asm/sysreg.h
         tools/arch/arm64/include/uapi/asm/bitsperlong.h
-        tools/arch/arm64/include/uapi/asm/bpf_perf_event.h
         tools/arch/arm64/include/uapi/asm/kvm.h
         tools/arch/arm64/include/uapi/asm/mman.h
         tools/arch/arm64/include/uapi/asm/perf_regs.h
         tools/arch/arm64/include/uapi/asm/unistd.h
         tools/arch/csky/include/uapi/asm/perf_regs.h
-        tools/arch/hexagon/include/uapi/asm/bitsperlong.h
         tools/arch/hexagon/include/uapi/asm/mman.h
         tools/arch/hexagon/include/uapi/asm/unistd.h
         tools/arch/ia64/include/asm/barrier.h
         tools/arch/ia64/include/uapi/asm/bitsperlong.h
         tools/arch/ia64/include/uapi/asm/mman.h
-        tools/arch/microblaze/include/uapi/asm/bitsperlong.h
-        tools/arch/microblaze/include/uapi/asm/mman.h
+
         tools/arch/mips/include/asm/barrier.h
         tools/arch/mips/include/asm/errno.h
         tools/arch/mips/include/uapi/asm/bitsperlong.h
@@ -39728,21 +37239,6 @@ add_executable(linux_kernel
         tools/arch/riscv/include/uapi/asm/unistd.h
         tools/arch/s390/include/asm/barrier.h
         tools/arch/s390/include/uapi/asm/bitsperlong.h
-        tools/arch/s390/include/uapi/asm/bpf_perf_event.h
-        tools/arch/s390/include/uapi/asm/kvm.h
-        tools/arch/s390/include/uapi/asm/kvm_perf.h
-        tools/arch/s390/include/uapi/asm/mman.h
-        tools/arch/s390/include/uapi/asm/perf_regs.h
-        tools/arch/s390/include/uapi/asm/ptrace.h
-        tools/arch/s390/include/uapi/asm/sie.h
-        tools/arch/sh/include/asm/barrier.h
-        tools/arch/sh/include/uapi/asm/mman.h
-        tools/arch/sparc/include/asm/barrier.h
-        tools/arch/sparc/include/asm/barrier_32.h
-        tools/arch/sparc/include/asm/barrier_64.h
-        tools/arch/sparc/include/uapi/asm/bitsperlong.h
-        tools/arch/sparc/include/uapi/asm/errno.h
-        tools/arch/sparc/include/uapi/asm/mman.h
         tools/arch/x86/include/asm/amd-ibs.h
         tools/arch/x86/include/asm/asm.h
         tools/arch/x86/include/asm/atomic.h
@@ -39824,10 +37320,8 @@ add_executable(linux_kernel
         tools/build/feature/test-bionic.c
         tools/build/feature/test-bpf.c
         tools/build/feature/test-clang-bpf-co-re.c
-        tools/build/feature/test-clang.cpp
         tools/build/feature/test-compile.c
         tools/build/feature/test-cplus-demangle.c
-        tools/build/feature/test-cxx.cpp
         tools/build/feature/test-disassembler-four-args.c
         tools/build/feature/test-disassembler-init-styled.c
         tools/build/feature/test-dwarf.c
@@ -39849,14 +37343,6 @@ add_executable(linux_kernel
         tools/build/feature/test-libbabeltrace.c
         tools/build/feature/test-libbfd-buildid.c
         tools/build/feature/test-libbfd.c
-        tools/build/feature/test-libbpf-bpf_map_create.c
-        tools/build/feature/test-libbpf-bpf_object__next_map.c
-        tools/build/feature/test-libbpf-bpf_object__next_program.c
-        tools/build/feature/test-libbpf-bpf_prog_load.c
-        tools/build/feature/test-libbpf-bpf_program__set_insns.c
-        tools/build/feature/test-libbpf-btf__load_from_kernel_by_id.c
-        tools/build/feature/test-libbpf-btf__raw_data.c
-        tools/build/feature/test-libbpf.c
         tools/build/feature/test-libcap.c
         tools/build/feature/test-libcrypto.c
         tools/build/feature/test-libdebuginfod.c
@@ -39883,27 +37369,6 @@ add_executable(linux_kernel
         tools/build/feature/test-libunwind-x86_64.c
         tools/build/feature/test-libunwind.c
         tools/build/feature/test-libzstd.c
-        tools/build/feature/test-llvm-version.cpp
-        tools/build/feature/test-llvm.cpp
-        tools/build/feature/test-lzma.c
-        tools/build/feature/test-numa_num_possible_cpus.c
-        tools/build/feature/test-pthread-attr-setaffinity-np.c
-        tools/build/feature/test-pthread-barrier.c
-        tools/build/feature/test-reallocarray.c
-        tools/build/feature/test-sched_getcpu.c
-        tools/build/feature/test-sdt.c
-        tools/build/feature/test-setns.c
-        tools/build/feature/test-stackprotector-all.c
-        tools/build/feature/test-timerfd.c
-        tools/build/feature/test-zlib.c
-        tools/build/tests/ex/arch/e.c
-        tools/build/tests/ex/arch/f.c
-        tools/build/tests/ex/a.c
-        tools/build/tests/ex/b.c
-        tools/build/tests/ex/c.c
-        tools/build/tests/ex/d.c
-        tools/build/tests/ex/ex.c
-        tools/build/tests/ex/inc.c
         tools/build/fixdep.c
         tools/cgroup/cgroup_event_listener.c
         tools/counter/counter_example.c
@@ -39996,7 +37461,6 @@ add_executable(linux_kernel
         tools/include/linux/mutex.h
         tools/include/linux/nmi.h
         tools/include/linux/numa.h
-        tools/include/linux/objtool.h
         tools/include/linux/overflow.h
         tools/include/linux/pfn.h
         tools/include/linux/poison.h
@@ -40098,13 +37562,6 @@ add_executable(linux_kernel
         tools/include/uapi/sound/asound.h
         tools/include/vdso/bits.h
         tools/include/vdso/const.h
-        tools/io_uring/barrier.h
-        tools/io_uring/io_uring-bench.c
-        tools/io_uring/io_uring-cp.c
-        tools/io_uring/liburing.h
-        tools/io_uring/queue.c
-        tools/io_uring/setup.c
-        tools/io_uring/syscall.c
         tools/laptop/dslm/dslm.c
         tools/laptop/freefall/freefall.c
         tools/leds/led_hw_brightness_mon.c
@@ -40215,31 +37672,6 @@ add_executable(linux_kernel
         tools/lib/thermal/thermal.c
         tools/lib/thermal/thermal_nl.c
         tools/lib/thermal/thermal_nl.h
-        tools/lib/traceevent/plugins/plugin_cfg80211.c
-        tools/lib/traceevent/plugins/plugin_function.c
-        tools/lib/traceevent/plugins/plugin_futex.c
-        tools/lib/traceevent/plugins/plugin_hrtimer.c
-        tools/lib/traceevent/plugins/plugin_jbd2.c
-        tools/lib/traceevent/plugins/plugin_kmem.c
-        tools/lib/traceevent/plugins/plugin_kvm.c
-        tools/lib/traceevent/plugins/plugin_mac80211.c
-        tools/lib/traceevent/plugins/plugin_sched_switch.c
-        tools/lib/traceevent/plugins/plugin_scsi.c
-        tools/lib/traceevent/plugins/plugin_tlb.c
-        tools/lib/traceevent/plugins/plugin_xen.c
-        tools/lib/traceevent/event-parse-api.c
-        tools/lib/traceevent/event-parse-local.h
-        tools/lib/traceevent/event-parse.c
-        tools/lib/traceevent/event-parse.h
-        tools/lib/traceevent/event-plugin.c
-        tools/lib/traceevent/event-utils.h
-        tools/lib/traceevent/kbuffer-parse.c
-        tools/lib/traceevent/kbuffer.h
-        tools/lib/traceevent/parse-filter.c
-        tools/lib/traceevent/parse-utils.c
-        tools/lib/traceevent/tep_strerror.c
-        tools/lib/traceevent/trace-seq.c
-        tools/lib/traceevent/trace-seq.h
         tools/lib/argv_split.c
         tools/lib/bitmap.c
         tools/lib/ctype.c
@@ -40254,7 +37686,6 @@ add_executable(linux_kernel
         tools/lib/zalloc.c
         tools/objtool/arch/x86/include/arch/cfi_regs.h
         tools/objtool/arch/x86/include/arch/elf.h
-        tools/objtool/arch/x86/include/arch/endianness.h
         tools/objtool/arch/x86/include/arch/special.h
         tools/objtool/arch/x86/decode.c
         tools/objtool/arch/x86/special.c
@@ -40375,7 +37806,6 @@ add_executable(linux_kernel
         tools/perf/arch/x86/tests/insn-x86-dat-src.c
         tools/perf/arch/x86/tests/insn-x86.c
         tools/perf/arch/x86/tests/intel-cqm.c
-        tools/perf/arch/x86/tests/intel-pt-pkt-decoder-test.c
         tools/perf/arch/x86/tests/sample-parsing.c
         tools/perf/arch/x86/util/archinsn.c
         tools/perf/arch/x86/util/auxtrace.c
@@ -40429,18 +37859,6 @@ add_executable(linux_kernel
         tools/perf/bench/syscall.c
         tools/perf/dlfilters/dlfilter-show-cycles.c
         tools/perf/dlfilters/dlfilter-test-api-v0.c
-        tools/perf/examples/bpf/5sec.c
-        tools/perf/examples/bpf/augmented_raw_syscalls.c
-        tools/perf/examples/bpf/augmented_syscalls.c
-        tools/perf/examples/bpf/empty.c
-        tools/perf/examples/bpf/etcsnoop.c
-        tools/perf/examples/bpf/hello.c
-        tools/perf/examples/bpf/sys_enter_openat.c
-        tools/perf/include/bpf/linux/socket.h
-        tools/perf/include/bpf/bpf.h
-        tools/perf/include/bpf/pid_filter.h
-        tools/perf/include/bpf/stdio.h
-        tools/perf/include/bpf/unistd.h
         tools/perf/include/perf/perf_dlfilter.h
         tools/perf/jvmti/jvmti_agent.c
         tools/perf/jvmti/jvmti_agent.h
@@ -40459,15 +37877,9 @@ add_executable(linux_kernel
         tools/perf/tests/bp_account.c
         tools/perf/tests/bp_signal.c
         tools/perf/tests/bp_signal_overflow.c
-        tools/perf/tests/bpf-script-example.c
-        tools/perf/tests/bpf-script-test-kbuild.c
-        tools/perf/tests/bpf-script-test-prologue.c
-        tools/perf/tests/bpf-script-test-relocation.c
-        tools/perf/tests/bpf.c
         tools/perf/tests/builtin-test-list.c
         tools/perf/tests/builtin-test-list.h
         tools/perf/tests/builtin-test.c
-        tools/perf/tests/clang.c
         tools/perf/tests/code-reading.c
         tools/perf/tests/cpumap.c
         tools/perf/tests/demangle-java-test.c
@@ -40492,8 +37904,6 @@ add_executable(linux_kernel
         tools/perf/tests/is_printable_array.c
         tools/perf/tests/keep-tracking.c
         tools/perf/tests/kmod-path.c
-        tools/perf/tests/llvm.c
-        tools/perf/tests/llvm.h
         tools/perf/tests/maps.c
         tools/perf/tests/mem.c
         tools/perf/tests/mem2node.c
@@ -40613,10 +38023,6 @@ add_executable(linux_kernel
         tools/perf/util/bpf_skel/kwork_trace.bpf.c
         tools/perf/util/bpf_skel/lock_contention.bpf.c
         tools/perf/util/bpf_skel/off_cpu.bpf.c
-        tools/perf/util/c++/clang-c.h
-        tools/perf/util/c++/clang-test.cpp
-        tools/perf/util/c++/clang.cpp
-        tools/perf/util/c++/clang.h
         tools/perf/util/cs-etm-decoder/cs-etm-decoder.c
         tools/perf/util/cs-etm-decoder/cs-etm-decoder.h
         tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c
@@ -40659,21 +38065,6 @@ add_executable(linux_kernel
         tools/perf/util/block-range.h
         tools/perf/util/bpf-event.c
         tools/perf/util/bpf-event.h
-        tools/perf/util/bpf-loader.c
-        tools/perf/util/bpf-loader.h
-        tools/perf/util/bpf-prologue.c
-        tools/perf/util/bpf-prologue.h
-        tools/perf/util/bpf-utils.c
-        tools/perf/util/bpf-utils.h
-        tools/perf/util/bpf_counter.c
-        tools/perf/util/bpf_counter.h
-        tools/perf/util/bpf_counter_cgroup.c
-        tools/perf/util/bpf_ftrace.c
-        tools/perf/util/bpf_kwork.c
-        tools/perf/util/bpf_lock_contention.c
-        tools/perf/util/bpf_map.c
-        tools/perf/util/bpf_map.h
-        tools/perf/util/bpf_off_cpu.c
         tools/perf/util/branch.c
         tools/perf/util/branch.h
         tools/perf/util/build-id.c
@@ -40743,256 +38134,6 @@ add_executable(linux_kernel
         tools/perf/util/event.c
         tools/perf/util/event.h
         tools/perf/util/events_stats.h
-        tools/perf/util/evlist-hybrid.c
-        tools/perf/util/evlist-hybrid.h
-        tools/perf/util/evlist.c
-        tools/perf/util/evlist.h
-        tools/perf/util/evsel.c
-        tools/perf/util/evsel.h
-        tools/perf/util/evsel_config.h
-        tools/perf/util/evsel_fprintf.c
-        tools/perf/util/evsel_fprintf.h
-        tools/perf/util/evswitch.c
-        tools/perf/util/evswitch.h
-        tools/perf/util/expr.c
-        tools/perf/util/expr.h
-        tools/perf/util/find-map.c
-        tools/perf/util/fncache.c
-        tools/perf/util/fncache.h
-        tools/perf/util/ftrace.h
-        tools/perf/util/genelf.c
-        tools/perf/util/genelf.h
-        tools/perf/util/genelf_debug.c
-        tools/perf/util/get_current_dir_name.c
-        tools/perf/util/get_current_dir_name.h
-        tools/perf/util/hashmap.c
-        tools/perf/util/hashmap.h
-        tools/perf/util/header.c
-        tools/perf/util/header.h
-        tools/perf/util/help-unknown-cmd.c
-        tools/perf/util/help-unknown-cmd.h
-        tools/perf/util/hisi-ptt.c
-        tools/perf/util/hisi-ptt.h
-        tools/perf/util/hist.c
-        tools/perf/util/hist.h
-        tools/perf/util/intel-bts.c
-        tools/perf/util/intel-bts.h
-        tools/perf/util/intel-pt.c
-        tools/perf/util/intel-pt.h
-        tools/perf/util/intlist.c
-        tools/perf/util/intlist.h
-        tools/perf/util/iostat.c
-        tools/perf/util/iostat.h
-        tools/perf/util/jit.h
-        tools/perf/util/jitdump.c
-        tools/perf/util/jitdump.h
-        tools/perf/util/kvm-stat.h
-        tools/perf/util/kwork.h
-        tools/perf/util/levenshtein.c
-        tools/perf/util/levenshtein.h
-        tools/perf/util/llvm-utils.c
-        tools/perf/util/llvm-utils.h
-        tools/perf/util/lock-contention.h
-        tools/perf/util/lzma.c
-        tools/perf/util/machine.c
-        tools/perf/util/machine.h
-        tools/perf/util/map.c
-        tools/perf/util/map.h
-        tools/perf/util/map_symbol.h
-        tools/perf/util/maps.c
-        tools/perf/util/maps.h
-        tools/perf/util/mem-events.c
-        tools/perf/util/mem-events.h
-        tools/perf/util/mem2node.c
-        tools/perf/util/mem2node.h
-        tools/perf/util/memswap.c
-        tools/perf/util/memswap.h
-        tools/perf/util/metricgroup.c
-        tools/perf/util/metricgroup.h
-        tools/perf/util/mmap.c
-        tools/perf/util/mmap.h
-        tools/perf/util/mutex.c
-        tools/perf/util/mutex.h
-        tools/perf/util/namespaces.c
-        tools/perf/util/namespaces.h
-        tools/perf/util/off_cpu.h
-        tools/perf/util/ordered-events.c
-        tools/perf/util/ordered-events.h
-        tools/perf/util/parse-branch-options.c
-        tools/perf/util/parse-branch-options.h
-        tools/perf/util/parse-events-hybrid.c
-        tools/perf/util/parse-events-hybrid.h
-        tools/perf/util/parse-events.c
-        tools/perf/util/parse-events.h
-        tools/perf/util/parse-regs-options.c
-        tools/perf/util/parse-regs-options.h
-        tools/perf/util/parse-sublevel-options.c
-        tools/perf/util/parse-sublevel-options.h
-        tools/perf/util/path.c
-        tools/perf/util/path.h
-        tools/perf/util/perf-hooks-list.h
-        tools/perf/util/perf-hooks.c
-        tools/perf/util/perf-hooks.h
-        tools/perf/util/perf_api_probe.c
-        tools/perf/util/perf_api_probe.h
-        tools/perf/util/perf_event_attr_fprintf.c
-        tools/perf/util/perf_regs.c
-        tools/perf/util/perf_regs.h
-        tools/perf/util/pfm.c
-        tools/perf/util/pfm.h
-        tools/perf/util/pmu-hybrid.c
-        tools/perf/util/pmu-hybrid.h
-        tools/perf/util/pmu.c
-        tools/perf/util/pmu.h
-        tools/perf/util/print-events.c
-        tools/perf/util/print-events.h
-        tools/perf/util/print_binary.c
-        tools/perf/util/print_binary.h
-        tools/perf/util/probe-event.c
-        tools/perf/util/probe-event.h
-        tools/perf/util/probe-file.c
-        tools/perf/util/probe-file.h
-        tools/perf/util/probe-finder.c
-        tools/perf/util/probe-finder.h
-        tools/perf/util/pstack.c
-        tools/perf/util/pstack.h
-        tools/perf/util/python.c
-        tools/perf/util/rb_resort.h
-        tools/perf/util/rblist.c
-        tools/perf/util/rblist.h
-        tools/perf/util/record.c
-        tools/perf/util/record.h
-        tools/perf/util/rlimit.c
-        tools/perf/util/rlimit.h
-        tools/perf/util/rwsem.c
-        tools/perf/util/rwsem.h
-        tools/perf/util/s390-cpumcf-kernel.h
-        tools/perf/util/s390-cpumsf-kernel.h
-        tools/perf/util/s390-cpumsf.c
-        tools/perf/util/s390-cpumsf.h
-        tools/perf/util/s390-sample-raw.c
-        tools/perf/util/sample-raw.c
-        tools/perf/util/sample-raw.h
-        tools/perf/util/session.c
-        tools/perf/util/session.h
-        tools/perf/util/setns.c
-        tools/perf/util/sideband_evlist.c
-        tools/perf/util/smt.c
-        tools/perf/util/smt.h
-        tools/perf/util/sort.c
-        tools/perf/util/sort.h
-        tools/perf/util/spark.c
-        tools/perf/util/spark.h
-        tools/perf/util/srccode.c
-        tools/perf/util/srccode.h
-        tools/perf/util/srcline.c
-        tools/perf/util/srcline.h
-        tools/perf/util/stat-display.c
-        tools/perf/util/stat-shadow.c
-        tools/perf/util/stat.c
-        tools/perf/util/stat.h
-        tools/perf/util/strbuf.c
-        tools/perf/util/strbuf.h
-        tools/perf/util/stream.c
-        tools/perf/util/stream.h
-        tools/perf/util/strfilter.c
-        tools/perf/util/strfilter.h
-        tools/perf/util/string.c
-        tools/perf/util/string2.h
-        tools/perf/util/strlist.c
-        tools/perf/util/strlist.h
-        tools/perf/util/svghelper.c
-        tools/perf/util/svghelper.h
-        tools/perf/util/symbol-elf.c
-        tools/perf/util/symbol-minimal.c
-        tools/perf/util/symbol.c
-        tools/perf/util/symbol.h
-        tools/perf/util/symbol_conf.h
-        tools/perf/util/symbol_fprintf.c
-        tools/perf/util/symsrc.h
-        tools/perf/util/synthetic-events.c
-        tools/perf/util/synthetic-events.h
-        tools/perf/util/syscalltbl.c
-        tools/perf/util/syscalltbl.h
-        tools/perf/util/target.c
-        tools/perf/util/target.h
-        tools/perf/util/term.c
-        tools/perf/util/term.h
-        tools/perf/util/thread-stack.c
-        tools/perf/util/thread-stack.h
-        tools/perf/util/thread.c
-        tools/perf/util/thread.h
-        tools/perf/util/thread_map.c
-        tools/perf/util/thread_map.h
-        tools/perf/util/time-utils.c
-        tools/perf/util/time-utils.h
-        tools/perf/util/tool.h
-        tools/perf/util/top.c
-        tools/perf/util/top.h
-        tools/perf/util/topdown.c
-        tools/perf/util/topdown.h
-        tools/perf/util/trace-event-info.c
-        tools/perf/util/trace-event-parse.c
-        tools/perf/util/trace-event-read.c
-        tools/perf/util/trace-event-scripting.c
-        tools/perf/util/trace-event.c
-        tools/perf/util/trace-event.h
-        tools/perf/util/tracepoint.c
-        tools/perf/util/tracepoint.h
-        tools/perf/util/trigger.h
-        tools/perf/util/tsc.c
-        tools/perf/util/tsc.h
-        tools/perf/util/units.c
-        tools/perf/util/units.h
-        tools/perf/util/unwind-libdw.c
-        tools/perf/util/unwind-libdw.h
-        tools/perf/util/unwind-libunwind-local.c
-        tools/perf/util/unwind-libunwind.c
-        tools/perf/util/unwind.h
-        tools/perf/util/usage.c
-        tools/perf/util/util.c
-        tools/perf/util/util.h
-        tools/perf/util/values.c
-        tools/perf/util/values.h
-        tools/perf/util/vdso.c
-        tools/perf/util/vdso.h
-        tools/perf/util/zlib.c
-        tools/perf/util/zstd.c
-        tools/perf/builtin-annotate.c
-        tools/perf/builtin-bench.c
-        tools/perf/builtin-buildid-cache.c
-        tools/perf/builtin-buildid-list.c
-        tools/perf/builtin-c2c.c
-        tools/perf/builtin-config.c
-        tools/perf/builtin-daemon.c
-        tools/perf/builtin-data.c
-        tools/perf/builtin-diff.c
-        tools/perf/builtin-evlist.c
-        tools/perf/builtin-ftrace.c
-        tools/perf/builtin-help.c
-        tools/perf/builtin-inject.c
-        tools/perf/builtin-kallsyms.c
-        tools/perf/builtin-kmem.c
-        tools/perf/builtin-kvm.c
-        tools/perf/builtin-kwork.c
-        tools/perf/builtin-list.c
-        tools/perf/builtin-lock.c
-        tools/perf/builtin-mem.c
-        tools/perf/builtin-probe.c
-        tools/perf/builtin-record.c
-        tools/perf/builtin-report.c
-        tools/perf/builtin-sched.c
-        tools/perf/builtin-script.c
-        tools/perf/builtin-stat.c
-        tools/perf/builtin-timechart.c
-        tools/perf/builtin-top.c
-        tools/perf/builtin-trace.c
-        tools/perf/builtin-version.c
-        tools/perf/builtin.h
-        tools/perf/perf-read-vdso.c
-        tools/perf/perf-sys.h
-        tools/perf/perf.c
-        tools/perf/perf.h
         tools/power/acpi/common/cmfsize.c
         tools/power/acpi/common/getopt.c
         tools/power/acpi/os_specific/service_layers/oslinuxtbl.c
@@ -41104,1816 +38245,6 @@ add_executable(linux_kernel
         tools/testing/nvdimm/dax-dev.c
         tools/testing/nvdimm/dax_pmem_test.c
         tools/testing/nvdimm/device_dax_test.c
-        tools/testing/nvdimm/dimm_devs.c
-        tools/testing/nvdimm/libnvdimm_test.c
-        tools/testing/nvdimm/pmem-dax.c
-        tools/testing/nvdimm/pmem_test.c
-        tools/testing/nvdimm/watermark.h
-        tools/testing/radix-tree/generated/autoconf.h
-        tools/testing/radix-tree/linux/bug.h
-        tools/testing/radix-tree/linux/cpu.h
-        tools/testing/radix-tree/linux/idr.h
-        tools/testing/radix-tree/linux/init.h
-        tools/testing/radix-tree/linux/kconfig.h
-        tools/testing/radix-tree/linux/kernel.h
-        tools/testing/radix-tree/linux/kmemleak.h
-        tools/testing/radix-tree/linux/local_lock.h
-        tools/testing/radix-tree/linux/lockdep.h
-        tools/testing/radix-tree/linux/maple_tree.h
-        tools/testing/radix-tree/linux/percpu.h
-        tools/testing/radix-tree/linux/preempt.h
-        tools/testing/radix-tree/linux/radix-tree.h
-        tools/testing/radix-tree/linux/rcupdate.h
-        tools/testing/radix-tree/linux/xarray.h
-        tools/testing/radix-tree/trace/events/maple_tree.h
-        tools/testing/radix-tree/benchmark.c
-        tools/testing/radix-tree/bitmap.c
-        tools/testing/radix-tree/idr-test.c
-        tools/testing/radix-tree/iteration_check.c
-        tools/testing/radix-tree/iteration_check_2.c
-        tools/testing/radix-tree/linux.c
-        tools/testing/radix-tree/main.c
-        tools/testing/radix-tree/maple.c
-        tools/testing/radix-tree/multiorder.c
-        tools/testing/radix-tree/regression.h
-        tools/testing/radix-tree/regression1.c
-        tools/testing/radix-tree/regression2.c
-        tools/testing/radix-tree/regression3.c
-        tools/testing/radix-tree/regression4.c
-        tools/testing/radix-tree/tag_check.c
-        tools/testing/radix-tree/test.c
-        tools/testing/radix-tree/test.h
-        tools/testing/radix-tree/xarray.c
-        tools/testing/scatterlist/linux/mm.h
-        tools/testing/scatterlist/main.c
-        tools/testing/selftests/alsa/mixer-test.c
-        tools/testing/selftests/arm64/abi/hwcap.c
-        tools/testing/selftests/arm64/abi/ptrace.c
-        tools/testing/selftests/arm64/abi/syscall-abi.c
-        tools/testing/selftests/arm64/abi/syscall-abi.h
-        tools/testing/selftests/arm64/abi/tpidr2.c
-        tools/testing/selftests/arm64/bti/assembler.h
-        tools/testing/selftests/arm64/bti/btitest.h
-        tools/testing/selftests/arm64/bti/compiler.h
-        tools/testing/selftests/arm64/bti/signal.c
-        tools/testing/selftests/arm64/bti/signal.h
-        tools/testing/selftests/arm64/bti/system.c
-        tools/testing/selftests/arm64/bti/system.h
-        tools/testing/selftests/arm64/bti/test.c
-        tools/testing/selftests/arm64/fp/asm-offsets.h
-        tools/testing/selftests/arm64/fp/assembler.h
-        tools/testing/selftests/arm64/fp/fp-stress.c
-        tools/testing/selftests/arm64/fp/rdvl-sme.c
-        tools/testing/selftests/arm64/fp/rdvl-sve.c
-        tools/testing/selftests/arm64/fp/rdvl.h
-        tools/testing/selftests/arm64/fp/sme-inst.h
-        tools/testing/selftests/arm64/fp/sve-probe-vls.c
-        tools/testing/selftests/arm64/fp/sve-ptrace.c
-        tools/testing/selftests/arm64/fp/vec-syscfg.c
-        tools/testing/selftests/arm64/fp/vlset.c
-        tools/testing/selftests/arm64/fp/za-fork.c
-        tools/testing/selftests/arm64/fp/za-ptrace.c
-        tools/testing/selftests/arm64/mte/check_buffer_fill.c
-        tools/testing/selftests/arm64/mte/check_child_memory.c
-        tools/testing/selftests/arm64/mte/check_gcr_el1_cswitch.c
-        tools/testing/selftests/arm64/mte/check_ksm_options.c
-        tools/testing/selftests/arm64/mte/check_mmap_options.c
-        tools/testing/selftests/arm64/mte/check_prctl.c
-        tools/testing/selftests/arm64/mte/check_tags_inclusion.c
-        tools/testing/selftests/arm64/mte/check_user_mem.c
-        tools/testing/selftests/arm64/mte/mte_common_util.c
-        tools/testing/selftests/arm64/mte/mte_common_util.h
-        tools/testing/selftests/arm64/mte/mte_def.h
-        tools/testing/selftests/arm64/pauth/exec_target.c
-        tools/testing/selftests/arm64/pauth/helper.c
-        tools/testing/selftests/arm64/pauth/helper.h
-        tools/testing/selftests/arm64/pauth/pac.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_bad_magic.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_bad_size.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_bad_size_for_magic0.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_duplicated_fpsimd.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_misaligned_sp.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_missing_fpsimd.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sme_change_vl.c
-        tools/testing/selftests/arm64/signal/testcases/fake_sigreturn_sve_change_vl.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_compat_toggle.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_daif_bits.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el1h.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el1t.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el2h.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el2t.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el3h.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_el3t.c
-        tools/testing/selftests/arm64/signal/testcases/mangle_pstate_invalid_mode_template.h
-        tools/testing/selftests/arm64/signal/testcases/sme_trap_no_sm.c
-        tools/testing/selftests/arm64/signal/testcases/sme_trap_non_streaming.c
-        tools/testing/selftests/arm64/signal/testcases/sme_trap_za.c
-        tools/testing/selftests/arm64/signal/testcases/sme_vl.c
-        tools/testing/selftests/arm64/signal/testcases/ssve_regs.c
-        tools/testing/selftests/arm64/signal/testcases/sve_regs.c
-        tools/testing/selftests/arm64/signal/testcases/sve_vl.c
-        tools/testing/selftests/arm64/signal/testcases/testcases.c
-        tools/testing/selftests/arm64/signal/testcases/testcases.h
-        tools/testing/selftests/arm64/signal/testcases/za_no_regs.c
-        tools/testing/selftests/arm64/signal/testcases/za_regs.c
-        tools/testing/selftests/arm64/signal/test_signals.c
-        tools/testing/selftests/arm64/signal/test_signals.h
-        tools/testing/selftests/arm64/signal/test_signals_utils.c
-        tools/testing/selftests/arm64/signal/test_signals_utils.h
-        tools/testing/selftests/arm64/tags/tags_test.c
-        tools/testing/selftests/bpf/benchs/bench_bloom_filter_map.c
-        tools/testing/selftests/bpf/benchs/bench_bpf_hashmap_full_update.c
-        tools/testing/selftests/bpf/benchs/bench_bpf_loop.c
-        tools/testing/selftests/bpf/benchs/bench_count.c
-        tools/testing/selftests/bpf/benchs/bench_local_storage.c
-        tools/testing/selftests/bpf/benchs/bench_local_storage_rcu_tasks_trace.c
-        tools/testing/selftests/bpf/benchs/bench_rename.c
-        tools/testing/selftests/bpf/benchs/bench_ringbufs.c
-        tools/testing/selftests/bpf/benchs/bench_strncmp.c
-        tools/testing/selftests/bpf/benchs/bench_trigger.c
-        tools/testing/selftests/bpf/bpf_testmod/bpf_testmod-events.h
-        tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.c
-        tools/testing/selftests/bpf/bpf_testmod/bpf_testmod.h
-        tools/testing/selftests/bpf/gnu/stubs.h
-        tools/testing/selftests/bpf/map_tests/array_map_batch_ops.c
-        tools/testing/selftests/bpf/map_tests/htab_map_batch_ops.c
-        tools/testing/selftests/bpf/map_tests/lpm_trie_map_batch_ops.c
-        tools/testing/selftests/bpf/map_tests/map_in_map_batch_ops.c
-        tools/testing/selftests/bpf/map_tests/sk_storage_map.c
-        tools/testing/selftests/bpf/map_tests/task_storage_map.c
-        tools/testing/selftests/bpf/prog_tests/align.c
-        tools/testing/selftests/bpf/prog_tests/arg_parsing.c
-        tools/testing/selftests/bpf/prog_tests/atomic_bounds.c
-        tools/testing/selftests/bpf/prog_tests/atomics.c
-        tools/testing/selftests/bpf/prog_tests/attach_probe.c
-        tools/testing/selftests/bpf/prog_tests/autoattach.c
-        tools/testing/selftests/bpf/prog_tests/autoload.c
-        tools/testing/selftests/bpf/prog_tests/bind_perm.c
-        tools/testing/selftests/bpf/prog_tests/bloom_filter_map.c
-        tools/testing/selftests/bpf/prog_tests/bpf_cookie.c
-        tools/testing/selftests/bpf/prog_tests/bpf_iter.c
-        tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt.c
-        tools/testing/selftests/bpf/prog_tests/bpf_iter_setsockopt_unix.c
-        tools/testing/selftests/bpf/prog_tests/bpf_loop.c
-        tools/testing/selftests/bpf/prog_tests/bpf_mod_race.c
-        tools/testing/selftests/bpf/prog_tests/bpf_nf.c
-        tools/testing/selftests/bpf/prog_tests/bpf_obj_id.c
-        tools/testing/selftests/bpf/prog_tests/bpf_tcp_ca.c
-        tools/testing/selftests/bpf/prog_tests/bpf_verif_scale.c
-        tools/testing/selftests/bpf/prog_tests/btf.c
-        tools/testing/selftests/bpf/prog_tests/btf_dedup_split.c
-        tools/testing/selftests/bpf/prog_tests/btf_dump.c
-        tools/testing/selftests/bpf/prog_tests/btf_endian.c
-        tools/testing/selftests/bpf/prog_tests/btf_map_in_map.c
-        tools/testing/selftests/bpf/prog_tests/btf_module.c
-        tools/testing/selftests/bpf/prog_tests/btf_skc_cls_ingress.c
-        tools/testing/selftests/bpf/prog_tests/btf_split.c
-        tools/testing/selftests/bpf/prog_tests/btf_tag.c
-        tools/testing/selftests/bpf/prog_tests/btf_write.c
-        tools/testing/selftests/bpf/prog_tests/cb_refs.c
-        tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_attach_autodetach.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_attach_multi.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_attach_override.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_getset_retval.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_hierarchical_stats.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_iter.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_link.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_skb_sk_lookup.c
-        tools/testing/selftests/bpf/prog_tests/cgroup_v1v2.c
-        tools/testing/selftests/bpf/prog_tests/check_mtu.c
-        tools/testing/selftests/bpf/prog_tests/cls_redirect.c
-        tools/testing/selftests/bpf/prog_tests/connect_force_port.c
-        tools/testing/selftests/bpf/prog_tests/connect_ping.c
-        tools/testing/selftests/bpf/prog_tests/core_autosize.c
-        tools/testing/selftests/bpf/prog_tests/core_extern.c
-        tools/testing/selftests/bpf/prog_tests/core_kern.c
-        tools/testing/selftests/bpf/prog_tests/core_kern_overflow.c
-        tools/testing/selftests/bpf/prog_tests/core_read_macros.c
-        tools/testing/selftests/bpf/prog_tests/core_reloc.c
-        tools/testing/selftests/bpf/prog_tests/core_retro.c
-        tools/testing/selftests/bpf/prog_tests/cpu_mask.c
-        tools/testing/selftests/bpf/prog_tests/custom_sec_handlers.c
-        tools/testing/selftests/bpf/prog_tests/d_path.c
-        tools/testing/selftests/bpf/prog_tests/deny_namespace.c
-        tools/testing/selftests/bpf/prog_tests/dummy_st_ops.c
-        tools/testing/selftests/bpf/prog_tests/dynptr.c
-        tools/testing/selftests/bpf/prog_tests/enable_stats.c
-        tools/testing/selftests/bpf/prog_tests/endian.c
-        tools/testing/selftests/bpf/prog_tests/exhandler.c
-        tools/testing/selftests/bpf/prog_tests/fentry_fexit.c
-        tools/testing/selftests/bpf/prog_tests/fentry_test.c
-        tools/testing/selftests/bpf/prog_tests/fexit_bpf2bpf.c
-        tools/testing/selftests/bpf/prog_tests/fexit_sleep.c
-        tools/testing/selftests/bpf/prog_tests/fexit_stress.c
-        tools/testing/selftests/bpf/prog_tests/fexit_test.c
-        tools/testing/selftests/bpf/prog_tests/find_vma.c
-        tools/testing/selftests/bpf/prog_tests/flow_dissector.c
-        tools/testing/selftests/bpf/prog_tests/flow_dissector_load_bytes.c
-        tools/testing/selftests/bpf/prog_tests/flow_dissector_reattach.c
-        tools/testing/selftests/bpf/prog_tests/for_each.c
-        tools/testing/selftests/bpf/prog_tests/get_branch_snapshot.c
-        tools/testing/selftests/bpf/prog_tests/get_func_args_test.c
-        tools/testing/selftests/bpf/prog_tests/get_func_ip_test.c
-        tools/testing/selftests/bpf/prog_tests/get_stack_raw_tp.c
-        tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-        tools/testing/selftests/bpf/prog_tests/global_data.c
-        tools/testing/selftests/bpf/prog_tests/global_data_init.c
-        tools/testing/selftests/bpf/prog_tests/global_func_args.c
-        tools/testing/selftests/bpf/prog_tests/hash_large_key.c
-        tools/testing/selftests/bpf/prog_tests/hashmap.c
-        tools/testing/selftests/bpf/prog_tests/helper_restricted.c
-        tools/testing/selftests/bpf/prog_tests/htab_update.c
-        tools/testing/selftests/bpf/prog_tests/kfree_skb.c
-        tools/testing/selftests/bpf/prog_tests/kfunc_call.c
-        tools/testing/selftests/bpf/prog_tests/kfunc_dynptr_param.c
-        tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-        tools/testing/selftests/bpf/prog_tests/ksyms.c
-        tools/testing/selftests/bpf/prog_tests/ksyms_btf.c
-        tools/testing/selftests/bpf/prog_tests/ksyms_module.c
-        tools/testing/selftests/bpf/prog_tests/l4lb_all.c
-        tools/testing/selftests/bpf/prog_tests/legacy_printk.c
-        tools/testing/selftests/bpf/prog_tests/libbpf_probes.c
-        tools/testing/selftests/bpf/prog_tests/libbpf_str.c
-        tools/testing/selftests/bpf/prog_tests/link_pinning.c
-        tools/testing/selftests/bpf/prog_tests/linked_funcs.c
-        tools/testing/selftests/bpf/prog_tests/linked_maps.c
-        tools/testing/selftests/bpf/prog_tests/linked_vars.c
-        tools/testing/selftests/bpf/prog_tests/load_bytes_relative.c
-        tools/testing/selftests/bpf/prog_tests/log_buf.c
-        tools/testing/selftests/bpf/prog_tests/log_fixup.c
-        tools/testing/selftests/bpf/prog_tests/lookup_and_delete.c
-        tools/testing/selftests/bpf/prog_tests/lookup_key.c
-        tools/testing/selftests/bpf/prog_tests/lru_bug.c
-        tools/testing/selftests/bpf/prog_tests/lsm_cgroup.c
-        tools/testing/selftests/bpf/prog_tests/map_init.c
-        tools/testing/selftests/bpf/prog_tests/map_kptr.c
-        tools/testing/selftests/bpf/prog_tests/map_lock.c
-        tools/testing/selftests/bpf/prog_tests/map_lookup_percpu_elem.c
-        tools/testing/selftests/bpf/prog_tests/map_ptr.c
-        tools/testing/selftests/bpf/prog_tests/metadata.c
-        tools/testing/selftests/bpf/prog_tests/migrate_reuseport.c
-        tools/testing/selftests/bpf/prog_tests/mmap.c
-        tools/testing/selftests/bpf/prog_tests/modify_return.c
-        tools/testing/selftests/bpf/prog_tests/module_attach.c
-        tools/testing/selftests/bpf/prog_tests/mptcp.c
-        tools/testing/selftests/bpf/prog_tests/netcnt.c
-        tools/testing/selftests/bpf/prog_tests/netns_cookie.c
-        tools/testing/selftests/bpf/prog_tests/ns_current_pid_tgid.c
-        tools/testing/selftests/bpf/prog_tests/obj_name.c
-        tools/testing/selftests/bpf/prog_tests/pe_preserve_elems.c
-        tools/testing/selftests/bpf/prog_tests/perf_branches.c
-        tools/testing/selftests/bpf/prog_tests/perf_buffer.c
-        tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
-        tools/testing/selftests/bpf/prog_tests/perf_link.c
-        tools/testing/selftests/bpf/prog_tests/pinning.c
-        tools/testing/selftests/bpf/prog_tests/pkt_access.c
-        tools/testing/selftests/bpf/prog_tests/pkt_md_access.c
-        tools/testing/selftests/bpf/prog_tests/probe_read_user_str.c
-        tools/testing/selftests/bpf/prog_tests/probe_user.c
-        tools/testing/selftests/bpf/prog_tests/prog_array_init.c
-        tools/testing/selftests/bpf/prog_tests/prog_run_opts.c
-        tools/testing/selftests/bpf/prog_tests/prog_tests_framework.c
-        tools/testing/selftests/bpf/prog_tests/queue_stack_map.c
-        tools/testing/selftests/bpf/prog_tests/raw_tp_test_run.c
-        tools/testing/selftests/bpf/prog_tests/raw_tp_writable_reject_nbd_invalid.c
-        tools/testing/selftests/bpf/prog_tests/raw_tp_writable_test_run.c
-        tools/testing/selftests/bpf/prog_tests/rdonly_maps.c
-        tools/testing/selftests/bpf/prog_tests/recursion.c
-        tools/testing/selftests/bpf/prog_tests/reference_tracking.c
-        tools/testing/selftests/bpf/prog_tests/resolve_btfids.c
-        tools/testing/selftests/bpf/prog_tests/ringbuf.c
-        tools/testing/selftests/bpf/prog_tests/ringbuf_multi.c
-        tools/testing/selftests/bpf/prog_tests/section_names.c
-        tools/testing/selftests/bpf/prog_tests/select_reuseport.c
-        tools/testing/selftests/bpf/prog_tests/send_signal.c
-        tools/testing/selftests/bpf/prog_tests/send_signal_sched_switch.c
-        tools/testing/selftests/bpf/prog_tests/setget_sockopt.c
-        tools/testing/selftests/bpf/prog_tests/signal_pending.c
-        tools/testing/selftests/bpf/prog_tests/sk_assign.c
-        tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-        tools/testing/selftests/bpf/prog_tests/sk_storage_tracing.c
-        tools/testing/selftests/bpf/prog_tests/skb_ctx.c
-        tools/testing/selftests/bpf/prog_tests/skb_helpers.c
-        tools/testing/selftests/bpf/prog_tests/skb_load_bytes.c
-        tools/testing/selftests/bpf/prog_tests/skc_to_unix_sock.c
-        tools/testing/selftests/bpf/prog_tests/skeleton.c
-        tools/testing/selftests/bpf/prog_tests/snprintf.c
-        tools/testing/selftests/bpf/prog_tests/snprintf_btf.c
-        tools/testing/selftests/bpf/prog_tests/sock_fields.c
-        tools/testing/selftests/bpf/prog_tests/socket_cookie.c
-        tools/testing/selftests/bpf/prog_tests/sockmap_basic.c
-        tools/testing/selftests/bpf/prog_tests/sockmap_ktls.c
-        tools/testing/selftests/bpf/prog_tests/sockmap_listen.c
-        tools/testing/selftests/bpf/prog_tests/sockopt.c
-        tools/testing/selftests/bpf/prog_tests/sockopt_inherit.c
-        tools/testing/selftests/bpf/prog_tests/sockopt_multi.c
-        tools/testing/selftests/bpf/prog_tests/sockopt_qos_to_cc.c
-        tools/testing/selftests/bpf/prog_tests/sockopt_sk.c
-        tools/testing/selftests/bpf/prog_tests/spinlock.c
-        tools/testing/selftests/bpf/prog_tests/stack_var_off.c
-        tools/testing/selftests/bpf/prog_tests/stacktrace_build_id.c
-        tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-        tools/testing/selftests/bpf/prog_tests/stacktrace_map.c
-        tools/testing/selftests/bpf/prog_tests/stacktrace_map_raw_tp.c
-        tools/testing/selftests/bpf/prog_tests/stacktrace_map_skip.c
-        tools/testing/selftests/bpf/prog_tests/static_linked.c
-        tools/testing/selftests/bpf/prog_tests/subprogs.c
-        tools/testing/selftests/bpf/prog_tests/subskeleton.c
-        tools/testing/selftests/bpf/prog_tests/syscall.c
-        tools/testing/selftests/bpf/prog_tests/tailcalls.c
-        tools/testing/selftests/bpf/prog_tests/task_fd_query_rawtp.c
-        tools/testing/selftests/bpf/prog_tests/task_fd_query_tp.c
-        tools/testing/selftests/bpf/prog_tests/task_local_storage.c
-        tools/testing/selftests/bpf/prog_tests/task_pt_regs.c
-        tools/testing/selftests/bpf/prog_tests/tc_bpf.c
-        tools/testing/selftests/bpf/prog_tests/tc_redirect.c
-        tools/testing/selftests/bpf/prog_tests/tcp_estats.c
-        tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c
-        tools/testing/selftests/bpf/prog_tests/tcp_rtt.c
-        tools/testing/selftests/bpf/prog_tests/tcpbpf_user.c
-        tools/testing/selftests/bpf/prog_tests/test_bpf_syscall_macro.c
-        tools/testing/selftests/bpf/prog_tests/test_bpffs.c
-        tools/testing/selftests/bpf/prog_tests/test_bprm_opts.c
-        tools/testing/selftests/bpf/prog_tests/test_global_funcs.c
-        tools/testing/selftests/bpf/prog_tests/test_ima.c
-        tools/testing/selftests/bpf/prog_tests/test_local_storage.c
-        tools/testing/selftests/bpf/prog_tests/test_lsm.c
-        tools/testing/selftests/bpf/prog_tests/test_overhead.c
-        tools/testing/selftests/bpf/prog_tests/test_profiler.c
-        tools/testing/selftests/bpf/prog_tests/test_skb_pkt_end.c
-        tools/testing/selftests/bpf/prog_tests/test_strncmp.c
-        tools/testing/selftests/bpf/prog_tests/test_tunnel.c
-        tools/testing/selftests/bpf/prog_tests/time_tai.c
-        tools/testing/selftests/bpf/prog_tests/timer.c
-        tools/testing/selftests/bpf/prog_tests/timer_crash.c
-        tools/testing/selftests/bpf/prog_tests/timer_mim.c
-        tools/testing/selftests/bpf/prog_tests/tp_attach_query.c
-        tools/testing/selftests/bpf/prog_tests/trace_ext.c
-        tools/testing/selftests/bpf/prog_tests/trace_printk.c
-        tools/testing/selftests/bpf/prog_tests/trace_vprintk.c
-        tools/testing/selftests/bpf/prog_tests/tracing_struct.c
-        tools/testing/selftests/bpf/prog_tests/trampoline_count.c
-        tools/testing/selftests/bpf/prog_tests/udp_limit.c
-        tools/testing/selftests/bpf/prog_tests/unpriv_bpf_disabled.c
-        tools/testing/selftests/bpf/prog_tests/uprobe_autoattach.c
-        tools/testing/selftests/bpf/prog_tests/usdt.c
-        tools/testing/selftests/bpf/prog_tests/user_ringbuf.c
-        tools/testing/selftests/bpf/prog_tests/varlen.c
-        tools/testing/selftests/bpf/prog_tests/verif_stats.c
-        tools/testing/selftests/bpf/prog_tests/verify_pkcs7_sig.c
-        tools/testing/selftests/bpf/prog_tests/vmlinux.c
-        tools/testing/selftests/bpf/prog_tests/xdp.c
-        tools/testing/selftests/bpf/prog_tests/xdp_adjust_frags.c
-        tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-        tools/testing/selftests/bpf/prog_tests/xdp_attach.c
-        tools/testing/selftests/bpf/prog_tests/xdp_bonding.c
-        tools/testing/selftests/bpf/prog_tests/xdp_bpf2bpf.c
-        tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-        tools/testing/selftests/bpf/prog_tests/xdp_cpumap_attach.c
-        tools/testing/selftests/bpf/prog_tests/xdp_devmap_attach.c
-        tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
-        tools/testing/selftests/bpf/prog_tests/xdp_info.c
-        tools/testing/selftests/bpf/prog_tests/xdp_link.c
-        tools/testing/selftests/bpf/prog_tests/xdp_noinline.c
-        tools/testing/selftests/bpf/prog_tests/xdp_perf.c
-        tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c
-        tools/testing/selftests/bpf/prog_tests/xdpwall.c
-        tools/testing/selftests/bpf/progs/atomic_bounds.c
-        tools/testing/selftests/bpf/progs/atomics.c
-        tools/testing/selftests/bpf/progs/bind4_prog.c
-        tools/testing/selftests/bpf/progs/bind6_prog.c
-        tools/testing/selftests/bpf/progs/bind_perm.c
-        tools/testing/selftests/bpf/progs/bloom_filter_bench.c
-        tools/testing/selftests/bpf/progs/bloom_filter_map.c
-        tools/testing/selftests/bpf/progs/bpf_cubic.c
-        tools/testing/selftests/bpf/progs/bpf_dctcp.c
-        tools/testing/selftests/bpf/progs/bpf_dctcp_release.c
-        tools/testing/selftests/bpf/progs/bpf_flow.c
-        tools/testing/selftests/bpf/progs/bpf_hashmap_full_update_bench.c
-        tools/testing/selftests/bpf/progs/bpf_iter.h
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_array_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_hash_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_link.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_percpu_array_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_percpu_hash_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_sk_storage_helpers.c
-        tools/testing/selftests/bpf/progs/bpf_iter_bpf_sk_storage_map.c
-        tools/testing/selftests/bpf/progs/bpf_iter_ipv6_route.c
-        tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-        tools/testing/selftests/bpf/progs/bpf_iter_netlink.c
-        tools/testing/selftests/bpf/progs/bpf_iter_setsockopt.c
-        tools/testing/selftests/bpf/progs/bpf_iter_setsockopt_unix.c
-        tools/testing/selftests/bpf/progs/bpf_iter_sockmap.c
-        tools/testing/selftests/bpf/progs/bpf_iter_task.c
-        tools/testing/selftests/bpf/progs/bpf_iter_task_btf.c
-        tools/testing/selftests/bpf/progs/bpf_iter_task_file.c
-        tools/testing/selftests/bpf/progs/bpf_iter_task_stack.c
-        tools/testing/selftests/bpf/progs/bpf_iter_task_vma.c
-        tools/testing/selftests/bpf/progs/bpf_iter_tcp4.c
-        tools/testing/selftests/bpf/progs/bpf_iter_tcp6.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern1.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern2.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern3.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern4.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern5.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern6.c
-        tools/testing/selftests/bpf/progs/bpf_iter_test_kern_common.h
-        tools/testing/selftests/bpf/progs/bpf_iter_udp4.c
-        tools/testing/selftests/bpf/progs/bpf_iter_udp6.c
-        tools/testing/selftests/bpf/progs/bpf_iter_unix.c
-        tools/testing/selftests/bpf/progs/bpf_iter_vma_offset.c
-        tools/testing/selftests/bpf/progs/bpf_loop.c
-        tools/testing/selftests/bpf/progs/bpf_loop_bench.c
-        tools/testing/selftests/bpf/progs/bpf_misc.h
-        tools/testing/selftests/bpf/progs/bpf_mod_race.c
-        tools/testing/selftests/bpf/progs/bpf_syscall_macro.c
-        tools/testing/selftests/bpf/progs/bpf_tcp_nogpl.c
-        tools/testing/selftests/bpf/progs/bpf_tracing_net.h
-        tools/testing/selftests/bpf/progs/bprm_opts.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___diff_arr_dim.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___diff_arr_val_sz.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___equiv_zero_sz_arr.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___err_bad_zero_sz_arr.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___err_non_array.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___err_too_shallow.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___err_too_small.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___err_wrong_val_type.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_arrays___fixed_arr.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_bitfields.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_bitfields___bit_sz_change.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_bitfields___bitfield_vs_int.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_bitfields___err_too_big_bitfield.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_bitfields___just_big_enough.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enum64val.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enum64val___diff.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enum64val___err_missing.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enum64val___val3_missing.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enumval.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enumval___diff.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enumval___err_missing.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_enumval___val3_missing.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_existence.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_existence___minimal.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_existence___wrong_field_defs.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_flavors.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_flavors__err_wrong_name.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_ints.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_ints___bool.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_ints___reverse_sign.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_misc.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_mods.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_mods___mod_swap.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_mods___typedefs.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___anon_embed.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___dup_compat_types.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_array_container.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_array_field.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_dup_incompat_types.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_missing_container.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_missing_field.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_nonstruct_container.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_partial_match_dups.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___err_too_deep.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___extra_nesting.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_nesting___struct_union_mixup.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___diff_enum_def.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___diff_func_proto.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___diff_ptr_type.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___err_non_enum.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___err_non_int.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_primitives___err_non_ptr.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_ptr_as_arr.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_ptr_as_arr___diff_sz.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_size.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_size___diff_offs.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_size___diff_sz.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_size___err_ambiguous.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based___all_missing.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based___diff.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based___diff_sz.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based___fn_wrong_args.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_based___incompat.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_id.c
-        tools/testing/selftests/bpf/progs/btf__core_reloc_type_id___missing_targets.c
-        tools/testing/selftests/bpf/progs/btf_data.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_bitfields.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_namespacing.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_ordering.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_packing.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_padding.c
-        tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
-        tools/testing/selftests/bpf/progs/btf_ptr.h
-        tools/testing/selftests/bpf/progs/btf_type_tag.c
-        tools/testing/selftests/bpf/progs/btf_type_tag_percpu.c
-        tools/testing/selftests/bpf/progs/btf_type_tag_user.c
-        tools/testing/selftests/bpf/progs/cb_refs.c
-        tools/testing/selftests/bpf/progs/cg_storage_multi.h
-        tools/testing/selftests/bpf/progs/cg_storage_multi_egress_only.c
-        tools/testing/selftests/bpf/progs/cg_storage_multi_isolated.c
-        tools/testing/selftests/bpf/progs/cg_storage_multi_shared.c
-        tools/testing/selftests/bpf/progs/cgroup_getset_retval_getsockopt.c
-        tools/testing/selftests/bpf/progs/cgroup_getset_retval_hooks.c
-        tools/testing/selftests/bpf/progs/cgroup_getset_retval_setsockopt.c
-        tools/testing/selftests/bpf/progs/cgroup_hierarchical_stats.c
-        tools/testing/selftests/bpf/progs/cgroup_iter.c
-        tools/testing/selftests/bpf/progs/cgroup_skb_sk_lookup_kern.c
-        tools/testing/selftests/bpf/progs/connect4_dropper.c
-        tools/testing/selftests/bpf/progs/connect4_prog.c
-        tools/testing/selftests/bpf/progs/connect6_prog.c
-        tools/testing/selftests/bpf/progs/connect_force_port4.c
-        tools/testing/selftests/bpf/progs/connect_force_port6.c
-        tools/testing/selftests/bpf/progs/connect_ping.c
-        tools/testing/selftests/bpf/progs/core_kern.c
-        tools/testing/selftests/bpf/progs/core_kern_overflow.c
-        tools/testing/selftests/bpf/progs/core_reloc_types.h
-        tools/testing/selftests/bpf/progs/dev_cgroup.c
-        tools/testing/selftests/bpf/progs/dummy_st_ops.c
-        tools/testing/selftests/bpf/progs/dynptr_fail.c
-        tools/testing/selftests/bpf/progs/dynptr_success.c
-        tools/testing/selftests/bpf/progs/exhandler_kern.c
-        tools/testing/selftests/bpf/progs/fentry_test.c
-        tools/testing/selftests/bpf/progs/fexit_bpf2bpf.c
-        tools/testing/selftests/bpf/progs/fexit_bpf2bpf_simple.c
-        tools/testing/selftests/bpf/progs/fexit_sleep.c
-        tools/testing/selftests/bpf/progs/fexit_test.c
-        tools/testing/selftests/bpf/progs/find_vma.c
-        tools/testing/selftests/bpf/progs/find_vma_fail1.c
-        tools/testing/selftests/bpf/progs/find_vma_fail2.c
-        tools/testing/selftests/bpf/progs/fmod_ret_freplace.c
-        tools/testing/selftests/bpf/progs/for_each_array_map_elem.c
-        tools/testing/selftests/bpf/progs/for_each_hash_map_elem.c
-        tools/testing/selftests/bpf/progs/for_each_map_elem_write_key.c
-        tools/testing/selftests/bpf/progs/freplace_attach_probe.c
-        tools/testing/selftests/bpf/progs/freplace_cls_redirect.c
-        tools/testing/selftests/bpf/progs/freplace_connect4.c
-        tools/testing/selftests/bpf/progs/freplace_connect_v4_prog.c
-        tools/testing/selftests/bpf/progs/freplace_get_constant.c
-        tools/testing/selftests/bpf/progs/freplace_global_func.c
-        tools/testing/selftests/bpf/progs/get_branch_snapshot.c
-        tools/testing/selftests/bpf/progs/get_cgroup_id_kern.c
-        tools/testing/selftests/bpf/progs/get_func_args_test.c
-        tools/testing/selftests/bpf/progs/get_func_ip_test.c
-        tools/testing/selftests/bpf/progs/htab_update.c
-        tools/testing/selftests/bpf/progs/ima.c
-        tools/testing/selftests/bpf/progs/kfree_skb.c
-        tools/testing/selftests/bpf/progs/kfunc_call_destructive.c
-        tools/testing/selftests/bpf/progs/kfunc_call_fail.c
-        tools/testing/selftests/bpf/progs/kfunc_call_race.c
-        tools/testing/selftests/bpf/progs/kfunc_call_test.c
-        tools/testing/selftests/bpf/progs/kfunc_call_test_subprog.c
-        tools/testing/selftests/bpf/progs/kprobe_multi.c
-        tools/testing/selftests/bpf/progs/kprobe_multi_empty.c
-        tools/testing/selftests/bpf/progs/ksym_race.c
-        tools/testing/selftests/bpf/progs/linked_funcs1.c
-        tools/testing/selftests/bpf/progs/linked_funcs2.c
-        tools/testing/selftests/bpf/progs/linked_maps1.c
-        tools/testing/selftests/bpf/progs/linked_maps2.c
-        tools/testing/selftests/bpf/progs/linked_vars1.c
-        tools/testing/selftests/bpf/progs/linked_vars2.c
-        tools/testing/selftests/bpf/progs/load_bytes_relative.c
-        tools/testing/selftests/bpf/progs/local_storage.c
-        tools/testing/selftests/bpf/progs/local_storage_bench.c
-        tools/testing/selftests/bpf/progs/local_storage_rcu_tasks_trace_bench.c
-        tools/testing/selftests/bpf/progs/loop1.c
-        tools/testing/selftests/bpf/progs/loop2.c
-        tools/testing/selftests/bpf/progs/loop3.c
-        tools/testing/selftests/bpf/progs/loop4.c
-        tools/testing/selftests/bpf/progs/loop5.c
-        tools/testing/selftests/bpf/progs/loop6.c
-        tools/testing/selftests/bpf/progs/lru_bug.c
-        tools/testing/selftests/bpf/progs/lsm.c
-        tools/testing/selftests/bpf/progs/lsm_cgroup.c
-        tools/testing/selftests/bpf/progs/lsm_cgroup_nonvoid.c
-        tools/testing/selftests/bpf/progs/map_kptr.c
-        tools/testing/selftests/bpf/progs/map_kptr_fail.c
-        tools/testing/selftests/bpf/progs/map_ptr_kern.c
-        tools/testing/selftests/bpf/progs/metadata_unused.c
-        tools/testing/selftests/bpf/progs/metadata_used.c
-        tools/testing/selftests/bpf/progs/modify_return.c
-        tools/testing/selftests/bpf/progs/mptcp_sock.c
-        tools/testing/selftests/bpf/progs/netcnt_prog.c
-        tools/testing/selftests/bpf/progs/netif_receive_skb.c
-        tools/testing/selftests/bpf/progs/netns_cookie_prog.c
-        tools/testing/selftests/bpf/progs/perf_event_stackmap.c
-        tools/testing/selftests/bpf/progs/perfbuf_bench.c
-        tools/testing/selftests/bpf/progs/profiler.h
-        tools/testing/selftests/bpf/progs/profiler.inc.h
-        tools/testing/selftests/bpf/progs/profiler1.c
-        tools/testing/selftests/bpf/progs/profiler2.c
-        tools/testing/selftests/bpf/progs/profiler3.c
-        tools/testing/selftests/bpf/progs/pyperf.h
-        tools/testing/selftests/bpf/progs/pyperf100.c
-        tools/testing/selftests/bpf/progs/pyperf180.c
-        tools/testing/selftests/bpf/progs/pyperf50.c
-        tools/testing/selftests/bpf/progs/pyperf600.c
-        tools/testing/selftests/bpf/progs/pyperf600_bpf_loop.c
-        tools/testing/selftests/bpf/progs/pyperf600_nounroll.c
-        tools/testing/selftests/bpf/progs/pyperf_global.c
-        tools/testing/selftests/bpf/progs/pyperf_subprogs.c
-        tools/testing/selftests/bpf/progs/read_bpf_task_storage_busy.c
-        tools/testing/selftests/bpf/progs/recursion.c
-        tools/testing/selftests/bpf/progs/recvmsg4_prog.c
-        tools/testing/selftests/bpf/progs/recvmsg6_prog.c
-        tools/testing/selftests/bpf/progs/ringbuf_bench.c
-        tools/testing/selftests/bpf/progs/sample_map_ret0.c
-        tools/testing/selftests/bpf/progs/sample_ret0.c
-        tools/testing/selftests/bpf/progs/sendmsg4_prog.c
-        tools/testing/selftests/bpf/progs/sendmsg6_prog.c
-        tools/testing/selftests/bpf/progs/setget_sockopt.c
-        tools/testing/selftests/bpf/progs/skb_load_bytes.c
-        tools/testing/selftests/bpf/progs/skb_pkt_end.c
-        tools/testing/selftests/bpf/progs/socket_cookie_prog.c
-        tools/testing/selftests/bpf/progs/sockmap_parse_prog.c
-        tools/testing/selftests/bpf/progs/sockmap_tcp_msg_prog.c
-        tools/testing/selftests/bpf/progs/sockmap_verdict_prog.c
-        tools/testing/selftests/bpf/progs/sockopt_inherit.c
-        tools/testing/selftests/bpf/progs/sockopt_multi.c
-        tools/testing/selftests/bpf/progs/sockopt_qos_to_cc.c
-        tools/testing/selftests/bpf/progs/sockopt_sk.c
-        tools/testing/selftests/bpf/progs/stacktrace_map_skip.c
-        tools/testing/selftests/bpf/progs/strncmp_bench.c
-        tools/testing/selftests/bpf/progs/strncmp_test.c
-        tools/testing/selftests/bpf/progs/strobemeta.c
-        tools/testing/selftests/bpf/progs/strobemeta.h
-        tools/testing/selftests/bpf/progs/strobemeta_bpf_loop.c
-        tools/testing/selftests/bpf/progs/strobemeta_nounroll1.c
-        tools/testing/selftests/bpf/progs/strobemeta_nounroll2.c
-        tools/testing/selftests/bpf/progs/strobemeta_subprogs.c
-        tools/testing/selftests/bpf/progs/syscall.c
-        tools/testing/selftests/bpf/progs/tailcall1.c
-        tools/testing/selftests/bpf/progs/tailcall2.c
-        tools/testing/selftests/bpf/progs/tailcall3.c
-        tools/testing/selftests/bpf/progs/tailcall4.c
-        tools/testing/selftests/bpf/progs/tailcall5.c
-        tools/testing/selftests/bpf/progs/tailcall6.c
-        tools/testing/selftests/bpf/progs/tailcall_bpf2bpf1.c
-        tools/testing/selftests/bpf/progs/tailcall_bpf2bpf2.c
-        tools/testing/selftests/bpf/progs/tailcall_bpf2bpf3.c
-        tools/testing/selftests/bpf/progs/tailcall_bpf2bpf4.c
-        tools/testing/selftests/bpf/progs/tailcall_bpf2bpf6.c
-        tools/testing/selftests/bpf/progs/task_local_storage.c
-        tools/testing/selftests/bpf/progs/task_local_storage_exit_creds.c
-        tools/testing/selftests/bpf/progs/task_ls_recursion.c
-        tools/testing/selftests/bpf/progs/tcp_ca_incompl_cong_ops.c
-        tools/testing/selftests/bpf/progs/tcp_ca_unsupp_cong_op.c
-        tools/testing/selftests/bpf/progs/tcp_ca_write_sk_pacing.c
-        tools/testing/selftests/bpf/progs/tcp_rtt.c
-        tools/testing/selftests/bpf/progs/test_attach_probe.c
-        tools/testing/selftests/bpf/progs/test_autoattach.c
-        tools/testing/selftests/bpf/progs/test_autoload.c
-        tools/testing/selftests/bpf/progs/test_bpf_cookie.c
-        tools/testing/selftests/bpf/progs/test_bpf_nf.c
-        tools/testing/selftests/bpf/progs/test_bpf_nf_fail.c
-        tools/testing/selftests/bpf/progs/test_btf_decl_tag.c
-        tools/testing/selftests/bpf/progs/test_btf_map_in_map.c
-        tools/testing/selftests/bpf/progs/test_btf_newkv.c
-        tools/testing/selftests/bpf/progs/test_btf_nokv.c
-        tools/testing/selftests/bpf/progs/test_btf_skc_cls_ingress.c
-        tools/testing/selftests/bpf/progs/test_cgroup_link.c
-        tools/testing/selftests/bpf/progs/test_check_mtu.c
-        tools/testing/selftests/bpf/progs/test_cls_redirect.c
-        tools/testing/selftests/bpf/progs/test_cls_redirect.h
-        tools/testing/selftests/bpf/progs/test_cls_redirect_subprogs.c
-        tools/testing/selftests/bpf/progs/test_core_autosize.c
-        tools/testing/selftests/bpf/progs/test_core_extern.c
-        tools/testing/selftests/bpf/progs/test_core_read_macros.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_arrays.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_bitfields_direct.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_bitfields_probed.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_enum64val.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_enumval.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_existence.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_flavors.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_ints.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_kernel.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_misc.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_mods.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_module.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_nesting.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_primitives.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_ptr_as_arr.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_size.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_type_based.c
-        tools/testing/selftests/bpf/progs/test_core_reloc_type_id.c
-        tools/testing/selftests/bpf/progs/test_core_retro.c
-        tools/testing/selftests/bpf/progs/test_custom_sec_handlers.c
-        tools/testing/selftests/bpf/progs/test_d_path.c
-        tools/testing/selftests/bpf/progs/test_d_path_check_rdonly_mem.c
-        tools/testing/selftests/bpf/progs/test_d_path_check_types.c
-        tools/testing/selftests/bpf/progs/test_deny_namespace.c
-        tools/testing/selftests/bpf/progs/test_enable_stats.c
-        tools/testing/selftests/bpf/progs/test_endian.c
-        tools/testing/selftests/bpf/progs/test_get_stack_rawtp.c
-        tools/testing/selftests/bpf/progs/test_get_stack_rawtp_err.c
-        tools/testing/selftests/bpf/progs/test_global_data.c
-        tools/testing/selftests/bpf/progs/test_global_func1.c
-        tools/testing/selftests/bpf/progs/test_global_func10.c
-        tools/testing/selftests/bpf/progs/test_global_func11.c
-        tools/testing/selftests/bpf/progs/test_global_func12.c
-        tools/testing/selftests/bpf/progs/test_global_func13.c
-        tools/testing/selftests/bpf/progs/test_global_func14.c
-        tools/testing/selftests/bpf/progs/test_global_func15.c
-        tools/testing/selftests/bpf/progs/test_global_func16.c
-        tools/testing/selftests/bpf/progs/test_global_func17.c
-        tools/testing/selftests/bpf/progs/test_global_func2.c
-        tools/testing/selftests/bpf/progs/test_global_func3.c
-        tools/testing/selftests/bpf/progs/test_global_func4.c
-        tools/testing/selftests/bpf/progs/test_global_func5.c
-        tools/testing/selftests/bpf/progs/test_global_func6.c
-        tools/testing/selftests/bpf/progs/test_global_func7.c
-        tools/testing/selftests/bpf/progs/test_global_func8.c
-        tools/testing/selftests/bpf/progs/test_global_func9.c
-        tools/testing/selftests/bpf/progs/test_global_func_args.c
-        tools/testing/selftests/bpf/progs/test_hash_large_key.c
-        tools/testing/selftests/bpf/progs/test_helper_restricted.c
-        tools/testing/selftests/bpf/progs/test_jhash.h
-        tools/testing/selftests/bpf/progs/test_kfunc_dynptr_param.c
-        tools/testing/selftests/bpf/progs/test_ksyms.c
-        tools/testing/selftests/bpf/progs/test_ksyms_btf.c
-        tools/testing/selftests/bpf/progs/test_ksyms_btf_null_check.c
-        tools/testing/selftests/bpf/progs/test_ksyms_btf_write_check.c
-        tools/testing/selftests/bpf/progs/test_ksyms_module.c
-        tools/testing/selftests/bpf/progs/test_ksyms_weak.c
-        tools/testing/selftests/bpf/progs/test_l4lb.c
-        tools/testing/selftests/bpf/progs/test_l4lb_noinline.c
-        tools/testing/selftests/bpf/progs/test_legacy_printk.c
-        tools/testing/selftests/bpf/progs/test_link_pinning.c
-        tools/testing/selftests/bpf/progs/test_lirc_mode2_kern.c
-        tools/testing/selftests/bpf/progs/test_log_buf.c
-        tools/testing/selftests/bpf/progs/test_log_fixup.c
-        tools/testing/selftests/bpf/progs/test_lookup_and_delete.c
-        tools/testing/selftests/bpf/progs/test_lookup_key.c
-        tools/testing/selftests/bpf/progs/test_lwt_ip_encap.c
-        tools/testing/selftests/bpf/progs/test_lwt_seg6local.c
-        tools/testing/selftests/bpf/progs/test_map_in_map.c
-        tools/testing/selftests/bpf/progs/test_map_in_map_invalid.c
-        tools/testing/selftests/bpf/progs/test_map_init.c
-        tools/testing/selftests/bpf/progs/test_map_lock.c
-        tools/testing/selftests/bpf/progs/test_map_lookup_percpu_elem.c
-        tools/testing/selftests/bpf/progs/test_migrate_reuseport.c
-        tools/testing/selftests/bpf/progs/test_misc_tcp_hdr_options.c
-        tools/testing/selftests/bpf/progs/test_mmap.c
-        tools/testing/selftests/bpf/progs/test_module_attach.c
-        tools/testing/selftests/bpf/progs/test_ns_current_pid_tgid.c
-        tools/testing/selftests/bpf/progs/test_obj_id.c
-        tools/testing/selftests/bpf/progs/test_overhead.c
-        tools/testing/selftests/bpf/progs/test_pe_preserve_elems.c
-        tools/testing/selftests/bpf/progs/test_perf_branches.c
-        tools/testing/selftests/bpf/progs/test_perf_buffer.c
-        tools/testing/selftests/bpf/progs/test_perf_link.c
-        tools/testing/selftests/bpf/progs/test_pinning.c
-        tools/testing/selftests/bpf/progs/test_pinning_invalid.c
-        tools/testing/selftests/bpf/progs/test_pkt_access.c
-        tools/testing/selftests/bpf/progs/test_pkt_md_access.c
-        tools/testing/selftests/bpf/progs/test_probe_read_user_str.c
-        tools/testing/selftests/bpf/progs/test_probe_user.c
-        tools/testing/selftests/bpf/progs/test_prog_array_init.c
-        tools/testing/selftests/bpf/progs/test_queue_map.c
-        tools/testing/selftests/bpf/progs/test_queue_stack_map.h
-        tools/testing/selftests/bpf/progs/test_raw_tp_test_run.c
-        tools/testing/selftests/bpf/progs/test_rdonly_maps.c
-        tools/testing/selftests/bpf/progs/test_ringbuf.c
-        tools/testing/selftests/bpf/progs/test_ringbuf_multi.c
-        tools/testing/selftests/bpf/progs/test_seg6_loop.c
-        tools/testing/selftests/bpf/progs/test_select_reuseport_kern.c
-        tools/testing/selftests/bpf/progs/test_send_signal_kern.c
-        tools/testing/selftests/bpf/progs/test_sk_assign.c
-        tools/testing/selftests/bpf/progs/test_sk_lookup.c
-        tools/testing/selftests/bpf/progs/test_sk_lookup_kern.c
-        tools/testing/selftests/bpf/progs/test_sk_storage_trace_itself.c
-        tools/testing/selftests/bpf/progs/test_sk_storage_tracing.c
-        tools/testing/selftests/bpf/progs/test_skb_cgroup_id_kern.c
-        tools/testing/selftests/bpf/progs/test_skb_ctx.c
-        tools/testing/selftests/bpf/progs/test_skb_helpers.c
-        tools/testing/selftests/bpf/progs/test_skc_to_unix_sock.c
-        tools/testing/selftests/bpf/progs/test_skeleton.c
-        tools/testing/selftests/bpf/progs/test_skmsg_load_helpers.c
-        tools/testing/selftests/bpf/progs/test_snprintf.c
-        tools/testing/selftests/bpf/progs/test_snprintf_single.c
-        tools/testing/selftests/bpf/progs/test_sock_fields.c
-        tools/testing/selftests/bpf/progs/test_sockhash_kern.c
-        tools/testing/selftests/bpf/progs/test_sockmap_invalid_update.c
-        tools/testing/selftests/bpf/progs/test_sockmap_kern.c
-        tools/testing/selftests/bpf/progs/test_sockmap_kern.h
-        tools/testing/selftests/bpf/progs/test_sockmap_listen.c
-        tools/testing/selftests/bpf/progs/test_sockmap_progs_query.c
-        tools/testing/selftests/bpf/progs/test_sockmap_skb_verdict_attach.c
-        tools/testing/selftests/bpf/progs/test_sockmap_update.c
-        tools/testing/selftests/bpf/progs/test_spin_lock.c
-        tools/testing/selftests/bpf/progs/test_stack_map.c
-        tools/testing/selftests/bpf/progs/test_stack_var_off.c
-        tools/testing/selftests/bpf/progs/test_stacktrace_build_id.c
-        tools/testing/selftests/bpf/progs/test_stacktrace_map.c
-        tools/testing/selftests/bpf/progs/test_static_linked1.c
-        tools/testing/selftests/bpf/progs/test_static_linked2.c
-        tools/testing/selftests/bpf/progs/test_subprogs.c
-        tools/testing/selftests/bpf/progs/test_subprogs_unused.c
-        tools/testing/selftests/bpf/progs/test_subskeleton.c
-        tools/testing/selftests/bpf/progs/test_subskeleton_lib.c
-        tools/testing/selftests/bpf/progs/test_subskeleton_lib2.c
-        tools/testing/selftests/bpf/progs/test_sysctl_loop1.c
-        tools/testing/selftests/bpf/progs/test_sysctl_loop2.c
-        tools/testing/selftests/bpf/progs/test_sysctl_prog.c
-        tools/testing/selftests/bpf/progs/test_task_pt_regs.c
-        tools/testing/selftests/bpf/progs/test_tc_bpf.c
-        tools/testing/selftests/bpf/progs/test_tc_dtime.c
-        tools/testing/selftests/bpf/progs/test_tc_edt.c
-        tools/testing/selftests/bpf/progs/test_tc_neigh.c
-        tools/testing/selftests/bpf/progs/test_tc_neigh_fib.c
-        tools/testing/selftests/bpf/progs/test_tc_peer.c
-        tools/testing/selftests/bpf/progs/test_tc_tunnel.c
-        tools/testing/selftests/bpf/progs/test_tcp_check_syncookie_kern.c
-        tools/testing/selftests/bpf/progs/test_tcp_estats.c
-        tools/testing/selftests/bpf/progs/test_tcp_hdr_options.c
-        tools/testing/selftests/bpf/progs/test_tcpbpf_kern.c
-        tools/testing/selftests/bpf/progs/test_tcpnotify_kern.c
-        tools/testing/selftests/bpf/progs/test_time_tai.c
-        tools/testing/selftests/bpf/progs/test_trace_ext.c
-        tools/testing/selftests/bpf/progs/test_trace_ext_tracing.c
-        tools/testing/selftests/bpf/progs/test_tracepoint.c
-        tools/testing/selftests/bpf/progs/test_trampoline_count.c
-        tools/testing/selftests/bpf/progs/test_tunnel_kern.c
-        tools/testing/selftests/bpf/progs/test_unpriv_bpf_disabled.c
-        tools/testing/selftests/bpf/progs/test_uprobe_autoattach.c
-        tools/testing/selftests/bpf/progs/test_urandom_usdt.c
-        tools/testing/selftests/bpf/progs/test_usdt.c
-        tools/testing/selftests/bpf/progs/test_usdt_multispec.c
-        tools/testing/selftests/bpf/progs/test_user_ringbuf.h
-        tools/testing/selftests/bpf/progs/test_varlen.c
-        tools/testing/selftests/bpf/progs/test_verif_scale1.c
-        tools/testing/selftests/bpf/progs/test_verif_scale2.c
-        tools/testing/selftests/bpf/progs/test_verif_scale3.c
-        tools/testing/selftests/bpf/progs/test_verify_pkcs7_sig.c
-        tools/testing/selftests/bpf/progs/test_vmlinux.c
-        tools/testing/selftests/bpf/progs/test_xdp.c
-        tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_grow.c
-        tools/testing/selftests/bpf/progs/test_xdp_adjust_tail_shrink.c
-        tools/testing/selftests/bpf/progs/test_xdp_bpf2bpf.c
-        tools/testing/selftests/bpf/progs/test_xdp_context_test_run.c
-        tools/testing/selftests/bpf/progs/test_xdp_devmap_helpers.c
-        tools/testing/selftests/bpf/progs/test_xdp_do_redirect.c
-        tools/testing/selftests/bpf/progs/test_xdp_link.c
-        tools/testing/selftests/bpf/progs/test_xdp_loop.c
-        tools/testing/selftests/bpf/progs/test_xdp_meta.c
-        tools/testing/selftests/bpf/progs/test_xdp_noinline.c
-        tools/testing/selftests/bpf/progs/test_xdp_redirect.c
-        tools/testing/selftests/bpf/progs/test_xdp_update_frags.c
-        tools/testing/selftests/bpf/progs/test_xdp_vlan.c
-        tools/testing/selftests/bpf/progs/test_xdp_with_cpumap_frags_helpers.c
-        tools/testing/selftests/bpf/progs/test_xdp_with_cpumap_helpers.c
-        tools/testing/selftests/bpf/progs/test_xdp_with_devmap_frags_helpers.c
-        tools/testing/selftests/bpf/progs/test_xdp_with_devmap_helpers.c
-        tools/testing/selftests/bpf/progs/timer.c
-        tools/testing/selftests/bpf/progs/timer_crash.c
-        tools/testing/selftests/bpf/progs/timer_mim.c
-        tools/testing/selftests/bpf/progs/timer_mim_reject.c
-        tools/testing/selftests/bpf/progs/trace_dummy_st_ops.c
-        tools/testing/selftests/bpf/progs/trace_printk.c
-        tools/testing/selftests/bpf/progs/trace_vprintk.c
-        tools/testing/selftests/bpf/progs/tracing_struct.c
-        tools/testing/selftests/bpf/progs/trigger_bench.c
-        tools/testing/selftests/bpf/progs/twfw.c
-        tools/testing/selftests/bpf/progs/udp_limit.c
-        tools/testing/selftests/bpf/progs/user_ringbuf_fail.c
-        tools/testing/selftests/bpf/progs/user_ringbuf_success.c
-        tools/testing/selftests/bpf/progs/xdp_dummy.c
-        tools/testing/selftests/bpf/progs/xdp_redirect_map.c
-        tools/testing/selftests/bpf/progs/xdp_redirect_multi_kern.c
-        tools/testing/selftests/bpf/progs/xdp_synproxy_kern.c
-        tools/testing/selftests/bpf/progs/xdp_tx.c
-        tools/testing/selftests/bpf/progs/xdping_kern.c
-        tools/testing/selftests/bpf/progs/xdpwall.c
-        tools/testing/selftests/bpf/verifier/and.c
-        tools/testing/selftests/bpf/verifier/array_access.c
-        tools/testing/selftests/bpf/verifier/atomic_and.c
-        tools/testing/selftests/bpf/verifier/atomic_bounds.c
-        tools/testing/selftests/bpf/verifier/atomic_cmpxchg.c
-        tools/testing/selftests/bpf/verifier/atomic_fetch.c
-        tools/testing/selftests/bpf/verifier/atomic_fetch_add.c
-        tools/testing/selftests/bpf/verifier/atomic_invalid.c
-        tools/testing/selftests/bpf/verifier/atomic_or.c
-        tools/testing/selftests/bpf/verifier/atomic_xchg.c
-        tools/testing/selftests/bpf/verifier/atomic_xor.c
-        tools/testing/selftests/bpf/verifier/basic.c
-        tools/testing/selftests/bpf/verifier/basic_call.c
-        tools/testing/selftests/bpf/verifier/basic_instr.c
-        tools/testing/selftests/bpf/verifier/basic_stack.c
-        tools/testing/selftests/bpf/verifier/basic_stx_ldx.c
-        tools/testing/selftests/bpf/verifier/bounds.c
-        tools/testing/selftests/bpf/verifier/bounds_deduction.c
-        tools/testing/selftests/bpf/verifier/bounds_mix_sign_unsign.c
-        tools/testing/selftests/bpf/verifier/bpf_get_stack.c
-        tools/testing/selftests/bpf/verifier/bpf_loop_inline.c
-        tools/testing/selftests/bpf/verifier/btf_ctx_access.c
-        tools/testing/selftests/bpf/verifier/calls.c
-        tools/testing/selftests/bpf/verifier/cfg.c
-        tools/testing/selftests/bpf/verifier/cgroup_inv_retcode.c
-        tools/testing/selftests/bpf/verifier/cgroup_skb.c
-        tools/testing/selftests/bpf/verifier/cgroup_storage.c
-        tools/testing/selftests/bpf/verifier/const_or.c
-        tools/testing/selftests/bpf/verifier/ctx.c
-        tools/testing/selftests/bpf/verifier/ctx_sk_lookup.c
-        tools/testing/selftests/bpf/verifier/ctx_sk_msg.c
-        tools/testing/selftests/bpf/verifier/ctx_skb.c
-        tools/testing/selftests/bpf/verifier/d_path.c
-        tools/testing/selftests/bpf/verifier/dead_code.c
-        tools/testing/selftests/bpf/verifier/direct_packet_access.c
-        tools/testing/selftests/bpf/verifier/direct_stack_access_wraparound.c
-        tools/testing/selftests/bpf/verifier/direct_value_access.c
-        tools/testing/selftests/bpf/verifier/div0.c
-        tools/testing/selftests/bpf/verifier/div_overflow.c
-        tools/testing/selftests/bpf/verifier/event_output.c
-        tools/testing/selftests/bpf/verifier/helper_access_var_len.c
-        tools/testing/selftests/bpf/verifier/helper_packet_access.c
-        tools/testing/selftests/bpf/verifier/helper_restricted.c
-        tools/testing/selftests/bpf/verifier/helper_value_access.c
-        tools/testing/selftests/bpf/verifier/int_ptr.c
-        tools/testing/selftests/bpf/verifier/jit.c
-        tools/testing/selftests/bpf/verifier/jmp32.c
-        tools/testing/selftests/bpf/verifier/jset.c
-        tools/testing/selftests/bpf/verifier/jump.c
-        tools/testing/selftests/bpf/verifier/junk_insn.c
-        tools/testing/selftests/bpf/verifier/ld_abs.c
-        tools/testing/selftests/bpf/verifier/ld_dw.c
-        tools/testing/selftests/bpf/verifier/ld_imm64.c
-        tools/testing/selftests/bpf/verifier/ld_ind.c
-        tools/testing/selftests/bpf/verifier/leak_ptr.c
-        tools/testing/selftests/bpf/verifier/loops1.c
-        tools/testing/selftests/bpf/verifier/lwt.c
-        tools/testing/selftests/bpf/verifier/map_in_map.c
-        tools/testing/selftests/bpf/verifier/map_kptr.c
-        tools/testing/selftests/bpf/verifier/map_ptr.c
-        tools/testing/selftests/bpf/verifier/map_ptr_mixing.c
-        tools/testing/selftests/bpf/verifier/map_ret_val.c
-        tools/testing/selftests/bpf/verifier/masking.c
-        tools/testing/selftests/bpf/verifier/meta_access.c
-        tools/testing/selftests/bpf/verifier/perf_event_sample_period.c
-        tools/testing/selftests/bpf/verifier/precise.c
-        tools/testing/selftests/bpf/verifier/prevent_map_lookup.c
-        tools/testing/selftests/bpf/verifier/raw_stack.c
-        tools/testing/selftests/bpf/verifier/raw_tp_writable.c
-        tools/testing/selftests/bpf/verifier/ref_tracking.c
-        tools/testing/selftests/bpf/verifier/regalloc.c
-        tools/testing/selftests/bpf/verifier/ringbuf.c
-        tools/testing/selftests/bpf/verifier/runtime_jit.c
-        tools/testing/selftests/bpf/verifier/scale.c
-        tools/testing/selftests/bpf/verifier/search_pruning.c
-        tools/testing/selftests/bpf/verifier/sock.c
-        tools/testing/selftests/bpf/verifier/spill_fill.c
-        tools/testing/selftests/bpf/verifier/spin_lock.c
-        tools/testing/selftests/bpf/verifier/stack_ptr.c
-        tools/testing/selftests/bpf/verifier/subreg.c
-        tools/testing/selftests/bpf/verifier/uninit.c
-        tools/testing/selftests/bpf/verifier/unpriv.c
-        tools/testing/selftests/bpf/verifier/value.c
-        tools/testing/selftests/bpf/verifier/value_adj_spill.c
-        tools/testing/selftests/bpf/verifier/value_illegal_alu.c
-        tools/testing/selftests/bpf/verifier/value_or_null.c
-        tools/testing/selftests/bpf/verifier/value_ptr_arith.c
-        tools/testing/selftests/bpf/verifier/var_off.c
-        tools/testing/selftests/bpf/verifier/wide_access.c
-        tools/testing/selftests/bpf/verifier/xadd.c
-        tools/testing/selftests/bpf/verifier/xdp.c
-        tools/testing/selftests/bpf/verifier/xdp_direct_packet_access.c
-        tools/testing/selftests/bpf/bench.c
-        tools/testing/selftests/bpf/bench.h
-        tools/testing/selftests/bpf/bpf_legacy.h
-        tools/testing/selftests/bpf/bpf_rand.h
-        tools/testing/selftests/bpf/bpf_sockopt_helpers.h
-        tools/testing/selftests/bpf/bpf_tcp_helpers.h
-        tools/testing/selftests/bpf/bpf_util.h
-        tools/testing/selftests/bpf/btf_helpers.c
-        tools/testing/selftests/bpf/btf_helpers.h
-        tools/testing/selftests/bpf/cap_helpers.c
-        tools/testing/selftests/bpf/cap_helpers.h
-        tools/testing/selftests/bpf/cgroup_getset_retval_hooks.h
-        tools/testing/selftests/bpf/cgroup_helpers.c
-        tools/testing/selftests/bpf/cgroup_helpers.h
-        tools/testing/selftests/bpf/flow_dissector_load.c
-        tools/testing/selftests/bpf/flow_dissector_load.h
-        tools/testing/selftests/bpf/get_cgroup_id_user.c
-        tools/testing/selftests/bpf/netcnt_common.h
-        tools/testing/selftests/bpf/network_helpers.c
-        tools/testing/selftests/bpf/network_helpers.h
-        tools/testing/selftests/bpf/sdt-config.h
-        tools/testing/selftests/bpf/sdt.h
-        tools/testing/selftests/bpf/task_local_storage_helpers.h
-        tools/testing/selftests/bpf/test_btf.h
-        tools/testing/selftests/bpf/test_cgroup_storage.c
-        tools/testing/selftests/bpf/test_cpp.cpp
-        tools/testing/selftests/bpf/test_dev_cgroup.c
-        tools/testing/selftests/bpf/test_flow_dissector.c
-        tools/testing/selftests/bpf/test_iptunnel_common.h
-        tools/testing/selftests/bpf/test_lirc_mode2_user.c
-        tools/testing/selftests/bpf/test_lpm_map.c
-        tools/testing/selftests/bpf/test_lru_map.c
-        tools/testing/selftests/bpf/test_maps.c
-        tools/testing/selftests/bpf/test_maps.h
-        tools/testing/selftests/bpf/test_progs.c
-        tools/testing/selftests/bpf/test_progs.h
-        tools/testing/selftests/bpf/test_select_reuseport_common.h
-        tools/testing/selftests/bpf/test_skb_cgroup_id_user.c
-        tools/testing/selftests/bpf/test_sock.c
-        tools/testing/selftests/bpf/test_sock_addr.c
-        tools/testing/selftests/bpf/test_sockmap.c
-        tools/testing/selftests/bpf/test_sysctl.c
-        tools/testing/selftests/bpf/test_tag.c
-        tools/testing/selftests/bpf/test_tcp_check_syncookie_user.c
-        tools/testing/selftests/bpf/test_tcp_hdr_options.h
-        tools/testing/selftests/bpf/test_tcpbpf.h
-        tools/testing/selftests/bpf/test_tcpnotify.h
-        tools/testing/selftests/bpf/test_tcpnotify_user.c
-        tools/testing/selftests/bpf/test_verifier.c
-        tools/testing/selftests/bpf/test_verifier_log.c
-        tools/testing/selftests/bpf/testing_helpers.c
-        tools/testing/selftests/bpf/testing_helpers.h
-        tools/testing/selftests/bpf/trace_helpers.c
-        tools/testing/selftests/bpf/trace_helpers.h
-        tools/testing/selftests/bpf/urandom_read.c
-        tools/testing/selftests/bpf/urandom_read_aux.c
-        tools/testing/selftests/bpf/urandom_read_lib1.c
-        tools/testing/selftests/bpf/urandom_read_lib2.c
-        tools/testing/selftests/bpf/veristat.c
-        tools/testing/selftests/bpf/xdp_redirect_multi.c
-        tools/testing/selftests/bpf/xdp_synproxy.c
-        tools/testing/selftests/bpf/xdping.c
-        tools/testing/selftests/bpf/xdping.h
-        tools/testing/selftests/bpf/xsk.c
-        tools/testing/selftests/bpf/xsk.h
-        tools/testing/selftests/bpf/xskxceiver.c
-        tools/testing/selftests/bpf/xskxceiver.h
-        tools/testing/selftests/breakpoints/breakpoint_test.c
-        tools/testing/selftests/breakpoints/breakpoint_test_arm64.c
-        tools/testing/selftests/breakpoints/step_after_suspend_test.c
-        tools/testing/selftests/capabilities/test_execve.c
-        tools/testing/selftests/capabilities/validate_cap.c
-        tools/testing/selftests/cgroup/cgroup_util.c
-        tools/testing/selftests/cgroup/cgroup_util.h
-        tools/testing/selftests/cgroup/memcg_protection.m
-        tools/testing/selftests/cgroup/test_core.c
-        tools/testing/selftests/cgroup/test_cpu.c
-        tools/testing/selftests/cgroup/test_freezer.c
-        tools/testing/selftests/cgroup/test_kill.c
-        tools/testing/selftests/cgroup/test_kmem.c
-        tools/testing/selftests/cgroup/test_memcontrol.c
-        tools/testing/selftests/cgroup/wait_inotify.c
-        tools/testing/selftests/clone3/clone3.c
-        tools/testing/selftests/clone3/clone3_cap_checkpoint_restore.c
-        tools/testing/selftests/clone3/clone3_clear_sighand.c
-        tools/testing/selftests/clone3/clone3_selftests.h
-        tools/testing/selftests/clone3/clone3_set_tid.c
-        tools/testing/selftests/core/close_range_test.c
-        tools/testing/selftests/damon/huge_count_read_write.c
-        tools/testing/selftests/dma/dma_map_benchmark.c
-        tools/testing/selftests/dmabuf-heaps/dmabuf-heap.c
-        tools/testing/selftests/drivers/dma-buf/udmabuf.c
-        tools/testing/selftests/drivers/s390x/uvdevice/test_uvdevice.c
-        tools/testing/selftests/efivarfs/create-read.c
-        tools/testing/selftests/efivarfs/open-unlink.c
-        tools/testing/selftests/exec/execveat.c
-        tools/testing/selftests/exec/load_address.c
-        tools/testing/selftests/exec/non-regular.c
-        tools/testing/selftests/exec/null-argv.c
-        tools/testing/selftests/exec/recursion-depth.c
-        tools/testing/selftests/filesystems/binderfs/binderfs_test.c
-        tools/testing/selftests/filesystems/epoll/epoll_wakeup_test.c
-        tools/testing/selftests/filesystems/fat/rename_exchange.c
-        tools/testing/selftests/filesystems/devpts_pts.c
-        tools/testing/selftests/filesystems/dnotify_test.c
-        tools/testing/selftests/firmware/fw_namespace.c
-        tools/testing/selftests/fpu/test_fpu.c
-        tools/testing/selftests/futex/functional/futex_requeue.c
-        tools/testing/selftests/futex/functional/futex_requeue_pi.c
-        tools/testing/selftests/futex/functional/futex_requeue_pi_mismatched_ops.c
-        tools/testing/selftests/futex/functional/futex_requeue_pi_signal_restart.c
-        tools/testing/selftests/futex/functional/futex_wait.c
-        tools/testing/selftests/futex/functional/futex_wait_private_mapped_file.c
-        tools/testing/selftests/futex/functional/futex_wait_timeout.c
-        tools/testing/selftests/futex/functional/futex_wait_uninitialized_heap.c
-        tools/testing/selftests/futex/functional/futex_wait_wouldblock.c
-        tools/testing/selftests/futex/functional/futex_waitv.c
-        tools/testing/selftests/futex/include/atomic.h
-        tools/testing/selftests/futex/include/futex2test.h
-        tools/testing/selftests/futex/include/futextest.h
-        tools/testing/selftests/futex/include/logging.h
-        tools/testing/selftests/gpio/gpio-chip-info.c
-        tools/testing/selftests/gpio/gpio-line-name.c
-        tools/testing/selftests/gpio/gpio-mockup-cdev.c
-        tools/testing/selftests/ia64/aliasing-test.c
-        tools/testing/selftests/intel_pstate/aperf.c
-        tools/testing/selftests/intel_pstate/msr.c
-        tools/testing/selftests/ipc/msgque.c
-        tools/testing/selftests/ir/ir_loopback.c
-        tools/testing/selftests/kcmp/kcmp_test.c
-        tools/testing/selftests/kvm/aarch64/aarch32_id_regs.c
-        tools/testing/selftests/kvm/aarch64/arch_timer.c
-        tools/testing/selftests/kvm/aarch64/debug-exceptions.c
-        tools/testing/selftests/kvm/aarch64/get-reg-list.c
-        tools/testing/selftests/kvm/aarch64/hypercalls.c
-        tools/testing/selftests/kvm/aarch64/psci_test.c
-        tools/testing/selftests/kvm/aarch64/vcpu_width_config.c
-        tools/testing/selftests/kvm/aarch64/vgic_init.c
-        tools/testing/selftests/kvm/aarch64/vgic_irq.c
-        tools/testing/selftests/kvm/include/aarch64/arch_timer.h
-        tools/testing/selftests/kvm/include/aarch64/delay.h
-        tools/testing/selftests/kvm/include/aarch64/gic.h
-        tools/testing/selftests/kvm/include/aarch64/gic_v3.h
-        tools/testing/selftests/kvm/include/aarch64/processor.h
-        tools/testing/selftests/kvm/include/aarch64/spinlock.h
-        tools/testing/selftests/kvm/include/aarch64/vgic.h
-        tools/testing/selftests/kvm/include/riscv/processor.h
-        tools/testing/selftests/kvm/include/s390x/diag318_test_handler.h
-        tools/testing/selftests/kvm/include/s390x/processor.h
-        tools/testing/selftests/kvm/include/x86_64/apic.h
-        tools/testing/selftests/kvm/include/x86_64/evmcs.h
-        tools/testing/selftests/kvm/include/x86_64/hyperv.h
-        tools/testing/selftests/kvm/include/x86_64/mce.h
-        tools/testing/selftests/kvm/include/x86_64/processor.h
-        tools/testing/selftests/kvm/include/x86_64/svm.h
-        tools/testing/selftests/kvm/include/x86_64/svm_util.h
-        tools/testing/selftests/kvm/include/x86_64/vmx.h
-        tools/testing/selftests/kvm/include/guest_modes.h
-        tools/testing/selftests/kvm/include/kvm_util.h
-        tools/testing/selftests/kvm/include/kvm_util_base.h
-        tools/testing/selftests/kvm/include/numaif.h
-        tools/testing/selftests/kvm/include/perf_test_util.h
-        tools/testing/selftests/kvm/include/sparsebit.h
-        tools/testing/selftests/kvm/include/test_util.h
-        tools/testing/selftests/kvm/include/ucall_common.h
-        tools/testing/selftests/kvm/lib/aarch64/gic.c
-        tools/testing/selftests/kvm/lib/aarch64/gic_private.h
-        tools/testing/selftests/kvm/lib/aarch64/gic_v3.c
-        tools/testing/selftests/kvm/lib/aarch64/processor.c
-        tools/testing/selftests/kvm/lib/aarch64/spinlock.c
-        tools/testing/selftests/kvm/lib/aarch64/ucall.c
-        tools/testing/selftests/kvm/lib/aarch64/vgic.c
-        tools/testing/selftests/kvm/lib/riscv/processor.c
-        tools/testing/selftests/kvm/lib/riscv/ucall.c
-        tools/testing/selftests/kvm/lib/s390x/diag318_test_handler.c
-        tools/testing/selftests/kvm/lib/s390x/processor.c
-        tools/testing/selftests/kvm/lib/s390x/ucall.c
-        tools/testing/selftests/kvm/lib/x86_64/apic.c
-        tools/testing/selftests/kvm/lib/x86_64/perf_test_util.c
-        tools/testing/selftests/kvm/lib/x86_64/processor.c
-        tools/testing/selftests/kvm/lib/x86_64/svm.c
-        tools/testing/selftests/kvm/lib/x86_64/ucall.c
-        tools/testing/selftests/kvm/lib/x86_64/vmx.c
-        tools/testing/selftests/kvm/lib/assert.c
-        tools/testing/selftests/kvm/lib/elf.c
-        tools/testing/selftests/kvm/lib/guest_modes.c
-        tools/testing/selftests/kvm/lib/io.c
-        tools/testing/selftests/kvm/lib/kvm_util.c
-        tools/testing/selftests/kvm/lib/perf_test_util.c
-        tools/testing/selftests/kvm/lib/rbtree.c
-        tools/testing/selftests/kvm/lib/sparsebit.c
-        tools/testing/selftests/kvm/lib/string_override.c
-        tools/testing/selftests/kvm/lib/test_util.c
-        tools/testing/selftests/kvm/s390x/memop.c
-        tools/testing/selftests/kvm/s390x/resets.c
-        tools/testing/selftests/kvm/s390x/sync_regs_test.c
-        tools/testing/selftests/kvm/s390x/tprot.c
-        tools/testing/selftests/kvm/x86_64/amx_test.c
-        tools/testing/selftests/kvm/x86_64/cpuid_test.c
-        tools/testing/selftests/kvm/x86_64/cr4_cpuid_sync_test.c
-        tools/testing/selftests/kvm/x86_64/debug_regs.c
-        tools/testing/selftests/kvm/x86_64/emulator_error_test.c
-        tools/testing/selftests/kvm/x86_64/evmcs_test.c
-        tools/testing/selftests/kvm/x86_64/fix_hypercall_test.c
-        tools/testing/selftests/kvm/x86_64/get_msr_index_features.c
-        tools/testing/selftests/kvm/x86_64/hyperv_clock.c
-        tools/testing/selftests/kvm/x86_64/hyperv_cpuid.c
-        tools/testing/selftests/kvm/x86_64/hyperv_features.c
-        tools/testing/selftests/kvm/x86_64/hyperv_svm_test.c
-        tools/testing/selftests/kvm/x86_64/kvm_clock_test.c
-        tools/testing/selftests/kvm/x86_64/kvm_pv_test.c
-        tools/testing/selftests/kvm/x86_64/max_vcpuid_cap_test.c
-        tools/testing/selftests/kvm/x86_64/mmio_warning_test.c
-        tools/testing/selftests/kvm/x86_64/monitor_mwait_test.c
-        tools/testing/selftests/kvm/x86_64/nested_exceptions_test.c
-        tools/testing/selftests/kvm/x86_64/nx_huge_pages_test.c
-        tools/testing/selftests/kvm/x86_64/platform_info_test.c
-        tools/testing/selftests/kvm/x86_64/pmu_event_filter_test.c
-        tools/testing/selftests/kvm/x86_64/set_boot_cpu_id.c
-        tools/testing/selftests/kvm/x86_64/set_sregs_test.c
-        tools/testing/selftests/kvm/x86_64/sev_migrate_tests.c
-        tools/testing/selftests/kvm/x86_64/smm_test.c
-        tools/testing/selftests/kvm/x86_64/state_test.c
-        tools/testing/selftests/kvm/x86_64/svm_int_ctl_test.c
-        tools/testing/selftests/kvm/x86_64/svm_nested_shutdown_test.c
-        tools/testing/selftests/kvm/x86_64/svm_nested_soft_inject_test.c
-        tools/testing/selftests/kvm/x86_64/svm_vmcall_test.c
-        tools/testing/selftests/kvm/x86_64/sync_regs_test.c
-        tools/testing/selftests/kvm/x86_64/triple_fault_event_test.c
-        tools/testing/selftests/kvm/x86_64/tsc_msrs_test.c
-        tools/testing/selftests/kvm/x86_64/tsc_scaling_sync.c
-        tools/testing/selftests/kvm/x86_64/ucna_injection_test.c
-        tools/testing/selftests/kvm/x86_64/userspace_io_test.c
-        tools/testing/selftests/kvm/x86_64/userspace_msr_exit_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_apic_access_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_close_while_nested_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_dirty_log_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_exception_with_invalid_guest_state.c
-        tools/testing/selftests/kvm/x86_64/vmx_invalid_nested_guest_state.c
-        tools/testing/selftests/kvm/x86_64/vmx_msrs_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_nested_tsc_scaling_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_pmu_caps_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_preemption_timer_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_set_nested_state_test.c
-        tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c
-        tools/testing/selftests/kvm/x86_64/xapic_ipi_test.c
-        tools/testing/selftests/kvm/x86_64/xapic_state_test.c
-        tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c
-        tools/testing/selftests/kvm/x86_64/xen_vmcall_test.c
-        tools/testing/selftests/kvm/x86_64/xss_msr_test.c
-        tools/testing/selftests/kvm/access_tracking_perf_test.c
-        tools/testing/selftests/kvm/demand_paging_test.c
-        tools/testing/selftests/kvm/dirty_log_perf_test.c
-        tools/testing/selftests/kvm/dirty_log_test.c
-        tools/testing/selftests/kvm/hardware_disable_test.c
-        tools/testing/selftests/kvm/kvm_binary_stats_test.c
-        tools/testing/selftests/kvm/kvm_create_max_vcpus.c
-        tools/testing/selftests/kvm/kvm_page_table_test.c
-        tools/testing/selftests/kvm/max_guest_memory_test.c
-        tools/testing/selftests/kvm/memslot_modification_stress_test.c
-        tools/testing/selftests/kvm/memslot_perf_test.c
-        tools/testing/selftests/kvm/rseq_test.c
-        tools/testing/selftests/kvm/set_memory_region_test.c
-        tools/testing/selftests/kvm/steal_time.c
-        tools/testing/selftests/kvm/system_counter_offset_test.c
-        tools/testing/selftests/landlock/base_test.c
-        tools/testing/selftests/landlock/common.h
-        tools/testing/selftests/landlock/fs_test.c
-        tools/testing/selftests/landlock/ptrace_test.c
-        tools/testing/selftests/landlock/true.c
-        tools/testing/selftests/media_tests/media_device_open.c
-        tools/testing/selftests/media_tests/media_device_test.c
-        tools/testing/selftests/media_tests/video_device_test.c
-        tools/testing/selftests/membarrier/membarrier_test_impl.h
-        tools/testing/selftests/membarrier/membarrier_test_multi_thread.c
-        tools/testing/selftests/membarrier/membarrier_test_single_thread.c
-        tools/testing/selftests/memfd/common.c
-        tools/testing/selftests/memfd/common.h
-        tools/testing/selftests/memfd/fuse_mnt.c
-        tools/testing/selftests/memfd/fuse_test.c
-        tools/testing/selftests/memfd/memfd_test.c
-        tools/testing/selftests/mincore/mincore_selftest.c
-        tools/testing/selftests/mount/nosymfollow-test.c
-        tools/testing/selftests/mount/unprivileged-remount-test.c
-        tools/testing/selftests/mount_setattr/mount_setattr_test.c
-        tools/testing/selftests/move_mount_set_group/move_mount_set_group_test.c
-        tools/testing/selftests/mqueue/mq_open_tests.c
-        tools/testing/selftests/mqueue/mq_perf_tests.c
-        tools/testing/selftests/nci/nci_dev.c
-        tools/testing/selftests/net/af_unix/diag_uid.c
-        tools/testing/selftests/net/af_unix/test_unix_oob.c
-        tools/testing/selftests/net/af_unix/unix_connect.c
-        tools/testing/selftests/net/bpf/nat6to4.c
-        tools/testing/selftests/net/mptcp/mptcp_connect.c
-        tools/testing/selftests/net/mptcp/mptcp_inq.c
-        tools/testing/selftests/net/mptcp/mptcp_sockopt.c
-        tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-        tools/testing/selftests/net/bind_bhash.c
-        tools/testing/selftests/net/cmsg_sender.c
-        tools/testing/selftests/net/fin_ack_lat.c
-        tools/testing/selftests/net/gro.c
-        tools/testing/selftests/net/hwtstamp_config.c
-        tools/testing/selftests/net/io_uring_zerocopy_tx.c
-        tools/testing/selftests/net/ioam6_parser.c
-        tools/testing/selftests/net/ip_defrag.c
-        tools/testing/selftests/net/ipsec.c
-        tools/testing/selftests/net/ipv6_flowlabel.c
-        tools/testing/selftests/net/ipv6_flowlabel_mgr.c
-        tools/testing/selftests/net/msg_zerocopy.c
-        tools/testing/selftests/net/nettest.c
-        tools/testing/selftests/net/psock_fanout.c
-        tools/testing/selftests/net/psock_lib.h
-        tools/testing/selftests/net/psock_snd.c
-        tools/testing/selftests/net/psock_tpacket.c
-        tools/testing/selftests/net/reuseaddr_conflict.c
-        tools/testing/selftests/net/reuseaddr_ports_exhausted.c
-        tools/testing/selftests/net/reuseport_addr_any.c
-        tools/testing/selftests/net/reuseport_bpf.c
-        tools/testing/selftests/net/reuseport_bpf_cpu.c
-        tools/testing/selftests/net/reuseport_bpf_numa.c
-        tools/testing/selftests/net/reuseport_dualstack.c
-        tools/testing/selftests/net/rxtimestamp.c
-        tools/testing/selftests/net/sk_bind_sendto_listen.c
-        tools/testing/selftests/net/sk_connect_zero_addr.c
-        tools/testing/selftests/net/so_netns_cookie.c
-        tools/testing/selftests/net/so_txtime.c
-        tools/testing/selftests/net/socket.c
-        tools/testing/selftests/net/stress_reuseport_listen.c
-        tools/testing/selftests/net/tap.c
-        tools/testing/selftests/net/tcp_fastopen_backup_key.c
-        tools/testing/selftests/net/tcp_inq.c
-        tools/testing/selftests/net/tcp_mmap.c
-        tools/testing/selftests/net/timestamping.c
-        tools/testing/selftests/net/tls.c
-        tools/testing/selftests/net/toeplitz.c
-        tools/testing/selftests/net/tun.c
-        tools/testing/selftests/net/txring_overwrite.c
-        tools/testing/selftests/net/txtimestamp.c
-        tools/testing/selftests/net/udpgso.c
-        tools/testing/selftests/net/udpgso_bench_rx.c
-        tools/testing/selftests/net/udpgso_bench_tx.c
-        tools/testing/selftests/netfilter/connect_close.c
-        tools/testing/selftests/netfilter/nf-queue.c
-        tools/testing/selftests/nolibc/nolibc-test.c
-        tools/testing/selftests/nsfs/owner.c
-        tools/testing/selftests/nsfs/pidns.c
-        tools/testing/selftests/openat2/helpers.c
-        tools/testing/selftests/openat2/helpers.h
-        tools/testing/selftests/openat2/openat2_test.c
-        tools/testing/selftests/openat2/rename_attack_test.c
-        tools/testing/selftests/openat2/resolve_test.c
-        tools/testing/selftests/perf_events/remove_on_exec.c
-        tools/testing/selftests/perf_events/sigtrap_threads.c
-        tools/testing/selftests/pid_namespace/regression_enomem.c
-        tools/testing/selftests/pidfd/pidfd.h
-        tools/testing/selftests/pidfd/pidfd_fdinfo_test.c
-        tools/testing/selftests/pidfd/pidfd_getfd_test.c
-        tools/testing/selftests/pidfd/pidfd_open_test.c
-        tools/testing/selftests/pidfd/pidfd_poll_test.c
-        tools/testing/selftests/pidfd/pidfd_setns_test.c
-        tools/testing/selftests/pidfd/pidfd_test.c
-        tools/testing/selftests/pidfd/pidfd_wait.c
-        tools/testing/selftests/powerpc/alignment/alignment_handler.c
-        tools/testing/selftests/powerpc/alignment/copy_first_unaligned.c
-        tools/testing/selftests/powerpc/benchmarks/context_switch.c
-        tools/testing/selftests/powerpc/benchmarks/exec_target.c
-        tools/testing/selftests/powerpc/benchmarks/fork.c
-        tools/testing/selftests/powerpc/benchmarks/futex_bench.c
-        tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-        tools/testing/selftests/powerpc/benchmarks/mmap_bench.c
-        tools/testing/selftests/powerpc/benchmarks/null_syscall.c
-        tools/testing/selftests/powerpc/cache_shape/cache_shape.c
-        tools/testing/selftests/powerpc/copyloops/asm/asm-compat.h
-        tools/testing/selftests/powerpc/copyloops/asm/export.h
-        tools/testing/selftests/powerpc/copyloops/asm/feature-fixups.h
-        tools/testing/selftests/powerpc/copyloops/asm/kasan.h
-        tools/testing/selftests/powerpc/copyloops/asm/ppc_asm.h
-        tools/testing/selftests/powerpc/copyloops/asm/processor.h
-        tools/testing/selftests/powerpc/copyloops/exc_validate.c
-        tools/testing/selftests/powerpc/copyloops/memmove_validate.c
-        tools/testing/selftests/powerpc/copyloops/validate.c
-        tools/testing/selftests/powerpc/dscr/dscr.h
-        tools/testing/selftests/powerpc/dscr/dscr_default_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_explicit_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_inherit_exec_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_inherit_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_sysfs_thread_test.c
-        tools/testing/selftests/powerpc/dscr/dscr_user_test.c
-        tools/testing/selftests/powerpc/include/basic_asm.h
-        tools/testing/selftests/powerpc/include/fpu_asm.h
-        tools/testing/selftests/powerpc/include/gpr_asm.h
-        tools/testing/selftests/powerpc/include/instructions.h
-        tools/testing/selftests/powerpc/include/pkeys.h
-        tools/testing/selftests/powerpc/include/reg.h
-        tools/testing/selftests/powerpc/include/subunit.h
-        tools/testing/selftests/powerpc/include/utils.h
-        tools/testing/selftests/powerpc/include/vmx_asm.h
-        tools/testing/selftests/powerpc/include/vsx_asm.h
-        tools/testing/selftests/powerpc/math/fpu_denormal.c
-        tools/testing/selftests/powerpc/math/fpu_preempt.c
-        tools/testing/selftests/powerpc/math/fpu_signal.c
-        tools/testing/selftests/powerpc/math/fpu_syscall.c
-        tools/testing/selftests/powerpc/math/mma.c
-        tools/testing/selftests/powerpc/math/vmx_preempt.c
-        tools/testing/selftests/powerpc/math/vmx_signal.c
-        tools/testing/selftests/powerpc/math/vmx_syscall.c
-        tools/testing/selftests/powerpc/math/vsx_preempt.c
-        tools/testing/selftests/powerpc/mce/inject-ra-err.c
-        tools/testing/selftests/powerpc/mm/bad_accesses.c
-        tools/testing/selftests/powerpc/mm/exec_prot.c
-        tools/testing/selftests/powerpc/mm/hugetlb_vs_thp_test.c
-        tools/testing/selftests/powerpc/mm/large_vm_fork_separation.c
-        tools/testing/selftests/powerpc/mm/large_vm_gpr_corruption.c
-        tools/testing/selftests/powerpc/mm/pkey_exec_prot.c
-        tools/testing/selftests/powerpc/mm/pkey_siginfo.c
-        tools/testing/selftests/powerpc/mm/prot_sao.c
-        tools/testing/selftests/powerpc/mm/segv_errors.c
-        tools/testing/selftests/powerpc/mm/stack_expansion_ldst.c
-        tools/testing/selftests/powerpc/mm/stack_expansion_signal.c
-        tools/testing/selftests/powerpc/mm/subpage_prot.c
-        tools/testing/selftests/powerpc/mm/tlbie_test.c
-        tools/testing/selftests/powerpc/mm/wild_bctr.c
-        tools/testing/selftests/powerpc/nx-gzip/include/copy-paste.h
-        tools/testing/selftests/powerpc/nx-gzip/include/crb.h
-        tools/testing/selftests/powerpc/nx-gzip/include/nx.h
-        tools/testing/selftests/powerpc/nx-gzip/include/nx_dbg.h
-        tools/testing/selftests/powerpc/nx-gzip/include/nxu.h
-        tools/testing/selftests/powerpc/nx-gzip/gunz_test.c
-        tools/testing/selftests/powerpc/nx-gzip/gzfht_test.c
-        tools/testing/selftests/powerpc/nx-gzip/gzip_vas.c
-        tools/testing/selftests/powerpc/papr_attributes/attr_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/back_to_back_ebbs_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/close_clears_pmcc_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/cpu_event_pinned_vs_ebb_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/cpu_event_vs_ebb_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/cycles_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/cycles_with_freeze_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/cycles_with_mmcr2_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/ebb.c
-        tools/testing/selftests/powerpc/pmu/ebb/ebb.h
-        tools/testing/selftests/powerpc/pmu/ebb/ebb_on_child_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/ebb_on_willing_child_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/ebb_vs_cpu_event_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/event_attributes_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/fork_cleanup_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/instruction_count_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/lost_exception_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/multi_counter_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/multi_ebb_procs_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/no_handler_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/pmae_handling_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/pmc56_overflow_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/reg_access_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/regs_access_pmccext_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/task_event_pinned_vs_ebb_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/task_event_vs_ebb_test.c
-        tools/testing/selftests/powerpc/pmu/ebb/trace.c
-        tools/testing/selftests/powerpc/pmu/ebb/trace.h
-        tools/testing/selftests/powerpc/pmu/event_code_tests/blacklisted_events_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/event_alternatives_tests_p10.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/event_alternatives_tests_p9.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/generic_events_valid_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_cache_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_l2l3_sel_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_mmcra_sample_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_pmc56_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_pmc_count_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_radix_scope_qual_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_repeat_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_thresh_cmp_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_thresh_ctl_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_thresh_sel_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_constraint_unit_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/group_pmc56_exclude_constraints_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/hw_cache_event_type_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/invalid_event_code_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/reserved_bits_mmcra_sample_elig_mode_test.c
-        tools/testing/selftests/powerpc/pmu/event_code_tests/reserved_bits_mmcra_thresh_ctl_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/bhrb_filter_map_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/bhrb_no_crash_wo_pmu_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/intr_regs_no_crash_wo_pmu_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/misc.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/misc.h
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_cc56run_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_exceptionbits_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_fc56_pmc1ce_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_fc56_pmc56_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_pmccext_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr0_pmcjce_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr1_comb_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr1_sel_unit_cache_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr2_fcs_fch_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr2_l2l3_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcr3_src_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_bhrb_any_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_bhrb_cond_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_bhrb_disable_no_branch_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_bhrb_disable_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_bhrb_ind_call_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_cmp_test.c
-        tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_marked_sample_test.c
-        tools/testing/selftests/powerpc/pmu/count_instructions.c
-        tools/testing/selftests/powerpc/pmu/count_stcx_fail.c
-        tools/testing/selftests/powerpc/pmu/event.c
-        tools/testing/selftests/powerpc/pmu/event.h
-        tools/testing/selftests/powerpc/pmu/l3_bank_test.c
-        tools/testing/selftests/powerpc/pmu/lib.c
-        tools/testing/selftests/powerpc/pmu/lib.h
-        tools/testing/selftests/powerpc/pmu/per_event_excludes.c
-        tools/testing/selftests/powerpc/primitives/asm/firmware.h
-        tools/testing/selftests/powerpc/primitives/asm/ppc-opcode.h
-        tools/testing/selftests/powerpc/primitives/asm/processor.h
-        tools/testing/selftests/powerpc/primitives/linux/stringify.h
-        tools/testing/selftests/powerpc/primitives/load_unaligned_zeropad.c
-        tools/testing/selftests/powerpc/ptrace/child.h
-        tools/testing/selftests/powerpc/ptrace/core-pkey.c
-        tools/testing/selftests/powerpc/ptrace/perf-hwbreak.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-gpr.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-gpr.h
-        tools/testing/selftests/powerpc/ptrace/ptrace-hwbreak.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-perf-hwbreak.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-pkey.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-syscall.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tar.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tar.h
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-gpr.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-spd-gpr.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-spd-tar.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-spd-vsx.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-spr.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-tar.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-tm-vsx.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-vsx.c
-        tools/testing/selftests/powerpc/ptrace/ptrace-vsx.h
-        tools/testing/selftests/powerpc/ptrace/ptrace.h
-        tools/testing/selftests/powerpc/security/entry_flush.c
-        tools/testing/selftests/powerpc/security/flush_utils.c
-        tools/testing/selftests/powerpc/security/flush_utils.h
-        tools/testing/selftests/powerpc/security/rfi_flush.c
-        tools/testing/selftests/powerpc/security/spectre_v2.c
-        tools/testing/selftests/powerpc/security/uaccess_flush.c
-        tools/testing/selftests/powerpc/signal/sig_sc_double_restart.c
-        tools/testing/selftests/powerpc/signal/sigfuz.c
-        tools/testing/selftests/powerpc/signal/signal.c
-        tools/testing/selftests/powerpc/signal/signal_tm.c
-        tools/testing/selftests/powerpc/signal/sigreturn_kernel.c
-        tools/testing/selftests/powerpc/signal/sigreturn_unaligned.c
-        tools/testing/selftests/powerpc/signal/sigreturn_vdso.c
-        tools/testing/selftests/powerpc/stringloops/asm/cache.h
-        tools/testing/selftests/powerpc/stringloops/asm/export.h
-        tools/testing/selftests/powerpc/stringloops/asm/ppc-opcode.h
-        tools/testing/selftests/powerpc/stringloops/asm/ppc_asm.h
-        tools/testing/selftests/powerpc/stringloops/memcmp.c
-        tools/testing/selftests/powerpc/stringloops/string.c
-        tools/testing/selftests/powerpc/stringloops/strlen.c
-        tools/testing/selftests/powerpc/switch_endian/common.h
-        tools/testing/selftests/powerpc/syscalls/ipc.h
-        tools/testing/selftests/powerpc/syscalls/ipc_unmuxed.c
-        tools/testing/selftests/powerpc/syscalls/rtas_filter.c
-        tools/testing/selftests/powerpc/tm/tm-exec.c
-        tools/testing/selftests/powerpc/tm/tm-fork.c
-        tools/testing/selftests/powerpc/tm/tm-poison.c
-        tools/testing/selftests/powerpc/tm/tm-resched-dscr.c
-        tools/testing/selftests/powerpc/tm/tm-signal-context-chk-fpu.c
-        tools/testing/selftests/powerpc/tm/tm-signal-context-chk-gpr.c
-        tools/testing/selftests/powerpc/tm/tm-signal-context-chk-vmx.c
-        tools/testing/selftests/powerpc/tm/tm-signal-context-chk-vsx.c
-        tools/testing/selftests/powerpc/tm/tm-signal-context-force-tm.c
-        tools/testing/selftests/powerpc/tm/tm-signal-msr-resv.c
-        tools/testing/selftests/powerpc/tm/tm-signal-pagefault.c
-        tools/testing/selftests/powerpc/tm/tm-signal-sigreturn-nt.c
-        tools/testing/selftests/powerpc/tm/tm-signal-stack.c
-        tools/testing/selftests/powerpc/tm/tm-sigreturn.c
-        tools/testing/selftests/powerpc/tm/tm-syscall.c
-        tools/testing/selftests/powerpc/tm/tm-tar.c
-        tools/testing/selftests/powerpc/tm/tm-tmspr.c
-        tools/testing/selftests/powerpc/tm/tm-trap.c
-        tools/testing/selftests/powerpc/tm/tm-unavailable.c
-        tools/testing/selftests/powerpc/tm/tm-vmx-unavail.c
-        tools/testing/selftests/powerpc/tm/tm-vmxcopy.c
-        tools/testing/selftests/powerpc/tm/tm.h
-        tools/testing/selftests/powerpc/vphn/test-vphn.c
-        tools/testing/selftests/powerpc/harness.c
-        tools/testing/selftests/powerpc/utils.c
-        tools/testing/selftests/prctl/disable-tsc-ctxt-sw-stress-test.c
-        tools/testing/selftests/prctl/disable-tsc-on-off-stress-test.c
-        tools/testing/selftests/prctl/disable-tsc-test.c
-        tools/testing/selftests/proc/fd-001-lookup.c
-        tools/testing/selftests/proc/fd-002-posix-eq.c
-        tools/testing/selftests/proc/fd-003-kthread.c
-        tools/testing/selftests/proc/proc-empty-vm.c
-        tools/testing/selftests/proc/proc-fsconfig-hidepid.c
-        tools/testing/selftests/proc/proc-loadavg-001.c
-        tools/testing/selftests/proc/proc-multiple-procfs.c
-        tools/testing/selftests/proc/proc-pid-vm.c
-        tools/testing/selftests/proc/proc-self-map-files-001.c
-        tools/testing/selftests/proc/proc-self-map-files-002.c
-        tools/testing/selftests/proc/proc-self-syscall.c
-        tools/testing/selftests/proc/proc-self-wchan.c
-        tools/testing/selftests/proc/proc-subset-pid.c
-        tools/testing/selftests/proc/proc-tid0.c
-        tools/testing/selftests/proc/proc-uptime-001.c
-        tools/testing/selftests/proc/proc-uptime-002.c
-        tools/testing/selftests/proc/proc-uptime.h
-        tools/testing/selftests/proc/proc.h
-        tools/testing/selftests/proc/read.c
-        tools/testing/selftests/proc/self.c
-        tools/testing/selftests/proc/setns-dcache.c
-        tools/testing/selftests/proc/setns-sysvipc.c
-        tools/testing/selftests/proc/thread-self.c
-        tools/testing/selftests/ptp/testptp.c
-        tools/testing/selftests/ptrace/get_syscall_info.c
-        tools/testing/selftests/ptrace/peeksiginfo.c
-        tools/testing/selftests/ptrace/vmaccess.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/delay.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/export.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/mutex.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/percpu.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/preempt.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/rcupdate.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/sched.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/smp.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/linux/workqueue.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/empty_includes/uapi/linux/types.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/include/linux/kconfig.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/include/linux/types.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/assume.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/barriers.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/bug_on.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/combined_source.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/config.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/include_srcu.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/int_typedefs.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/locks.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/misc.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/misc.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/percpu.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/preempt.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/preempt.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/simple_sync_srcu.c
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/src/workqueues.h
-        tools/testing/selftests/rcutorture/formal/srcu-cbmc/tests/store_buffering/test.c
-        tools/testing/selftests/resctrl/cache.c
-        tools/testing/selftests/resctrl/cat_test.c
-        tools/testing/selftests/resctrl/cmt_test.c
-        tools/testing/selftests/resctrl/fill_buf.c
-        tools/testing/selftests/resctrl/mba_test.c
-        tools/testing/selftests/resctrl/mbm_test.c
-        tools/testing/selftests/resctrl/resctrl.h
-        tools/testing/selftests/resctrl/resctrl_tests.c
-        tools/testing/selftests/resctrl/resctrl_val.c
-        tools/testing/selftests/resctrl/resctrlfs.c
-        tools/testing/selftests/rlimits/rlimits-per-userns.c
-        tools/testing/selftests/rseq/basic_percpu_ops_test.c
-        tools/testing/selftests/rseq/basic_test.c
-        tools/testing/selftests/rseq/compiler.h
-        tools/testing/selftests/rseq/param_test.c
-        tools/testing/selftests/rseq/rseq-abi.h
-        tools/testing/selftests/rseq/rseq-arm.h
-        tools/testing/selftests/rseq/rseq-arm64.h
-        tools/testing/selftests/rseq/rseq-generic-thread-pointer.h
-        tools/testing/selftests/rseq/rseq-mips.h
-        tools/testing/selftests/rseq/rseq-ppc-thread-pointer.h
-        tools/testing/selftests/rseq/rseq-ppc.h
-        tools/testing/selftests/rseq/rseq-riscv.h
-        tools/testing/selftests/rseq/rseq-s390.h
-        tools/testing/selftests/rseq/rseq-skip.h
-        tools/testing/selftests/rseq/rseq-thread-pointer.h
-        tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
-        tools/testing/selftests/rseq/rseq-x86.h
-        tools/testing/selftests/rseq/rseq.c
-        tools/testing/selftests/rseq/rseq.h
-        tools/testing/selftests/rtc/rtctest.c
-        tools/testing/selftests/rtc/setdate.c
-        tools/testing/selftests/safesetid/safesetid-test.c
-        tools/testing/selftests/sched/cs_prctl_test.c
-        tools/testing/selftests/seccomp/seccomp_benchmark.c
-        tools/testing/selftests/seccomp/seccomp_bpf.c
-        tools/testing/selftests/sgx/defines.h
-        tools/testing/selftests/sgx/load.c
-        tools/testing/selftests/sgx/main.c
-        tools/testing/selftests/sgx/main.h
-        tools/testing/selftests/sgx/sigstruct.c
-        tools/testing/selftests/sgx/test_encl.c
-        tools/testing/selftests/sigaltstack/sas.c
-        tools/testing/selftests/size/get_size.c
-        tools/testing/selftests/sparc64/drivers/adi-test.c
-        tools/testing/selftests/splice/default_file_splice_read.c
-        tools/testing/selftests/splice/splice_read.c
-        tools/testing/selftests/sync/sw_sync.h
-        tools/testing/selftests/sync/sync.c
-        tools/testing/selftests/sync/sync.h
-        tools/testing/selftests/sync/sync_alloc.c
-        tools/testing/selftests/sync/sync_fence.c
-        tools/testing/selftests/sync/sync_merge.c
-        tools/testing/selftests/sync/sync_stress_consumer.c
-        tools/testing/selftests/sync/sync_stress_merge.c
-        tools/testing/selftests/sync/sync_stress_parallelism.c
-        tools/testing/selftests/sync/sync_test.c
-        tools/testing/selftests/sync/sync_wait.c
-        tools/testing/selftests/sync/synctest.h
-        tools/testing/selftests/syscall_user_dispatch/sud_benchmark.c
-        tools/testing/selftests/syscall_user_dispatch/sud_test.c
-        tools/testing/selftests/tc-testing/action.c
-        tools/testing/selftests/timens/clock_nanosleep.c
-        tools/testing/selftests/timens/exec.c
-        tools/testing/selftests/timens/futex.c
-        tools/testing/selftests/timens/gettime_perf.c
-        tools/testing/selftests/timens/log.h
-        tools/testing/selftests/timens/procfs.c
-        tools/testing/selftests/timens/timens.c
-        tools/testing/selftests/timens/timens.h
-        tools/testing/selftests/timens/timer.c
-        tools/testing/selftests/timens/timerfd.c
-        tools/testing/selftests/timers/adjtick.c
-        tools/testing/selftests/timers/alarmtimer-suspend.c
-        tools/testing/selftests/timers/change_skew.c
-        tools/testing/selftests/timers/clocksource-switch.c
-        tools/testing/selftests/timers/freq-step.c
-        tools/testing/selftests/timers/inconsistency-check.c
-        tools/testing/selftests/timers/leap-a-day.c
-        tools/testing/selftests/timers/leapcrash.c
-        tools/testing/selftests/timers/mqueue-lat.c
-        tools/testing/selftests/timers/nanosleep.c
-        tools/testing/selftests/timers/nsleep-lat.c
-        tools/testing/selftests/timers/posix_timers.c
-        tools/testing/selftests/timers/raw_skew.c
-        tools/testing/selftests/timers/rtcpie.c
-        tools/testing/selftests/timers/set-2038.c
-        tools/testing/selftests/timers/set-tai.c
-        tools/testing/selftests/timers/set-timer-lat.c
-        tools/testing/selftests/timers/set-tz.c
-        tools/testing/selftests/timers/skew_consistency.c
-        tools/testing/selftests/timers/threadtest.c
-        tools/testing/selftests/timers/valid-adjtimex.c
-        tools/testing/selftests/tmpfs/bug-link-o-tmpfile.c
-        tools/testing/selftests/uevent/uevent_filtering.c
-        tools/testing/selftests/user_events/dyn_test.c
-        tools/testing/selftests/user_events/ftrace_test.c
-        tools/testing/selftests/user_events/perf_test.c
-        tools/testing/selftests/vDSO/parse_vdso.c
-        tools/testing/selftests/vDSO/parse_vdso.h
-        tools/testing/selftests/vDSO/vdso_config.h
-        tools/testing/selftests/vDSO/vdso_standalone_test_x86.c
-        tools/testing/selftests/vDSO/vdso_test_abi.c
-        tools/testing/selftests/vDSO/vdso_test_clock_getres.c
-        tools/testing/selftests/vDSO/vdso_test_correctness.c
-        tools/testing/selftests/vDSO/vdso_test_getcpu.c
-        tools/testing/selftests/vDSO/vdso_test_gettimeofday.c
-        tools/testing/selftests/vm/compaction_test.c
-        tools/testing/selftests/vm/gup_test.c
-        tools/testing/selftests/vm/hmm-tests.c
-        tools/testing/selftests/vm/hugepage-mmap.c
-        tools/testing/selftests/vm/hugepage-mremap.c
-        tools/testing/selftests/vm/hugepage-shm.c
-        tools/testing/selftests/vm/hugepage-vmemmap.c
-        tools/testing/selftests/vm/hugetlb-madvise.c
-        tools/testing/selftests/vm/khugepaged.c
-        tools/testing/selftests/vm/ksm_tests.c
-        tools/testing/selftests/vm/madv_populate.c
-        tools/testing/selftests/vm/map_fixed_noreplace.c
-        tools/testing/selftests/vm/map_hugetlb.c
-        tools/testing/selftests/vm/map_populate.c
-        tools/testing/selftests/vm/memfd_secret.c
-        tools/testing/selftests/vm/migration.c
-        tools/testing/selftests/vm/mlock-random-test.c
-        tools/testing/selftests/vm/mlock2-tests.c
-        tools/testing/selftests/vm/mlock2.h
-        tools/testing/selftests/vm/mrelease_test.c
-        tools/testing/selftests/vm/mremap_dontunmap.c
-        tools/testing/selftests/vm/mremap_test.c
-        tools/testing/selftests/vm/on-fault-limit.c
-        tools/testing/selftests/vm/pkey-helpers.h
-        tools/testing/selftests/vm/pkey-powerpc.h
-        tools/testing/selftests/vm/pkey-x86.h
-        tools/testing/selftests/vm/protection_keys.c
-        tools/testing/selftests/vm/soft-dirty.c
-        tools/testing/selftests/vm/split_huge_page_test.c
-        tools/testing/selftests/vm/thuge-gen.c
-        tools/testing/selftests/vm/transhuge-stress.c
-        tools/testing/selftests/vm/userfaultfd.c
-        tools/testing/selftests/vm/util.h
-        tools/testing/selftests/vm/va_128TBswitch.c
-        tools/testing/selftests/vm/virtual_address_range.c
-        tools/testing/selftests/vm/vm_util.c
-        tools/testing/selftests/vm/vm_util.h
-        tools/testing/selftests/vm/write_to_hugetlbfs.c
-        tools/testing/selftests/watchdog/watchdog-test.c
-        tools/testing/selftests/wireguard/qemu/init.c
-        tools/testing/selftests/x86/amx.c
-        tools/testing/selftests/x86/check_initial_reg_state.c
-        tools/testing/selftests/x86/corrupt_xstate_header.c
-        tools/testing/selftests/x86/entry_from_vm86.c
-        tools/testing/selftests/x86/fsgsbase.c
-        tools/testing/selftests/x86/fsgsbase_restore.c
-        tools/testing/selftests/x86/helpers.h
-        tools/testing/selftests/x86/ioperm.c
-        tools/testing/selftests/x86/iopl.c
-        tools/testing/selftests/x86/ldt_gdt.c
-        tools/testing/selftests/x86/mov_ss_trap.c
-        tools/testing/selftests/x86/ptrace_syscall.c
-        tools/testing/selftests/x86/sigaltstack.c
-        tools/testing/selftests/x86/sigreturn.c
-        tools/testing/selftests/x86/single_step_syscall.c
-        tools/testing/selftests/x86/syscall_arg_fault.c
-        tools/testing/selftests/x86/syscall_nt.c
-        tools/testing/selftests/x86/syscall_numbering.c
-        tools/testing/selftests/x86/sysret_rip.c
-        tools/testing/selftests/x86/sysret_ss_attrs.c
-        tools/testing/selftests/x86/test_FCMOV.c
-        tools/testing/selftests/x86/test_FCOMI.c
-        tools/testing/selftests/x86/test_FISTTP.c
-        tools/testing/selftests/x86/test_mremap_vdso.c
-        tools/testing/selftests/x86/test_syscall_vdso.c
-        tools/testing/selftests/x86/test_vsyscall.c
-        tools/testing/selftests/x86/trivial_32bit_program.c
-        tools/testing/selftests/x86/trivial_64bit_program.c
-        tools/testing/selftests/x86/trivial_program.c
-        tools/testing/selftests/x86/unwind_vdso.c
-        tools/testing/selftests/x86/vdso_restorer.c
-        tools/testing/selftests/kselftest.h
-        tools/testing/selftests/kselftest_harness.h
-        tools/testing/selftests/kselftest_module.h
-        tools/testing/vsock/control.c
-        tools/testing/vsock/control.h
-        tools/testing/vsock/timeout.c
-        tools/testing/vsock/timeout.h
-        tools/testing/vsock/util.c
-        tools/testing/vsock/util.h
-        tools/testing/vsock/vsock_diag_test.c
-        tools/testing/vsock/vsock_test.c
         tools/thermal/lib/log.c
         tools/thermal/lib/log.h
         tools/thermal/lib/mainloop.c
@@ -43027,9 +38358,6 @@ add_executable(linux_kernel
         tools/virtio/xen/xen.h
         tools/virtio/virtio_test.c
         tools/virtio/vringh_test.c
-        tools/vm/page-types.c
-        tools/vm/page_owner_sort.c
-        tools/vm/slabinfo.c
         tools/wmi/dell-smbios-example.c
         usr/dummy-include/stdbool.h
         usr/dummy-include/stdlib.h
