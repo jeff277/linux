@@ -3179,7 +3179,7 @@ extern int netdev_flow_limit_table_len;
  * Incoming packets are placed on per-CPU queues
  */
 struct softnet_data {
-	struct list_head	poll_list;
+	struct list_head	poll_list;		// 和网卡驱动关联
 	struct sk_buff_head	process_queue;
 
 	/* stats */
