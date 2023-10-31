@@ -963,6 +963,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
 		else
 			sprintf(q_vector->name, "%s-unused", netdev->name);
 
+		// igb_msix_ring 网卡注册的中断服务
 		err = request_irq(adapter->msix_entries[vector].vector,
 				  igb_msix_ring, 0, q_vector->name,
 				  q_vector);
@@ -8225,7 +8226,7 @@ static int igb_poll(struct napi_struct *napi, int budget)
 		clean_complete = igb_clean_tx_irq(q_vector, budget);
 
 	if (q_vector->rx.ring) {
-		int cleaned = igb_clean_rx_irq(q_vector, budget);
+		int cleaned = igb_clean_rx_irq(q_vector, budget);	// 收包逻辑.
 
 		work_done += cleaned;
 		if (cleaned >= budget)
@@ -8889,6 +8890,7 @@ static void igb_put_rx_buffer(struct igb_ring *rx_ring,
 	rx_buffer->page = NULL;
 }
 
+// 从ringbuffer中取下来包，并重新申请SKB, 最后调用napi_gro_receive()这个我们关注的流程
 static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
 {
 	struct igb_adapter *adapter = q_vector->adapter;
@@ -9006,7 +9008,7 @@ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
 		/* populate checksum, timestamp, VLAN, and protocol */
 		igb_process_skb_fields(rx_ring, rx_desc, skb);
 
-		napi_gro_receive(&q_vector->napi, skb);
+		napi_gro_receive(&q_vector->napi, skb);		// 这里又回到 core/gro.c
 
 		/* reset skb pointer */
 		skb = NULL;

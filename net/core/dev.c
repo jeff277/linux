@@ -4482,6 +4482,8 @@ static inline void ____napi_schedule(struct softnet_data *sd,
 		}
 	}
 
+	// 这是网卡硬中断中的处理逻辑, 将napi_struct 挂载到 softnet_data的poll_ist.  
+	// 紧接着触发软中断 NET_RX_SOFTIRQ.  该软中断的注册在 net_dev_init()中初始化, 注册的是net_rx_action()
 	list_add_tail(&napi->poll_list, &sd->poll_list);
 	WRITE_ONCE(napi->list_owner, smp_processor_id());
 	/* If not called from net_rx_action()
@@ -6553,7 +6555,7 @@ static int __napi_poll(struct napi_struct *n, bool *repoll)
 	 */
 	work = 0;
 	if (test_bit(NAPI_STATE_SCHED, &n->state)) {
-		work = n->poll(n, weight);
+		work = n->poll(n, weight);		// 在这里真正执行各网卡驱动注册的poll处理函数. igb网卡注册的是 igb_poll()
 		trace_napi_poll(n, work, weight);
 	}
 
@@ -6753,7 +6755,7 @@ start:
 		}
 
 		n = list_first_entry(&list, struct napi_struct, poll_list);
-		budget -= napi_poll(n, &repoll);
+		budget -= napi_poll(n, &repoll);	// softnet_data->poll_list, 就是各网卡驱动注册到poll的处理函数.
 
 		/* If softirq window is exhausted then punt.
 		 * Allow this to run for 2 jiffies since which will allow
@@ -11581,7 +11583,7 @@ static int __init net_dev_init(void)
 	WARN_ON(rc < 0);
 	rc = 0;
 out:
-	`return rc;
+	return rc;
 }
 
 // [网络子系统初始化 - 1] 入口
