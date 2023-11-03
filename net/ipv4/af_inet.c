@@ -1732,7 +1732,7 @@ static const struct net_protocol igmp_protocol = {
 #endif
 
 static const struct net_protocol tcp_protocol = {
-	.handler	=	tcp_v4_rcv,
+	.handler	=	tcp_v4_rcv,         // [网络子系统初始化] 这是TCP收包的入口。在OS初始化阶段 调用inet_init() 添加到全局变量 inet_protos[udp/tcp..]。   mptcp依附tcp,所以这也是mptcp的入口
 	.err_handler	=	tcp_v4_err,
 	.no_policy	=	1,
 	.icmp_strict_tag_validation = 1,
@@ -1928,7 +1928,7 @@ fs_initcall(ipv4_offload_init);
 
 static struct packet_type ip_packet_type __read_mostly = {
 	.type = cpu_to_be16(ETH_P_IP),
-	.func = ip_rcv,
+	.func = ip_rcv,             /* [网络子系统初始化] 注意这里, 这是定义的ip收包的入口 */
 	.list_func = ip_list_rcv,
 };
 
@@ -1974,9 +1974,9 @@ static int __init inet_init(void)
 
 	if (inet_add_protocol(&icmp_protocol, IPPROTO_ICMP) < 0)
 		pr_crit("%s: Cannot add ICMP protocol\n", __func__);
-	if (inet_add_protocol(&udp_protocol, IPPROTO_UDP) < 0)
+	if (inet_add_protocol(&udp_protocol, IPPROTO_UDP) < 0)           // [网络子系统初始化]  注册UDP协议的操作集。 放在一个全局数组 inet_protos[], 数组的下标就是协议号。 ip_local_deliver_finish()收到数据包后解析协议号，取出这里注册的操作集，进行传输层的处理。
 		pr_crit("%s: Cannot add UDP protocol\n", __func__);
-	if (inet_add_protocol(&tcp_protocol, IPPROTO_TCP) < 0)
+	if (inet_add_protocol(&tcp_protocol, IPPROTO_TCP) < 0)           // [网络子系统初始化]  注册TCP协议的操作集。
 		pr_crit("%s: Cannot add TCP protocol\n", __func__);
 #ifdef CONFIG_IP_MULTICAST
 	if (inet_add_protocol(&igmp_protocol, IPPROTO_IGMP) < 0)
@@ -2009,7 +2009,7 @@ static int __init inet_init(void)
 	printk(KERN_INFO "Jeff Flag... tcp_init()\n");
 
 	/* Setup TCP slab cache for open requests. */
-	tcp_init();
+	tcp_init();     // 初始化TCP协议栈,运行时的全局变量.   所以， MPTCP协议栈运行时的全局变量也在里面！！！
 
 	/* Setup UDP memory threshold */
 	udp_init();
@@ -2043,7 +2043,7 @@ static int __init inet_init(void)
 
 	ipfrag_init();
 
-	dev_add_pack(&ip_packet_type);
+	dev_add_pack(&ip_packet_type);      // [网络子系统初始化] 注册了3层的入口 ip_rcv()
 
 	ip_tunnel_core_init();
 
@@ -2059,7 +2059,7 @@ out_unregister_tcp_proto:
 	goto out;
 }
 
-fs_initcall(inet_init);
+fs_initcall(inet_init);     // [网络子系统初始化]  协议栈初始化的入口
 
 /* ------------------------------------------------------------------------ */
 

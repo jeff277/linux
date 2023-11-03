@@ -212,10 +212,10 @@ struct inet_sock {
 	struct ipv6_pinfo	*pinet6;
 #endif
 	/* Socket demultiplex comparisons on incoming packets. */
-#define inet_daddr		sk.__sk_common.skc_daddr
-#define inet_rcv_saddr		sk.__sk_common.skc_rcv_saddr
-#define inet_dport		sk.__sk_common.skc_dport
-#define inet_num		sk.__sk_common.skc_num
+#define inet_daddr		sk.__sk_common.skc_daddr            /*目的IP*/
+#define inet_rcv_saddr		sk.__sk_common.skc_rcv_saddr    /*源IP*/
+#define inet_dport		sk.__sk_common.skc_dport            /*目的端口*/
+#define inet_num		sk.__sk_common.skc_num              /*源端口*/
 
 	__be32			inet_saddr;
 	__s16			uc_ttl;

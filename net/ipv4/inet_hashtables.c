@@ -678,16 +678,23 @@ unlock:
 	return ret;
 }
 
+/* 添加到ehash中 */
 bool inet_ehash_nolisten(struct sock *sk, struct sock *osk, bool *found_dup_sk)
 {
+    /* 添加到ehash中 */
 	bool ok = inet_ehash_insert(sk, osk, found_dup_sk);
 
 	if (ok) {
+        /* 成功增加计数 */
 		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
 	} else {
+        /* 增加孤儿数量 */
 		this_cpu_inc(*sk->sk_prot->orphan_count);
+        /* 标识连接关闭状态 */
 		inet_sk_set_state(sk, TCP_CLOSE);
+        /* 设置销毁标记 */
 		sock_set_flag(sk, SOCK_DEAD);
+        /* 销毁控制块 */
 		inet_csk_destroy_sock(sk);
 	}
 	return ok;
@@ -995,6 +1002,10 @@ EXPORT_SYMBOL_GPL(inet_bhash2_reset_saddr);
 #define INET_TABLE_PERTURB_SIZE (1 << CONFIG_INET_TABLE_PERTURB_ORDER)
 static u32 *table_perturb;
 
+/*
+ * 将端口检查通过的控制块加入到 ehash；函数对是否设置端口进行了不同处理，若未设置端口，则需要查找一个端口；
+ * 函数还调用 check_established 检查是否可以复用处在 TIME_WAIT 的控制块，以及调用 inet_ehash_nolisten 将端口对应的控制块加入的 ehash；
+ * */
 int __inet_hash_connect(struct inet_timewait_death_row *death_row,
 		struct sock *sk, u64 port_offset,
 		int (*check_established)(struct inet_timewait_death_row *,
@@ -1013,12 +1024,16 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
 	int l3mdev;
 	u32 index;
 
+    /* 绑定了源端口. 应用层调用bind()后才connect()  */
 	if (port) {
 		local_bh_disable();
+        /* 检查复用情况 */
 		ret = check_established(death_row, sk, port, NULL);
 		local_bh_enable();
 		return ret;
 	}
+
+    /* [大部分场景] 没有绑定端口，则随机一个src端口 */
 
 	l3mdev = inet_sk_bound_l3mdev(sk);
 
@@ -1041,11 +1056,17 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
 	offset &= ~1U;
 other_parity_scan:
 	port = low + offset;
+
+    /* 遍历端口 */
 	for (i = 0; i < remaining; i += 2, port += 2) {
 		if (unlikely(port >= high))
 			port -= remaining;
+
+        /* 保留端口 */
 		if (inet_is_local_reserved_port(net, port))
 			continue;
+
+        /* 找到端口对应的绑定hash桶 */
 		head = &hinfo->bhash[inet_bhashfn(net, port,
 						  hinfo->bhash_size)];
 		spin_lock_bh(&head->lock);
@@ -1053,12 +1074,19 @@ other_parity_scan:
 		/* Does not bother with rcv_saddr checks, because
 		 * the established check is already unique enough.
 		 */
+        /* 遍历绑定的链表中的节点 */
 		inet_bind_bucket_for_each(tb, &head->chain) {
+
+            /* 找到端口相同节点 */
 			if (inet_bind_bucket_match(tb, net, port, l3mdev)) {
+
+                /* 设置被重用了，继续找，随机端口不能重用 */
 				if (tb->fastreuse >= 0 ||
 				    tb->fastreuseport >= 0)
 					goto next_port;
 				WARN_ON(hlist_empty(&tb->owners));
+
+                /* 检查timewait复用情况 */
 				if (!check_established(death_row, sk,
 						       port, &tw))
 					goto ok;
@@ -1066,6 +1094,9 @@ other_parity_scan:
 			}
 		}
 
+        /* 遍历完成，没有重复 */
+
+        /* 创建该端口的绑定信息节点，加入绑定hash */
 		tb = inet_bind_bucket_create(hinfo->bind_bucket_cachep,
 					     net, head, port, l3mdev);
 		if (!tb) {
@@ -1073,6 +1104,8 @@ other_parity_scan:
 			return -ENOMEM;
 		}
 		tb_created = true;
+
+        /* 设置默认重用标记 */
 		tb->fastreuse = -1;
 		tb->fastreuseport = -1;
 		goto ok;
@@ -1081,6 +1114,7 @@ next_port:
 		cond_resched();
 	}
 
+    /* 没找到, 继续找 （查找优化而已) */
 	offset++;
 	if ((offset & 1) && remaining > 1)
 		goto other_parity_scan;
@@ -1111,18 +1145,23 @@ ok:
 	WRITE_ONCE(table_perturb[index], READ_ONCE(table_perturb[index]) + i + 2);
 
 	/* Head lock still held and bh's disabled */
+    /* 控制块加入该端口的使用者列表 */
 	inet_bind_hash(sk, tb, tb2, port);
 
+    /* 初始化源端口，加入到ehash */
 	if (sk_unhashed(sk)) {
 		inet_sk(sk)->inet_sport = htons(port);
 		inet_ehash_nolisten(sk, (struct sock *)tw, NULL);
 	}
+
+    /*有timewait控制块则从bind列表中移除 */
 	if (tw)
 		inet_twsk_bind_unhash(tw, hinfo);
 
 	spin_unlock(&head2->lock);
 	spin_unlock(&head->lock);
 
+    /* 调度销毁timewait控制块 */
 	if (tw)
 		inet_twsk_deschedule_put(tw);
 	local_bh_enable();

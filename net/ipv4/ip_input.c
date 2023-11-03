@@ -204,7 +204,7 @@ resubmit:
 		}
 
         // af_inet.c
-        // static const struct net_protocol tcp_protocol中设置了 tcp_v4_rcv
+        // "static const struct net_protocol tcp_protocol"中设置了 tcp_v4_rcv, udp_rcv.
         ret = INDIRECT_CALL_2(ipprot->handler, tcp_v4_rcv, udp_rcv,
 				      skb);
 		if (ret < 0) {
@@ -233,7 +233,7 @@ static int ip_local_deliver_finish(struct net *net, struct sock *sk, struct sk_b
 	__skb_pull(skb, skb_network_header_len(skb));
 
 	rcu_read_lock();
-	ip_protocol_deliver_rcu(net, skb, ip_hdr(skb)->protocol);   // 取IP头里面的协议号, 6-tcp, 17-udp
+	ip_protocol_deliver_rcu(net, skb, ip_hdr(skb)->protocol);   // [网络子系统] 取数据包中IP头里面的协议号, 6-tcp, 17-udp
 	rcu_read_unlock();
 
 	return 0;
@@ -256,7 +256,7 @@ int ip_local_deliver(struct sk_buff *skb)
 
 	return NF_HOOK(NFPROTO_IPV4, NF_INET_LOCAL_IN,
 		       net, NULL, skb, skb->dev, NULL,
-		       ip_local_deliver_finish);
+		       ip_local_deliver_finish);         // [网络子系统] 跑完netfilter的 NF_INET_LOCAL_IN 钩子后, 最后调用 ip_local_deliver_finish()
 }
 EXPORT_SYMBOL(ip_local_deliver);
 
@@ -447,9 +447,9 @@ static int ip_rcv_finish(struct net *net, struct sock *sk, struct sk_buff *skb)
 	if (!skb)
 		return NET_RX_SUCCESS;
 
-	ret = ip_rcv_finish_core(net, sk, skb, dev, NULL);
+	ret = ip_rcv_finish_core(net, sk, skb, dev, NULL);       // 里面是 路由子系统
 	if (ret != NET_RX_DROP)
-		ret = dst_input(skb);
+		ret = dst_input(skb);       // [网络子系统] tcp数据包从这里继续往上(4层)传递
 	return ret;
 }
 
@@ -571,7 +571,7 @@ int ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
 
 	return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
 		       net, NULL, skb, dev, NULL,
-		       ip_rcv_finish);
+		       ip_rcv_finish);      // [网络子系统] 跑完netfilter的NF_INET_PRE_ROUTING钩子后, 最后调用 ip_rcv_finish()
 }
 
 static void ip_sublist_rcv_finish(struct list_head *head)

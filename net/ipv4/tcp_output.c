@@ -744,7 +744,7 @@ static void mptcp_set_option_cond(const struct request_sock *req,
 	if (rsk_is_mptcp(req)) {
 		unsigned int size;
 
-		if (mptcp_synack_options(req, &size, &opts->mptcp)) {
+		if (mptcp_synack_options(req, &size, &opts->mptcp)) {       // [mptcp] 第二次握手, 回复syc+ack, 此时会塞一些mptcp选项
 			if (*remaining >= size) {
 				opts->options |= OPTION_MPTCP;
 				*remaining -= size;
@@ -822,6 +822,7 @@ static unsigned int tcp_syn_options(struct sock *sk, struct sk_buff *skb,
 
 	smc_set_option(tp, opts, &remaining);
 
+    // [mptcp - syn]
 	if (sk_is_mptcp(sk)) {
 		unsigned int size;
 
@@ -897,7 +898,7 @@ static unsigned int tcp_synack_options(const struct sock *sk,
 		}
 	}
 
-	mptcp_set_option_cond(req, opts, &remaining);
+	mptcp_set_option_cond(req, opts, &remaining);  // [mptcp] 第二次握手
 
 	smc_set_option_cond(tcp_sk(sk), ireq, opts, &remaining);
 
@@ -1277,6 +1278,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 	memset(&opts, 0, sizeof(opts));
 
 	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
+        // [mptcp - syn]
 		tcp_options_size = tcp_syn_options(sk, skb, &opts, &md5);
 	} else {
 		tcp_options_size = tcp_established_options(sk, skb, &opts,
@@ -1417,6 +1419,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 			    gfp_t gfp_mask)
 {
+    // [mptcp - syn]
 	return __tcp_transmit_skb(sk, skb, clone_it, gfp_mask,
 				  tcp_sk(sk)->rcv_nxt);
 }
@@ -3588,7 +3591,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
 	TCP_SKB_CB(skb)->tcp_flags = TCPHDR_SYN | TCPHDR_ACK;
 	tcp_header_size = tcp_synack_options(sk, req, mss, skb, &opts, md5,
 					     foc, synack_type,
-					     syn_skb) + sizeof(*th);
+					     syn_skb) + sizeof(*th);     // [mptcp] 第二次握手
 
 	skb_push(skb, tcp_header_size);
 	skb_reset_transport_header(skb);
@@ -3630,6 +3633,7 @@ struct sk_buff *tcp_make_synack(const struct sock *sk, struct dst_entry *dst,
 }
 EXPORT_SYMBOL(tcp_make_synack);
 
+// 初始化TCP拥塞控制算法
 static void tcp_ca_dst_init(struct sock *sk, const struct dst_entry *dst)
 {
 	struct inet_connection_sock *icsk = inet_csk(sk);
@@ -3640,6 +3644,7 @@ static void tcp_ca_dst_init(struct sock *sk, const struct dst_entry *dst)
 		return;
 
 	rcu_read_lock();
+    // 查找对应的拥塞控制算法
 	ca = tcp_ca_find_key(ca_key);
 	if (likely(ca && bpf_try_module_get(ca, ca->owner))) {
 		bpf_module_put(icsk->icsk_ca_ops, icsk->icsk_ca_ops->owner);
@@ -3650,6 +3655,7 @@ static void tcp_ca_dst_init(struct sock *sk, const struct dst_entry *dst)
 }
 
 /* Do all connect socket setups that can be done AF independent. */
+/* 初始化TCP相关的设置 */
 static void tcp_connect_init(struct sock *sk)
 {
 	const struct dst_entry *dst = __sk_dst_get(sk);
@@ -3660,6 +3666,7 @@ static void tcp_connect_init(struct sock *sk)
 	/* We'll fix this up when we get a response from the other end.
 	 * See tcp_input.c:tcp_rcv_state_process case TCP_SYN_SENT.
 	 */
+    /* 根据系统配置参数，计算该套接字将要发送的TCP首部大小。 */
 	tp->tcp_header_len = sizeof(struct tcphdr);
 	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_timestamps))
 		tp->tcp_header_len += TCPOLEN_TSTAMP_ALIGNED;
@@ -3670,29 +3677,45 @@ static void tcp_connect_init(struct sock *sk)
 #endif
 
 	/* If user gave his TCP_MAXSEG, record it to clamp */
+    /* 如果用户配置MSS大小，将其保存下来，作为MSS的最大值 */
 	if (tp->rx_opt.user_mss)
 		tp->rx_opt.mss_clamp = tp->rx_opt.user_mss;
+
+    /* max_window表示对端window的最大值 */
 	tp->max_window = 0;
+
+    /* 初始化MTU探测 */
 	tcp_mtup_init(sk);
+
+    /* 利用出口的MTU同步MSS */
 	tcp_sync_mss(sk, dst_mtu(dst));
 
+    /* 初始化TCP拥塞控制算法 */
 	tcp_ca_dst_init(sk, dst);
 
+    /* 如果没有设置windows的最大值，则尝试使用下一跳的最大窗口值 */
 	if (!tp->window_clamp)
 		tp->window_clamp = dst_metric(dst, RTAX_WINDOW);
+
+    /* 出口的MSS值即握手时交换的MSS值 */
 	tp->advmss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
 
+    /* 初始化接收MSS，其实是对对端MSS的猜测判断 */
 	tcp_initialize_rcv_mss(sk);
 
 	/* limit the window selection if the user enforce a smaller rx buffer */
-	if (sk->sk_userlocks & SOCK_RCVBUF_LOCK &&
+    /* 如果用户设置接收缓存的大小，并且窗口的最大值大于了接收缓存或者没有设置窗口的上限，则设置窗口的最大值为接收缓存的大小。*/
+
+    if (sk->sk_userlocks & SOCK_RCVBUF_LOCK &&
 	    (tp->window_clamp > tcp_full_space(sk) || tp->window_clamp == 0))
 		tp->window_clamp = tcp_full_space(sk);
 
+    /* 回调eBPF, 通过该方式设置rwnd */
 	rcv_wnd = tcp_rwnd_init_bpf(sk);
 	if (rcv_wnd == 0)
 		rcv_wnd = dst_metric(dst, RTAX_INITRWND);
 
+    /* 选择初始的接收窗口 */
 	tcp_select_initial_window(sk, tcp_full_space(sk),
 				  tp->advmss - (tp->rx_opt.ts_recent_stamp ? tp->tcp_header_len - sizeof(struct tcphdr) : 0),
 				  &tp->rcv_wnd,
@@ -3836,36 +3859,51 @@ done:
 }
 
 /* Build a SYN and send it off. */
+// tcp_connect 用于构造 syn 包并发送之，发送之后需要设置 syn 包的重传定时器；
 int tcp_connect(struct sock *sk)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
 	struct sk_buff *buff;
 	int err;
 
+    /* eBPF TCP_CONNECT hook点*/
 	tcp_call_bpf(sk, BPF_SOCK_OPS_TCP_CONNECT_CB, 0, NULL);
 
+    /* 检查重建路由 */
 	if (inet_csk(sk)->icsk_af_ops->rebuild_header(sk))
 		return -EHOSTUNREACH; /* Routing failure or similar. */
 
+    /* 初始化控制块中与连接相关的成员 */
 	tcp_connect_init(sk);
 
 	if (unlikely(tp->repair)) {
 		tcp_finish_connect(sk, NULL);
 		return 0;
 	}
+	/* 分配skb */
 
 	buff = tcp_stream_alloc_skb(sk, 0, sk->sk_allocation, true);
 	if (unlikely(!buff))
 		return -ENOBUFS;
 
+    /* 无数据的skb相关控制信息初始化 */
 	tcp_init_nondata_skb(buff, tp->write_seq++, TCPHDR_SYN);
+
+    /* 设置发送syn的时间 */
 	tcp_mstamp_refresh(tp);
 	tp->retrans_stamp = tcp_time_stamp(tp);
+
+    /* 加入发送队列 */
 	tcp_connect_queue_skb(sk, buff);
+
+    /* enc拥塞通告支持 */
 	tcp_ecn_send_syn(sk, buff);
+
+    /* 加入发送红黑树 */
 	tcp_rbtree_insert(&sk->tcp_rtx_queue, buff);
 
 	/* Send off SYN; include data in Fast Open. */
+    /* 发送syn */  // [mptcp - syn]
 	err = tp->fastopen_req ? tcp_send_syn_data(sk, buff) :
 	      tcp_transmit_skb(sk, buff, 1, sk->sk_allocation);
 	if (err == -ECONNREFUSED)
@@ -3874,6 +3912,7 @@ int tcp_connect(struct sock *sk)
 	/* We change tp->snd_nxt after the tcp_transmit_skb() call
 	 * in order to make this packet get counted in tcpOutSegs.
 	 */
+    /* 设置序号信息 */
 	WRITE_ONCE(tp->snd_nxt, tp->write_seq);
 	tp->pushed_seq = tp->write_seq;
 	buff = tcp_send_head(sk);
@@ -3884,6 +3923,7 @@ int tcp_connect(struct sock *sk)
 	TCP_INC_STATS(sock_net(sk), TCP_MIB_ACTIVEOPENS);
 
 	/* Timer for repeating the SYN until an answer. */
+    /* 启动重传定时器 */
 	inet_csk_reset_xmit_timer(sk, ICSK_TIME_RETRANS,
 				  inet_csk(sk)->icsk_rto, TCP_RTO_MAX);
 	return 0;
