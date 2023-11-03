@@ -456,7 +456,7 @@ struct sock {
 	int			sk_gso_type;
 	unsigned int		sk_gso_max_size;
 	gfp_t			sk_allocation;
-	__u32			sk_txhash;
+	__u32			sk_txhash;      // 场景1：connect()创建sk时会设置一个随机值. 场景2：todo
 
 	/*
 	 * Because of non atomicity rules, all
@@ -1212,7 +1212,7 @@ struct proto {
 	unsigned int		useroffset;	/* Usercopy region offset */
 	unsigned int		usersize;	/* Usercopy region size */
 
-	struct percpu_counter	*orphan_count;
+	struct percpu_counter	*orphan_count;	/*孤儿数量: 异常的sock数量*/
 
 	struct request_sock_ops	*rsk_prot;
 	struct timewait_sock_ops *twsk_prot;

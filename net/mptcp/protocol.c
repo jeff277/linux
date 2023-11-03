@@ -2758,9 +2758,9 @@ static struct inet_protosw mptcp_protosw = {
 
 void __init mptcp_proto_init(void)
 {
-	mptcp_prot.h.hashinfo = tcp_prot.h.hashinfo;
+	mptcp_prot.h.hashinfo = tcp_prot.h.hashinfo;	// tcp协议栈的全局hash表, e-hash b-hash l-hash全在这里！
 
-	if (percpu_counter_init(&mptcp_sockets_allocated, 0, GFP_KERNEL))
+	if (percpu_counter_init(&mptcp_sockets_allocated, 0, GFP_KERNEL))   // percpu的mptcp socket计数器
 		panic("Failed to allocate MPTCP pcpu counter\n");
 
 	mptcp_subflow_init();
