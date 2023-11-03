@@ -13,6 +13,7 @@
 #ifndef _LINUX_TCP_H
 #define _LINUX_TCP_H
 
+#define CONFIG_MPTCP 1
 
 #include <linux/skbuff.h>
 #include <linux/win_minmax.h>

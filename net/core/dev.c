@@ -2223,6 +2223,7 @@ int dev_forward_skb_nomtu(struct net_device *dev, struct sk_buff *skb)
 	return __dev_forward_skb2(dev, skb, false) ?: netif_rx_internal(skb);
 }
 
+// [网络子系统] 软中断中调用三层收包的入口,从此进入网络层
 static inline int deliver_skb(struct sk_buff *skb,
 			      struct packet_type *pt_prev,
 			      struct net_device *orig_dev)
@@ -2230,7 +2231,7 @@ static inline int deliver_skb(struct sk_buff *skb,
 	if (unlikely(skb_orphan_frags_rx(skb, GFP_ATOMIC)))
 		return -ENOMEM;
 	refcount_inc(&skb->users);
-	return pt_prev->func(skb, skb->dev, pt_prev, orig_dev);
+	return pt_prev->func(skb, skb->dev, pt_prev, orig_dev);  // tcp收包时 实际上将执行 ip_rcv()
 }
 
 static inline void deliver_ptype_list_skb(struct sk_buff *skb,
@@ -5339,6 +5340,7 @@ static inline int nf_ingress(struct sk_buff *skb, struct packet_type **pt_prev,
 	return 0;
 }
 
+// [网络子系统] 链路层收包的处理
 static int __netif_receive_skb_core(struct sk_buff **pskb, bool pfmemalloc,
 				    struct packet_type **ppt_prev)
 {
@@ -5395,7 +5397,7 @@ another_round:
 
 	list_for_each_entry_rcu(ptype, &ptype_all, list) {
 		if (pt_prev)
-			ret = deliver_skb(skb, pt_prev, orig_dev);
+			ret = deliver_skb(skb, pt_prev, orig_dev);        // [网络子系统] deliver_skb()调用 inet_init()中注册的网络层协议回调handler。 最终会执行 ip_rcv()
 		pt_prev = ptype;
 	}
 

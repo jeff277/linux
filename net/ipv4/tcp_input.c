@@ -6493,11 +6493,11 @@ static void tcp_rcv_synrecv_state_fastopen(struct sock *sk)
  *	address independent.
  */
 /*
- * 三次握手：之 第三次逻辑
- * 通常,第三次握手走到这里 子控制块sk的状态为 TCP_SYN_RECV.
+ * 三次握手：之 第一、三次逻辑
+ * 通常,第一次握手走到这里 sk是监听sock，其状态为:TCP_LISTEN
+ * 通常,第三次握手走到这里 子控制块sk的状态为 TCP_SYN_RECV (此时是数据sock)
  * 通常，正常逻辑，从该函数返回，子状态为TCP_ESTABLISHED
  * **/
-
 int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
@@ -6513,6 +6513,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 		SKB_DR_SET(reason, TCP_CLOSE);
 		goto discard;
 
+    // 第一次握手
 	case TCP_LISTEN:
 		if (th->ack)
 			return 1;
@@ -6521,7 +6522,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 			SKB_DR_SET(reason, TCP_RESET);
 			goto discard;
 		}
-		if (th->syn) {
+		if (th->syn) {   // 处理syn请求包
 			if (th->fin) {
 				SKB_DR_SET(reason, TCP_FLAGS);
 				goto discard;
@@ -6531,7 +6532,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 			 */
 			rcu_read_lock();
 			local_bh_disable();
-			acceptable = icsk->icsk_af_ops->conn_request(sk, skb) >= 0;     // //tcp_v4_conn_request
+			acceptable = icsk->icsk_af_ops->conn_request(sk, skb) >= 0;     // 已明确TCP协议调用的是 tcp_v4_conn_request().    那么 mptcp协议调用的是？ 会不会是 subflow_v4_conn_request() ,  从setsockoption找线索
 			local_bh_enable();
 			rcu_read_unlock();
 
@@ -7110,7 +7111,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
 			inet_csk_reqsk_queue_hash_add(sk, req, req->timeout);   // 新sock加入ehash
 		}
 
-        // 发第二次握手包
+        //  [mptcp] 发第二次握手包。 实际调用 tcp_v4_send_synack()。 里面在tcp头中填写mptcp选项的操作.
 		af_ops->send_synack(sk, dst, &fl, req, &foc,
 				    !want_cookie ? TCP_SYNACK_NORMAL :
 						   TCP_SYNACK_COOKIE,
