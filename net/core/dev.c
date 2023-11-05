@@ -11548,7 +11548,7 @@ static int __init net_dev_init(void)
 
 	for_each_possible_cpu(i) {
 		struct work_struct *flush = per_cpu_ptr(&flush_works, i);
-		struct softnet_data *sd = &per_cpu(softnet_data, i);  // [网络子系统初始化 - 2] 为每个CPU初始化softnet_data。 softnet_data的含义Incoming packets are placed on per-CPU queues
+		struct softnet_data *sd = &per_cpu(softnet_data, i);  // [网络初始化 - 2] 为每个CPU初始化softnet_data。 softnet_data的含义Incoming packets are placed on per-CPU queues
 
 		INIT_WORK(flush, flush_backlog);
 
@@ -11557,7 +11557,7 @@ static int __init net_dev_init(void)
 #ifdef CONFIG_XFRM_OFFLOAD
 		skb_queue_head_init(&sd->xfrm_backlog);
 #endif
-		INIT_LIST_HEAD(&sd->poll_list);		// [网络子系统初始化 - 2] 用于等待驱动程序将其poll函数注册进来.
+		INIT_LIST_HEAD(&sd->poll_list);		// [网络初始化 - 2] 用于等待驱动程序将其poll函数注册进来.
 		sd->output_queue_tailp = &sd->output_queue;
 #ifdef CONFIG_RPS
 		INIT_CSD(&sd->csd, rps_trigger_softirq, sd);
@@ -11589,8 +11589,8 @@ static int __init net_dev_init(void)
 	if (register_pernet_device(&default_device_ops))
 		goto out;
 
-	open_softirq(NET_TX_SOFTIRQ, net_tx_action);  // [网络子系统初始化 - 2] 为每个tx/rx软中断注册 中断处理函数.
-	open_softirq(NET_RX_SOFTIRQ, net_rx_action);  // [网络子系统初始化 - 2] 所以，也可以认为 net_rx_action就是网络子系统处理数据包的入口了
+	open_softirq(NET_TX_SOFTIRQ, net_tx_action);  // [网络初始化 - 2] 为每个tx/rx软中断注册 中断处理函数.
+	open_softirq(NET_RX_SOFTIRQ, net_rx_action);  // [网络初始化 - 2] 所以，也可以认为 net_rx_action就是网络子系统处理数据包的入口了
 
 	rc = cpuhp_setup_state_nocalls(CPUHP_NET_DEV_DEAD, "net/dev:dead",
 				       NULL, dev_cpu_dead);
@@ -11600,6 +11600,6 @@ out:
 	return rc;
 }
 
-// [网络子系统初始化 - 1] 入口
+// [网络初始化 - 1] 入口
 // Linux内核通过调用 subsys_initcall 来初始化各种子系统.       https://www.cntofu.com/book/114/Concepts/initcall.md
 subsys_initcall(net_dev_init);
