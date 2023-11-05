@@ -1163,7 +1163,12 @@ int mptcp_subflow_create_socket(struct sock *sk, struct socket **new_sock)
 #ifdef CONFIG_PROC_FS
 	this_cpu_add(*net->core.sock_inuse, 1);
 #endif
+
+	// 采用TCP ULP 在内核中实现mptcp v1协议.  这是和mptcp v0不一样的一个关键点。
+	// Upper Layer Protocol (ULP) that runs over TCP.  资料 https://blog.csdn.net/dog250/article/details/78231773
+	// [mptcp icsk_af_ops->conn_request] 设置路径： 这是per sock 设置的入口. 也就是应用层路径管理(PM)的挂载入口.
 	err = tcp_set_ulp(sf->sk, "mptcp");
+
 	release_sock(sf->sk);
 
 	if (err) {
@@ -1285,6 +1290,8 @@ static int subflow_ulp_init(struct sock *sk)
 
 	tp->is_mptcp = 1;
 	ctx->icsk_af_ops = icsk->icsk_af_ops;
+
+	// [mptcp icsk_af_ops->conn_request] 设置路径。    mptcp_stream_ops 中的bind, connect, listen等多个函数都会调用到这里一次.
 	icsk->icsk_af_ops = subflow_default_af_ops(sk);
 	ctx->tcp_data_ready = sk->sk_data_ready;
 	ctx->tcp_state_change = sk->sk_state_change;
@@ -1394,7 +1401,7 @@ void __init mptcp_subflow_init(void)
 	subflow_request_sock_ipv4_ops.init_req = subflow_v4_init_req;
 
 	subflow_specific = ipv4_specific;
-	subflow_specific.conn_request = subflow_v4_conn_request;
+	subflow_specific.conn_request = subflow_v4_conn_request;        // [mptcp icsk_af_ops->conn_request] 设置路径。
 	subflow_specific.syn_recv_sock = subflow_syn_recv_sock;
 	subflow_specific.sk_rx_dst_set = subflow_finish_connect;
 
@@ -1419,6 +1426,6 @@ void __init mptcp_subflow_init(void)
 
     // Upper Layer Protocol , 4.14新特性, 为Kernel TLS Support 而引入的.
     // mptcp用这个框架的时候, 协议名称就是mptcp
-	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
+	if (tcp_register_ulp(&subflow_ulp_ops) != 0)    // [mptcp icsk_af_ops->conn_request] 设置路径。
 		panic("MPTCP: failed to register subflows to ULP\n");
 }

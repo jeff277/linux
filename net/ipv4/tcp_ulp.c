@@ -136,6 +136,7 @@ static int __tcp_set_ulp(struct sock *sk, const struct tcp_ulp_ops *ulp_ops)
 	if (icsk->icsk_ulp_ops)
 		goto out_err;
 
+	 // [mptcp icsk_af_ops->conn_request] 的设置入口
 	err = ulp_ops->init(sk);
 	if (err)
 		goto out_err;
@@ -157,5 +158,5 @@ int tcp_set_ulp(struct sock *sk, const char *name)
 	if (!ulp_ops)
 		return -ENOENT;
 
-	return __tcp_set_ulp(sk, ulp_ops);
+	return __tcp_set_ulp(sk, ulp_ops);      // [mptcp icsk_af_ops->conn_request] 的设置入口
 }
