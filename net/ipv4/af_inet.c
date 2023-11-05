@@ -2074,7 +2074,7 @@ out_unregister_tcp_proto:
 	goto out;
 }
 
-//
+// inet, inet_sw, 自定义动态协议(mptcp)的说明文章: https://ieevee.com/tech/2017/06/12/kernel-network-stack.html
 fs_initcall(inet_init);     // [网络子系统初始化]  协议栈初始化的入口
 
 /* ------------------------------------------------------------------------ */
