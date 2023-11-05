@@ -118,7 +118,7 @@ enum {
 #define TCP_SAVED_SYN		28	/* Get SYN headers recorded for connection */
 #define TCP_REPAIR_WINDOW	29	/* Get/set window parameters */
 #define TCP_FASTOPEN_CONNECT	30	/* Attempt FastOpen with connect */
-#define TCP_ULP			31	/* Attach a ULP to a TCP connection */
+#define TCP_ULP			31	/* Attach a ULP to a TCP connection */      // mptcp会采用, 但是他在什么地方attach的? (默认好像不用）
 #define TCP_MD5SIG_EXT		32	/* TCP MD5 Signature with extensions */
 #define TCP_FASTOPEN_KEY	33	/* Set the key for Fast Open (cookie) */
 #define TCP_FASTOPEN_NO_COOKIE	34	/* Enable TFO without a TFO cookie */

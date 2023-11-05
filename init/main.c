@@ -684,7 +684,7 @@ noinline void __ref rest_init(void)
 	 * the init task will end up wanting to create kthreads, which, if
 	 * we schedule it before we create kthreadd, will OOPS.
 	 */
-	pid = kernel_thread(kernel_init, NULL, CLONE_FS);
+	pid = kernel_thread(kernel_init, NULL, CLONE_FS);	// kernel_init()中会初始化网络子系统
 	/*
 	 * Pin init on the boot CPU. Task migration is not properly working
 	 * until sched_init_smp() has been run. It will set the allowed
@@ -845,6 +845,7 @@ void __init __weak arch_call_rest_init(void)
 	rest_init();
 }
 
+// 内核的入口.   https://xinqiu.gitbooks.io/linux-insides-cn/content/Initialization/linux-initialization-4.html
 asmlinkage __visible void __init __no_sanitize_address start_kernel(void)
 {
 	char *command_line;
@@ -1058,7 +1059,7 @@ asmlinkage __visible void __init __no_sanitize_address start_kernel(void)
 	kcsan_init();
 
 	/* Do the rest non-__init'ed, we're now alive */
-	arch_call_rest_init();
+	arch_call_rest_init();      // 子系统和模块初始化入口.  比如网络子系统的初始化
 
 	prevent_tail_call_optimization();
 }
@@ -1300,6 +1301,8 @@ static void __init do_initcalls(void)
 	if (!command_line)
 		panic("%s: Failed to allocate %zu bytes\n", __func__, len);
 
+    // 这里会调用到 net_dev_init().  是dev.c中通过 subsys_initcall(net_dev_init) 静态注册的.
+    // 静态注册是依赖编译器特性实现的, 更多细节见 https://www.cntofu.com/book/114/Concepts/initcall.md
 	for (level = 0; level < ARRAY_SIZE(initcall_levels) - 1; level++) {
 		/* Parser modifies command_line, restore it each time */
 		strcpy(command_line, saved_command_line);
@@ -1323,7 +1326,7 @@ static void __init do_basic_setup(void)
 	init_irq_proc();
 	do_ctors();
 	usermodehelper_enable();
-	do_initcalls();
+	do_initcalls();		// 其中会初始化网络子系统
 }
 
 static void __init do_pre_smp_initcalls(void)
@@ -1412,7 +1415,7 @@ static int __ref kernel_init(void *unused)
 {
 	int ret;
 
-	kernel_init_freeable();
+	kernel_init_freeable();		// 其中会初始化网络子系统
 	/* need to finish all async __init code before freeing the memory */
 	async_synchronize_full();
 	kprobe_free_init_mem();
@@ -1523,7 +1526,7 @@ static noinline void __init kernel_init_freeable(void)
 	/* Initialize page ext after all struct pages are initialized. */
 	page_ext_init();
 
-	do_basic_setup();
+	do_basic_setup();       // 其中会初始化网络子系统
 
 	kunit_run_all_tests();
 
