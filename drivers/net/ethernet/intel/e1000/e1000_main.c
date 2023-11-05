@@ -180,7 +180,7 @@ static SIMPLE_DEV_PM_OPS(e1000_pm_ops, e1000_suspend, e1000_resume);
 static struct pci_driver e1000_driver = {
 	.name     = e1000_driver_name,
 	.id_table = e1000_pci_tbl,
-	.probe    = e1000_probe,
+	.probe    = e1000_probe,    // 关键方法, 硬件被probe到时被调用
 	.remove   = e1000_remove,
 	.driver = {
 		.pm = &e1000_pm_ops,
@@ -1388,7 +1388,7 @@ int e1000_open(struct net_device *netdev)
 	 */
 	e1000_configure(adapter);
 
-	err = e1000_request_irq(adapter);
+	err = e1000_request_irq(adapter);       // 注册中断处理函数。 最终注册的是 e1000_intr()
 	if (err)
 		goto err_req_irq;
 
@@ -3767,7 +3767,7 @@ static irqreturn_t e1000_intr(int irq, void *data)
 	}
 
 	/* disable interrupts, without the synchronize_irq bit */
-	ew32(IMC, ~0);
+	ew32(IMC, ~0);      // 关中断, 避免中断嵌套.  (napi处理完会开中断)
 	E1000_WRITE_FLUSH();
 
 	if (likely(napi_schedule_prep(&adapter->napi))) {
@@ -3775,7 +3775,7 @@ static irqreturn_t e1000_intr(int irq, void *data)
 		adapter->total_tx_packets = 0;
 		adapter->total_rx_bytes = 0;
 		adapter->total_rx_packets = 0;
-		__napi_schedule(&adapter->napi);
+		__napi_schedule(&adapter->napi);    // 激活NAPI, napi_struct.poll_list 挂在 softnet_data.poll_list 上,方便后面软中断调用 napi_struct.poll 获取网卡数据。然后设置NET_RX_SOFTIRQ 软中断标识位。
 	} else {
 		/* this really should not happen! if it does it is basically a
 		 * bug, but not a hard error, so enable ints and continue
