@@ -4707,5 +4707,5 @@ void __init tcp_init(void)
 	tcp_metrics_init();
 	BUG_ON(tcp_register_congestion_control(&tcp_reno) != 0);
 	tcp_tasklet_init();
-	mptcp_init();       //  MPTCP协议栈运行时的全局变量!
+	mptcp_init();       //  MPTCP协议栈运行时的全局变量!    也是 [mptcp icsk_af_ops->conn_request]
 }

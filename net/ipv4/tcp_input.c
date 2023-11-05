@@ -6532,7 +6532,15 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
 			 */
 			rcu_read_lock();
 			local_bh_disable();
-			acceptable = icsk->icsk_af_ops->conn_request(sk, skb) >= 0;     // 已明确TCP协议调用的是 tcp_v4_conn_request().    那么 mptcp协议调用的是？ 会不会是 subflow_v4_conn_request() ,  从setsockoption找线索
+
+            /*
+             * 这里是inet层的connection操作。
+             * 1、已明确TCP协议调用的是 tcp_v4_conn_request().
+             * 2、介于mptcp是inet层的协议，所以这里调用的是 subflow_v4_conn_request()。
+             *    原因：在inet_create()中会遍历协议类型 inetsw[TCP MPTCP...].
+             *    更多细节请搜索代码中的关键是 [mptcp icsk_af_ops->conn_request]!
+             * **/
+			acceptable = icsk->icsk_af_ops->conn_request(sk, skb) >= 0;
 			local_bh_enable();
 			rcu_read_unlock();
 
