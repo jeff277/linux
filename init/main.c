@@ -688,7 +688,7 @@ noinline void __ref __noreturn rest_init(void)
 	 * the init task will end up wanting to create kthreads, which, if
 	 * we schedule it before we create kthreadd, will OOPS.
 	 */
-	pid = user_mode_thread(kernel_init, NULL, CLONE_FS);
+	pid = user_mode_thread(kernel_init, NULL, CLONE_FS);        // kernel_init()中会初始化网络子系统
 	/*
 	 * Pin init on the boot CPU. Task migration is not properly working
 	 * until sched_init_smp() has been run. It will set the allowed
@@ -867,7 +867,7 @@ static void __init print_unknown_bootoptions(void)
 }
 
 asmlinkage __visible __init __no_sanitize_address __noreturn __no_stack_protector
-void start_kernel(void)
+void start_kernel(void)     // 内核的入口.   https://xinqiu.gitbooks.io/linux-insides-cn/content/Initialization/linux-initialization-4.html
 {
 	char *command_line;
 	char *after_dashes;
@@ -1065,7 +1065,7 @@ void start_kernel(void)
 	kcsan_init();
 
 	/* Do the rest non-__init'ed, we're now alive */
-	arch_call_rest_init();
+	arch_call_rest_init();      // 子系统和模块初始化入口.  比如网络子系统的初始化
 
 	/*
 	 * Avoid stack canaries in callers of boot_init_stack_canary for gcc-10
@@ -1304,6 +1304,8 @@ static void __init do_initcalls(void)
 	if (!command_line)
 		panic("%s: Failed to allocate %zu bytes\n", __func__, len);
 
+    // 这里会调用到 net_dev_init().  是dev.c中通过 subsys_initcall(net_dev_init) 静态注册的.
+    // 静态注册是依赖编译器特性实现的, 更多细节见 https://www.cntofu.com/book/114/Concepts/initcall.md
 	for (level = 0; level < ARRAY_SIZE(initcall_levels) - 1; level++) {
 		/* Parser modifies command_line, restore it each time */
 		strcpy(command_line, saved_command_line);
@@ -1326,7 +1328,7 @@ static void __init do_basic_setup(void)
 	driver_init();
 	init_irq_proc();
 	do_ctors();
-	do_initcalls();
+	do_initcalls();     // 其中会初始化网络子系统
 }
 
 static void __init do_pre_smp_initcalls(void)
@@ -1434,7 +1436,7 @@ static int __ref kernel_init(void *unused)
 	 */
 	wait_for_completion(&kthreadd_done);
 
-	kernel_init_freeable();
+	kernel_init_freeable();     // 其中会初始化网络子系统
 	/* need to finish all async __init code before freeing the memory */
 	async_synchronize_full();
 
@@ -1544,7 +1546,7 @@ static noinline void __init kernel_init_freeable(void)
 	padata_init();
 	page_alloc_init_late();
 
-	do_basic_setup();
+	do_basic_setup();       // 其中会初始化网络子系统
 
 	kunit_run_all_tests();
 

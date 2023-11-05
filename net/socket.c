@@ -1551,7 +1551,7 @@ int __sock_create(struct net *net, int family, int type, int protocol,
 #endif
 
 	rcu_read_lock();
-	pf = rcu_dereference(net_families[family]);
+	pf = rcu_dereference(net_families[family]);     // family == AF_INET
 	err = -EAFNOSUPPORT;
 	if (!pf)
 		goto out_release;
@@ -1654,6 +1654,7 @@ static struct socket *__sys_socket_create(int family, int type, int protocol)
 		return ERR_PTR(-EINVAL);
 	type &= SOCK_TYPE_MASK;
 
+    // [socket()]
 	retval = sock_create(family, type, protocol, &sock);
 	if (retval < 0)
 		return ERR_PTR(retval);
@@ -1717,6 +1718,7 @@ int __sys_socket(int family, int type, int protocol)
 	return sock_map_fd(sock, flags & (O_CLOEXEC | O_NONBLOCK));
 }
 
+// [socket()] socket函数的内核入口. 参数 protocol 可以是 IPPROTO_MPTCP, IPPROTO_TCP
 SYSCALL_DEFINE3(socket, int, family, int, type, int, protocol)
 {
 	return __sys_socket(family, type, protocol);

@@ -2053,6 +2053,8 @@ void __init mptcp_subflow_init(void)
 
 	mptcp_diag_subflow_init(&subflow_ulp_ops);
 
+    // Upper Layer Protocol , 4.14新特性, 为Kernel TLS Support 而引入的.
+    // mptcp用这个框架的时候, 协议名称就是mptcp
 	if (tcp_register_ulp(&subflow_ulp_ops) != 0)
 		panic("MPTCP: failed to register subflows to ULP\n");
 }
