@@ -78,7 +78,7 @@ struct inet_protosw {
 
         /* These two fields form the lookup key.  */
 	unsigned short	 type;	   /* This is the 2nd argument to socket(2). */
-	unsigned short	 protocol; /* This is the L4 protocol number.  */
+	unsigned short	 protocol; /* This is the L4 protocol number.  */  // 比如 6，17。 IPPROTO_MPTCP （这个协议号，不一定是在数据包中相同位置取的，MPTCP在是tcp的一个option，其数据包中的L4协议值还是6!)
 
 	struct proto	 *prot;
 	const struct proto_ops *ops;

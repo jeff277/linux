@@ -124,7 +124,7 @@
 /* The inetsw table contains everything that inet_create needs to
  * build a new socket.
  */
-static struct list_head inetsw[SOCK_MAX];
+static struct list_head inetsw[SOCK_MAX];       // inet层的协议Switch: 有tcp,udp,mptcp,l2tp等。 sw是Switch 也就是协议分叉走不同的逻辑的意思。
 static DEFINE_SPINLOCK(inetsw_lock);
 
 /* New destruction routine */
@@ -262,6 +262,8 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
 lookup_protocol:
 	err = -ESOCKTNOSUPPORT;
 	rcu_read_lock();
+
+    // 此时会匹配协议号, 注意MPTCP协议是IPPROTO_MPTCP,也在这个inetsw[]中。
 	list_for_each_entry_rcu(answer, &inetsw[sock->type], list) {
 
 		err = 0;
@@ -1174,7 +1176,7 @@ void inet_register_protosw(struct inet_protosw *p)
 {
 	struct list_head *lh;
 	struct inet_protosw *answer;
-	int protocol = p->protocol;
+	int protocol = p->protocol;         // 协议号 比如 IPPROTO_MPTCP.
 	struct list_head *last_perm;
 
 	spin_lock_bh(&inetsw_lock);
@@ -2058,6 +2060,7 @@ out_unregister_tcp_proto:
 	goto out;
 }
 
+//
 fs_initcall(inet_init);     // [网络子系统初始化]  协议栈初始化的入口
 
 /* ------------------------------------------------------------------------ */

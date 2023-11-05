@@ -107,7 +107,7 @@ static int __mptcp_socket_create(struct mptcp_sock *msk)
 	struct socket *ssock;
 	int err;
 
-	err = mptcp_subflow_create_socket(sk, sk->sk_family, &ssock);
+	err = mptcp_subflow_create_socket(sk, sk->sk_family, &ssock);   // [mptcp icsk_af_ops->conn_request] 设置路径
 	if (err)
 		return err;
 
@@ -3892,15 +3892,15 @@ static const struct proto_ops mptcp_stream_ops = {
 	.family		   = PF_INET,
 	.owner		   = THIS_MODULE,
 	.release	   = inet_release,
-	.bind		   = mptcp_bind,
-	.connect	   = inet_stream_connect,
+	.bind		   = mptcp_bind,            //  会调用 __mptcp_nmpc_sk()
+	.connect	   = inet_stream_connect,   //  会调用 __mptcp_nmpc_sk()
 	.socketpair	   = sock_no_socketpair,
 	.accept		   = mptcp_stream_accept,
 	.getname	   = inet_getname,
 	.poll		   = mptcp_poll,
 	.ioctl		   = inet_ioctl,
 	.gettstamp	   = sock_gettstamp,
-	.listen		   = mptcp_listen,
+	.listen		   = mptcp_listen,      // 会调用 __mptcp_nmpc_sk()
 	.shutdown	   = inet_shutdown,
 	.setsockopt	   = sock_common_setsockopt,
 	.getsockopt	   = sock_common_getsockopt,
@@ -3915,7 +3915,7 @@ static struct inet_protosw mptcp_protosw = {
 	.type		= SOCK_STREAM,
 	.protocol	= IPPROTO_MPTCP,
 	.prot		= &mptcp_prot,
-	.ops		= &mptcp_stream_ops,
+	.ops		= &mptcp_stream_ops,  //该ops中的bind, listen, connect 等函数会调用 __mptcp_nmpc_sk(),
 	.flags		= INET_PROTOSW_ICSK,
 };
 
@@ -3971,14 +3971,19 @@ void __init mptcp_proto_init(void)
 		napi_enable(&delegated->napi);
 	}
 
-	mptcp_subflow_init();
+	mptcp_subflow_init();   // [mptcp icsk_af_ops->conn_request] 设置路径
 	mptcp_pm_init();
 	mptcp_token_init();
 
 	if (proto_register(&mptcp_prot, 1) != 0)
 		panic("Failed to register MPTCP proto.\n");
 
-	inet_register_protosw(&mptcp_protosw);  // [socket()] 注册协议族和对应的处理对
+    /*
+     * [socket()] 注册inet层的新处理协议 mptcp
+     * inet层处于socket和具体protocol之间。
+     * udplite,l2tp,sctp都是用这种方式添加到内核网络协议栈的。
+     * */
+	inet_register_protosw(&mptcp_protosw);
 
 	BUILD_BUG_ON(sizeof(struct mptcp_skb_cb) > sizeof_field(struct sk_buff, cb));
 }
