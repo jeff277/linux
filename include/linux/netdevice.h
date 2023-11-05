@@ -354,7 +354,7 @@ struct napi_struct {
 	int			weight;
 	int			defer_hard_irqs_count;
 	unsigned long		gro_bitmask;
-	int			(*poll)(struct napi_struct *, int);
+	int			(*poll)(struct napi_struct *, int);         // 各网卡驱动注册的poll函数. e1000注册的是 e1000e_poll(), 对应的weight=64
 #ifdef CONFIG_NETPOLL
 	int			poll_owner;
 #endif
@@ -2053,7 +2053,10 @@ struct net_device {
 	/* Read-mostly cache-line for fast-path access */
 	unsigned int		flags;
 	unsigned long long	priv_flags;
+
+	 // 各网卡驱动注册的处理函数.  比如e1000网卡注册的是  e1000e_netdev_ops
 	const struct net_device_ops *netdev_ops;
+
 	int			ifindex;
 	unsigned short		gflags;
 	unsigned short		hard_header_len;

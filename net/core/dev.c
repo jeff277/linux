@@ -195,7 +195,7 @@ static DEFINE_MUTEX(ifalias_mutex);
 static DEFINE_SPINLOCK(napi_hash_lock);
 
 static unsigned int napi_gen_id = NR_CPUS;
-static DEFINE_READ_MOSTLY_HASHTABLE(napi_hash, 8);
+static DEFINE_READ_MOSTLY_HASHTABLE(napi_hash, 8);      //netif_napi_add()。将网卡各自的napi_struct加入到这个hash表了。 关键是他们的e1000e_poll().  hash key是自增id
 
 static DECLARE_RWSEM(devnet_rename_sem);
 
@@ -4388,7 +4388,7 @@ static inline void ____napi_schedule(struct softnet_data *sd,
 		}
 	}
 
-	// 这是网卡硬中断中的处理逻辑, 将napi_struct 挂载到 softnet_data的poll_ist.  
+	// 这是网卡硬中断中的处理逻辑, 将napi_struct 挂载到 本CPU的，softnet_data的poll_ist.
 	// 紧接着触发软中断 NET_RX_SOFTIRQ.  该软中断的注册在 net_dev_init()中初始化, 注册的是net_rx_action()
 	list_add_tail(&napi->poll_list, &sd->poll_list);
 	__raise_softirq_irqoff(NET_RX_SOFTIRQ);
@@ -6034,7 +6034,7 @@ void __napi_schedule(struct napi_struct *n)
 	unsigned long flags;
 
 	local_irq_save(flags);
-	____napi_schedule(this_cpu_ptr(&softnet_data), n);
+	____napi_schedule(this_cpu_ptr(&softnet_data), n);      // 硬中断中NAPI的处理, 注意关键信息 this_cpu的softnet_data。  n和网卡设备帮忙绑定。  这样就把处理中断的CPU和有数据包的网卡设备关联上了。
 	local_irq_restore(flags);
 }
 EXPORT_SYMBOL(__napi_schedule);
@@ -10107,6 +10107,19 @@ EXPORT_SYMBOL(netif_tx_stop_all_queues);
  * A %NETDEV_REGISTER message is sent to the netdev notifier chain.
  * Callers must hold the rtnl lock - you may want register_netdev()
  * instead of this.
+ */
+
+ /*
+    register_netdevice 的工作主要包括以下部分：
+    初始化 net_device 的部分字段
+    如果内核支持 Divert 功能，则用 alloc_divert_blk 分配该功能所需的数据空间块，并连接至 dev->divert
+    如果设备驱动已经对 dev->init 进行初始化，则执行此函数。
+    由 dev_new_index 分配给设备一个识别码。
+    把 net_device 插入到全局表 dev_base，以及两张哈希表 dev_name_head，dev_index_head。
+    检查功能标识是否有无效的组合。
+    设置 dev->state 中的__LINK_STATE_PRESENT 标识，使得设备能为内核所用。
+    用 dev_init_scheduler 初始化设备队列规则，以便流量控制用于实现 Qos。
+    通过 netdev_chain 通知表链通知所有对本设备注册感兴趣的子系统。
  */
 int register_netdevice(struct net_device *dev)
 {
