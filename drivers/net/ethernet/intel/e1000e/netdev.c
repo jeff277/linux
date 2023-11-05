@@ -7383,6 +7383,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (err)
 		return err;
 
+    // 设置pci设备的dma掩码
 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 	if (err) {
 		dev_err(&pdev->dev,
@@ -7403,6 +7404,8 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		goto err_alloc_etherdev;
 
 	err = -ENOMEM;
+
+    // 为e1000网卡对应的net_device结构分配内存. 后续会将netdev变量，加入 dev_base[]中
 	netdev = alloc_etherdev(sizeof(struct e1000_adapter));
 	if (!netdev)
 		goto err_alloc_etherdev;
@@ -7448,10 +7451,17 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		adapter->eee_advert = MDIO_EEE_100TX | MDIO_EEE_1000T;
 
 	/* construct the net_device struct */
+    // 注册驱动的发包收包等处理函数
 	netdev->netdev_ops = &e1000e_netdev_ops;
+
+    // 注册网卡命令函数
 	e1000e_set_ethtool_ops(netdev);
+
 	netdev->watchdog_timeo = 5 * HZ;
+
+    // 注册poll函数为 e1000e_poll
 	netif_napi_add(netdev, &adapter->napi, e1000e_poll);
+
 	strscpy(netdev->name, pci_name(pdev), sizeof(netdev->name));
 
 	netdev->mem_start = mmio_start;
@@ -7494,6 +7504,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		dev_info(&pdev->dev,
 			 "PHY reset is blocked due to SOL/IDER session.\n");
 
+    // 网卡属性初始化
 	/* Set initial default active device features */
 	netdev->features = (NETIF_F_SG |
 			    NETIF_F_HW_VLAN_CTAG_RX |
@@ -7675,6 +7686,8 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		adapter->flags2 |= FLAG2_ENABLE_S0IX_FLOWS;
 
 	strscpy(netdev->name, "eth%d", sizeof(netdev->name));
+
+    // 将当前网络设备注册到系统的dev_base[]设备数组当中
 	err = register_netdev(netdev);
 	if (err)
 		goto err_register;
