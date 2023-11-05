@@ -38375,4 +38375,7 @@ add_executable(linux_kernel
         virt/kvm/pfncache.c
         virt/kvm/vfio.c
         virt/kvm/vfio.h
-        virt/lib/irqbypass.c)
+        virt/lib/irqbypass.c
+        include/uapi/linux/tcp.h
+        include/uapi/linux/tcp.h
+        include/uapi/linux/tcp.h)

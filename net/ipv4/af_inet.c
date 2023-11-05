@@ -241,7 +241,7 @@ EXPORT_SYMBOL(inet_listen);
 /*
  *	Create an inet socket.
  */
-
+// [socket()] 此时会根据 family protocol 批量opts.  mptcp会匹配到 mptcp_protosw
 static int inet_create(struct net *net, struct socket *sock, int protocol,
 		       int kern)
 {
@@ -308,10 +308,9 @@ lookup_protocol:
 	    !ns_capable(net->user_ns, CAP_NET_RAW))
 		goto out_rcu_unlock;
 
-	sock->ops = answer->ops;
-	answer_prot = answer->prot;
-	answer_flags = answer->flags;
-	rcu_read_unlock();
+	sock->ops = answer->ops;        //[mptcp] mptcp_stream_ops
+	answer_prot = answer->prot;     //[mptcp] mptcp_prot
+	answer_flags = answer->flags;   //[mptcp] INET_PROTOSW_ICSK
 
 	WARN_ON(!answer_prot->slab);
 
@@ -1126,7 +1125,7 @@ static const struct proto_ops inet_sockraw_ops = {
 
 static const struct net_proto_family inet_family_ops = {
 	.family = PF_INET,
-	.create = inet_create,
+	.create = inet_create,      //[socket]
 	.owner	= THIS_MODULE,
 };
 
@@ -1962,7 +1961,7 @@ static int __init inet_init(void)
 	 *	Tell SOCKET that we are alive...
 	 */
 
-	(void)sock_register(&inet_family_ops);
+	(void)sock_register(&inet_family_ops);    // [socket()] 注册sock协议处理器. 创建socket时会调用这里注册的hander
 
 #ifdef CONFIG_SYSCTL
 	ip_static_sysctl_init();

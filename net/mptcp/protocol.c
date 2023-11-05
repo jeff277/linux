@@ -3910,6 +3910,7 @@ static const struct proto_ops mptcp_stream_ops = {
 	.sendpage	   = inet_sendpage,
 };
 
+// 会加入全局变量 inetsw[]中
 static struct inet_protosw mptcp_protosw = {
 	.type		= SOCK_STREAM,
 	.protocol	= IPPROTO_MPTCP,
@@ -3977,7 +3978,7 @@ void __init mptcp_proto_init(void)
 	if (proto_register(&mptcp_prot, 1) != 0)
 		panic("Failed to register MPTCP proto.\n");
 
-	inet_register_protosw(&mptcp_protosw);
+	inet_register_protosw(&mptcp_protosw);  // [socket()] 注册协议族和对应的处理对
 
 	BUILD_BUG_ON(sizeof(struct mptcp_skb_cb) > sizeof_field(struct sk_buff, cb));
 }

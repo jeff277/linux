@@ -94,7 +94,7 @@ struct inet_connection_sock {
 	__u32                     icsk_delack_max;
 	__u32			  icsk_pmtu_cookie;
 	const struct tcp_congestion_ops *icsk_ca_ops;
-	const struct inet_connection_sock_af_ops *icsk_af_ops;
+	const struct inet_connection_sock_af_ops *icsk_af_ops;      //todo 这里mptcp是如何赋值的？
 	const struct tcp_ulp_ops  *icsk_ulp_ops;
 	void __rcu		  *icsk_ulp_data;
 	void (*icsk_clean_acked)(struct sock *sk, u32 acked_seq);

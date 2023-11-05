@@ -121,6 +121,9 @@ struct socket {
 
 	struct file		*file;
 	struct sock		*sk;
+
+	// [socket()] 应用层创建socket时会最后一个参数会传入mptcp协议号。
+        // 然后在inet_create() 将下面这个ops赋值为了 mptcp_stream_ops
 	const struct proto_ops	*ops;
 
 	struct socket_wq	wq;

@@ -382,7 +382,7 @@ struct sock {
 #define sk_net_refcnt		__sk_common.skc_net_refcnt
 #define sk_bound_dev_if		__sk_common.skc_bound_dev_if
 #define sk_bind_node		__sk_common.skc_bind_node
-#define sk_prot			__sk_common.skc_prot
+#define sk_prot			__sk_common.skc_prot        //[mptcp] 在sk_alloc()函数中，会被赋值为 mptcp_prot
 #define sk_net			__sk_common.skc_net
 #define sk_v6_daddr		__sk_common.skc_v6_daddr
 #define sk_v6_rcv_saddr	__sk_common.skc_v6_rcv_saddr

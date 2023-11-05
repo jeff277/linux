@@ -11588,5 +11588,5 @@ out:
 }
 
 // [网络子系统初始化 - 1] 入口
-// Linux内核通过调用 subsys_initcall 来初始化各种子系统.
+// Linux内核通过调用 subsys_initcall 来初始化各种子系统.       https://www.cntofu.com/book/114/Concepts/initcall.md
 subsys_initcall(net_dev_init);
