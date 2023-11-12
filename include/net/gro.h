@@ -436,7 +436,7 @@ static inline void gro_normal_list(struct napi_struct *napi)
 {
 	if (!napi->rx_count)
 		return;
-	netif_receive_skb_list_internal(&napi->rx_list);
+	netif_receive_skb_list_internal(&napi->rx_list);	// 收包: 从网卡到三层入口 ip_rcv()
 	INIT_LIST_HEAD(&napi->rx_list);
 	napi->rx_count = 0;
 }
@@ -449,7 +449,7 @@ static inline void gro_normal_one(struct napi_struct *napi, struct sk_buff *skb,
 	list_add_tail(&skb->list, &napi->rx_list);
 	napi->rx_count += segs;
 	if (napi->rx_count >= READ_ONCE(gro_normal_batch))
-		gro_normal_list(napi);
+		gro_normal_list(napi);		// 收包: 从网卡到三层入口 ip_rcv()
 }
 
 /* This function is the alternative of 'inet_iif' and 'inet_sdif'

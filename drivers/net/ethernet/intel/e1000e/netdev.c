@@ -562,7 +562,7 @@ static void e1000_receive_skb(struct e1000_adapter *adapter,
 	if (staterr & E1000_RXD_STAT_VP)
 		__vlan_hwaccel_put_tag(skb, htons(ETH_P_8021Q), tag);
 
-	napi_gro_receive(&adapter->napi, skb);
+	napi_gro_receive(&adapter->napi, skb);   // 收包: 从网卡到三层入口 ip_rcv()
 }
 
 /**
@@ -7459,7 +7459,7 @@ static int e1000_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	netdev->watchdog_timeo = 5 * HZ;
 
-    // 注册poll函数为 e1000e_poll
+    // 注册poll函数为 e1000e_poll.  数据包从该网卡注册的 e1000e_poll()开始处理
 	netif_napi_add(netdev, &adapter->napi, e1000e_poll);
 
 	strscpy(netdev->name, pci_name(pdev), sizeof(netdev->name));

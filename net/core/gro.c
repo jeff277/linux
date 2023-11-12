@@ -576,7 +576,7 @@ static gro_result_t napi_skb_finish(struct napi_struct *napi,
 {
 	switch (ret) {
 	case GRO_NORMAL:
-		gro_normal_one(napi, skb, 1);		// 看这里
+		gro_normal_one(napi, skb, 1);		// 收包: 从网卡到三层入口 ip_rcv()
 		break;
 
 	case GRO_MERGED_FREE:
@@ -606,7 +606,7 @@ gro_result_t napi_gro_receive(struct napi_struct *napi, struct sk_buff *skb)
 
 	skb_gro_reset_offset(skb, 0);
 
-	ret = napi_skb_finish(napi, skb, dev_gro_receive(napi, skb));  // 重点关注 napi_skb_finish(),回到主流程
+	ret = napi_skb_finish(napi, skb, dev_gro_receive(napi, skb));  // 收包: 从网卡到三层入口 ip_rcv()
 	trace_napi_gro_receive_exit(ret);
 
 	return ret;
