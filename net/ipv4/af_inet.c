@@ -1929,6 +1929,7 @@ fs_initcall(ipv4_offload_init);
 
 static struct packet_type ip_packet_type __read_mostly = {
 	.type = cpu_to_be16(ETH_P_IP),
+	// 收包: 从网卡到三层入口 ip_rcv(). 这里注册ip_rcv()作为ip包的处理入口. 然后在deliver_skb()中调用该函数，进入RX的网络层协议栈逻辑.
 	.func = ip_rcv,             /* [网络子系统初始化] 注意这里, 这是定义的ip收包的入口 */
 	.list_func = ip_list_rcv,
 };

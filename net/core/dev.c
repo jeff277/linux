@@ -2187,6 +2187,8 @@ static inline int deliver_skb(struct sk_buff *skb,
 	if (unlikely(skb_orphan_frags_rx(skb, GFP_ATOMIC)))
 		return -ENOMEM;
 	refcount_inc(&skb->users);
+
+	// 收包: 从网卡到三层入口 ip_rcv()
 	return pt_prev->func(skb, skb->dev, pt_prev, orig_dev);  // tcp收包时 实际上将执行 ip_rcv()
 }
 
@@ -5371,6 +5373,7 @@ another_round:
 		goto skip_taps;
 
 	list_for_each_entry_rcu(ptype, &ptype_all, list) {
+		// 收包: 从网卡到三层入口 ip_rcv()
 		if (pt_prev)
 			ret = deliver_skb(skb, pt_prev, orig_dev);        // [网络子系统] deliver_skb()调用 inet_init()中注册的网络层协议回调handler。 最终会执行 ip_rcv()
 		pt_prev = ptype;
@@ -5604,7 +5607,7 @@ static void __netif_receive_skb_list_core(struct list_head *head, bool pfmemallo
 		struct packet_type *pt_prev = NULL;
 
 		skb_list_del_init(skb);
-		__netif_receive_skb_core(&skb, pfmemalloc, &pt_prev);
+		__netif_receive_skb_core(&skb, pfmemalloc, &pt_prev);  // 收包: 从网卡到三层入口 ip_rcv()
 		if (!pt_prev)
 			continue;
 		if (pt_curr != pt_prev || od_curr != orig_dev) {
@@ -5671,7 +5674,7 @@ static void __netif_receive_skb_list(struct list_head *head)
 	}
 	/* Handle the remaining sublist */
 	if (!list_empty(head))
-		__netif_receive_skb_list_core(head, pfmemalloc);
+		__netif_receive_skb_list_core(head, pfmemalloc);	// 收包: 从网卡到三层入口 ip_rcv()
 	/* Restore pflags */
 	if (pfmemalloc)
 		memalloc_noreclaim_restore(noreclaim_flag);
@@ -5762,7 +5765,7 @@ void netif_receive_skb_list_internal(struct list_head *head)
 		}
 	}
 #endif
-	__netif_receive_skb_list(head);
+	__netif_receive_skb_list(head);		// 收包: 从网卡到三层入口 ip_rcv()
 	rcu_read_unlock();
 }
 

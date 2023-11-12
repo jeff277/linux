@@ -1863,7 +1863,7 @@ static void e1000_configure_rx(struct e1000_adapter *adapter)
 	} else {
 		rdlen = adapter->rx_ring[0].count *
 			sizeof(struct e1000_rx_desc);
-		adapter->clean_rx = e1000_clean_rx_irq;
+		adapter->clean_rx = e1000_clean_rx_irq;		// 注册e1000网卡的接收处理函数。 收包: 从网卡到三层入口 ip_rcv()的起点
 		adapter->alloc_rx_buf = e1000_alloc_rx_buffers;
 	}
 
@@ -4461,7 +4461,7 @@ process_skb:
 				  ((u32)(rx_desc->errors) << 24),
 				  le16_to_cpu(rx_desc->csum), skb);
 
-		e1000_receive_skb(adapter, status, rx_desc->special, skb);
+		e1000_receive_skb(adapter, status, rx_desc->special, skb);   // 收包: 从网卡到三层入口 ip_rcv()
 
 next_desc:
 		rx_desc->status = 0;
