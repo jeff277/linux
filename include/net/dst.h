@@ -447,7 +447,7 @@ static inline int dst_output(struct net *net, struct sock *sk, struct sk_buff *s
 static inline int dst_input(struct sk_buff *skb)
 {
 	// ip_local_deliver()
-	return skb_dst(skb)->input(skb);
+	return skb_dst(skb)->input(skb);	//  [网络子系统] 从ip_rcv到tcp_v4_rcv.  ip_local_deliver()
 }
 
 static inline struct dst_entry *dst_check(struct dst_entry *dst, u32 cookie)
