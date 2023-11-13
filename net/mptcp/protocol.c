@@ -2727,6 +2727,7 @@ out_unlock:
 	return ret;
 }
 
+// 对应tcp的inet_stream_ops{}
 static const struct proto_ops mptcp_stream_ops = {
 	.family		   = PF_INET,
 	.owner		   = THIS_MODULE,
