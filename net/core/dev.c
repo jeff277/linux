@@ -2204,7 +2204,7 @@ static inline void deliver_ptype_list_skb(struct sk_buff *skb,
 		if (ptype->type != type)
 			continue;
 		if (pt_prev)
-			deliver_skb(skb, pt_prev, orig_dev);
+			deliver_skb(skb, pt_prev, orig_dev);        //type是数据包 包头中的协议号. 匹配到该协议号对应的处理函数.  对于以太网包， ETH_P_IP对应的处理函数是 pt_prev.func() = ip_rcv()
 		pt_prev = ptype;
 	}
 	*pt = pt_prev;
@@ -5372,10 +5372,10 @@ another_round:
 	if (pfmemalloc)
 		goto skip_taps;
 
+    // tcpdump抓包走这里
 	list_for_each_entry_rcu(ptype, &ptype_all, list) {
-		// 收包: 从网卡到三层入口 ip_rcv()
 		if (pt_prev)
-			ret = deliver_skb(skb, pt_prev, orig_dev);        // [网络子系统] deliver_skb()调用 inet_init()中注册的网络层协议回调handler。 最终会执行 ip_rcv()
+			ret = deliver_skb(skb, pt_prev, orig_dev);
 		pt_prev = ptype;
 	}
 
@@ -5481,6 +5481,7 @@ check_vlan_id:
 	type = skb->protocol;
 
 	/* deliver only exact match when indicated */
+    // [网络子系统] deliver_skb()调用 inet_init()中注册的网络层协议回调handler。 最终会执行 ip_rcv()
 	if (likely(!deliver_exact)) {
 		deliver_ptype_list_skb(skb, &pt_prev, orig_dev, type,
 				       &ptype_base[ntohs(type) &
