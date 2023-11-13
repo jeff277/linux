@@ -467,7 +467,7 @@ INDIRECT_CALLABLE_DECLARE(int ip_local_deliver(struct sk_buff *));
 static inline int dst_input(struct sk_buff *skb)
 {
 	return INDIRECT_CALL_INET(skb_dst(skb)->input,
-				  ip6_input, ip_local_deliver, skb);        // ip_local_deliver()
+				  ip6_input, ip_local_deliver, skb);        //  [网络子系统] 从ip_rcv到tcp_v4_rcv.  ip_local_deliver()
 }
 
 INDIRECT_CALLABLE_DECLARE(struct dst_entry *ip6_dst_check(struct dst_entry *,
