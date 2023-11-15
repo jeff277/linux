@@ -247,7 +247,9 @@ EXPORT_SYMBOL(inet_listen);
 /*
  *	Create an inet socket.
  */
-// [socket()] 此时会根据 family protocol 批量opts.  mptcp会匹配到 mptcp_protosw
+
+// mptcp相关的sock的sk_prot ops安装过程. 注意protocol的值是应用层指定的IPPROTO_TCP
+// [socket()] 此时会根据 family protocol 匹配opts.  mptcp会匹配到 mptcp_protosw
 static int inet_create(struct net *net, struct socket *sock, int protocol,
 		       int kern)
 {
@@ -316,6 +318,8 @@ lookup_protocol:
 	    !ns_capable(net->user_ns, CAP_NET_RAW))
 		goto out_rcu_unlock;
 
+    // mptcp相关的sock的sk_prot ops安装过程.
+    // 对于mptcp协议 answer=mptcp_protosw; 对于tcp协议 answer=inetsw_array[0]; 对于udp协议 answer=inetsw_array[1];
 	sock->ops = answer->ops;        //[mptcp] mptcp_stream_ops
 	answer_prot = answer->prot;     //[mptcp] mptcp_prot
 	answer_flags = answer->flags;   //[mptcp] INET_PROTOSW_ICSK
@@ -323,6 +327,7 @@ lookup_protocol:
 	WARN_ON(!answer_prot->slab);
 
 	err = -ENOMEM;
+    // mptcp相关的sock的sk_prot ops安装过程。 对于mptcp协议 answer_prot的值是 mptcp_prot
 	sk = sk_alloc(net, PF_INET, GFP_KERNEL, answer_prot, kern);
 	if (!sk)
 		goto out;
@@ -676,6 +681,7 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 				goto out;
 		}
 
+        // mptcp协议会调用, mptcp_connect()
 		err = sk->sk_prot->connect(sk, uaddr, addr_len);
 		if (err < 0)
 			goto out;
@@ -741,6 +747,7 @@ sock_error:
 }
 EXPORT_SYMBOL(__inet_stream_connect);
 
+// mptcp三次握手:客户端发syn.  mptcp和tcp的 connect() hander都是这
 int inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 			int addr_len, int flags)
 {

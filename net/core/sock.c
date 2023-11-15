@@ -2147,7 +2147,7 @@ struct sock *sk_alloc(struct net *net, int family, gfp_t priority,
 		 * See comment in struct sock definition to understand
 		 * why we need sk_prot_creator -acme
 		 */
-		sk->sk_prot = sk->sk_prot_creator = prot;
+		sk->sk_prot = sk->sk_prot_creator = prot;       // mptcp相关的sock的sk_prot ops安装过程。 到这里就完成了sk_prot handle的安装.  sk->sk_prot=mptcp_prot
 		sk->sk_kern_sock = kern;
 		sock_lock_init(sk);
 		sk->sk_net_refcnt = kern ? 0 : 1;

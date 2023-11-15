@@ -192,7 +192,7 @@ void ip_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int protocol)
 resubmit:
 	raw = raw_local_deliver(skb, protocol);
 
-	ipprot = rcu_dereference(inet_protos[protocol]);        //[网络子系统] 从ip_rcv到tcp_v4_rcv.  取当前协议(TCP/UDP...)对应的操作类
+	ipprot = rcu_dereference(inet_protos[protocol]);        //[网络子系统] 从ip_rcv到 tcp_v4_rcv.  取当前协议(TCP/UDP...)对应的操作类
 	if (ipprot) {
 		if (!ipprot->no_policy) {
 			if (!xfrm4_policy_check(NULL, XFRM_POLICY_IN, skb)) {
