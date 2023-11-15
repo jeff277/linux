@@ -1424,6 +1424,8 @@ int __sock_create(struct net *net, int family, int type, int protocol,
 	/* Now protected by module ref count */
 	rcu_read_unlock();
 
+    // mptcp相关的sock的sk_prot ops安装过程. 注意protocol的值是应用层指定的IPPROTO_TCP
+    // 对应mptcp类型的sock, create() = inet_create()
 	err = pf->create(net, sock, protocol, kern);
 	if (err < 0)
 		goto out_module_put;
@@ -1517,6 +1519,7 @@ int __sys_socket(int family, int type, int protocol)
 	if (SOCK_NONBLOCK != O_NONBLOCK && (flags & SOCK_NONBLOCK))
 		flags = (flags & ~SOCK_NONBLOCK) | O_NONBLOCK;
 
+	 // mptcp相关的sock的sk_prot ops安装过程. 注意protocol的值
 	retval = sock_create(family, type, protocol, &sock);
 	if (retval < 0)
 		return retval;
@@ -1524,6 +1527,7 @@ int __sys_socket(int family, int type, int protocol)
 	return sock_map_fd(sock, flags & (O_CLOEXEC | O_NONBLOCK));
 }
 
+// mptcp相关的sock的sk_prot ops安装过程. 应用层创建socket时协议号指定的就是 IPPROTO_TCP
 // [socket()] socket函数的内核入口. 参数 protocol 可以是 IPPROTO_MPTCP, IPPROTO_TCP
 SYSCALL_DEFINE3(socket, int, family, int, type, int, protocol)
 {
