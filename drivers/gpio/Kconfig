@@ -100,7 +100,7 @@ config GPIO_GENERIC
 	tristate
 
 config GPIO_REGMAP
-	depends on REGMAP
+	select REGMAP
 	tristate
 
 # put drivers in the right section, in alphabetical order
@@ -882,7 +882,7 @@ config GPIO_F7188X
 	help
 	  This option enables support for GPIOs found on Fintek Super-I/O
 	  chips F71869, F71869A, F71882FG, F71889F and F81866.
-	  As well as Nuvoton Super-I/O chip NCT6116D.
+	  As well as Nuvoton Super-I/O chip NCT6126D.
 
 	  To compile this driver as a module, choose M here: the module will
 	  be called f7188x-gpio.
@@ -1710,5 +1710,20 @@ config GPIO_SIM
 	  driver.
 
 endmenu
+
+comment "Other GPIO expanders"
+
+config GPIO_CASCADE
+	tristate "General GPIO cascade"
+	select MULTIPLEXER
+	help
+	  Say yes here to enable support for generic GPIO cascade.
+
+	  This allows building one-to-many cascades of GPIO lines using
+	  different types of multiplexers readily available. At the
+	  moment only input lines are supported.
+
+	  To build the driver as a module choose 'm' and the resulting module
+	  will be called 'gpio-cascade'.
 
 endif

@@ -892,14 +892,14 @@ config CC_IMPLICIT_FALLTHROUGH
 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
 
-# Currently, disable gcc-12 array-bounds globally.
-# We may want to target only particular configurations some day.
-config GCC12_NO_ARRAY_BOUNDS
+# Currently, disable gcc-11+ array-bounds globally.
+# It's still broken in gcc-13, so no upper bound yet.
+config GCC11_NO_ARRAY_BOUNDS
 	def_bool y
 
 config CC_NO_ARRAY_BOUNDS
 	bool
-	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
+	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC11_NO_ARRAY_BOUNDS
 
 #
 # For architectures that know their GCC __int128 support is sound
@@ -1481,6 +1481,17 @@ config SYSCTL_ARCH_UNALIGN_ALLOW
 	  the unaligned access emulation.
 	  see arch/parisc/kernel/unaligned.c for reference
 
+config KALLSYMS_UNCOMPRESSED
+	bool "Keep kallsyms uncompressed"
+	depends on KALLSYMS
+	help
+		Normally kallsyms contains compressed symbols (using a token table),
+		reducing the uncompressed kernel image size. Keeping the symbol table
+		uncompressed significantly improves the size of this part in compressed
+		kernel images.
+
+		Say N unless you need compressed kernel images to be small.
+
 config HAVE_PCSPKR_PLATFORM
 	bool
 
@@ -1815,6 +1826,15 @@ config EMBEDDED
 	  an embedded system so certain expert options are available
 	  for configuration.
 
+config MANGLE_BOOTARGS
+	bool "Rename offending bootargs"
+	depends on EXPERT
+	help
+	  Sometimes the bootloader passed bogus root= and rootfstype=
+	  parameters to the kernel, and while you want to ignore them,
+	  you need to know the values f.e. to support dual firmware
+	  layouts on the flash.
+
 config HAVE_PERF_EVENTS
 	bool
 	help
@@ -1983,7 +2003,7 @@ config PADATA
 	bool
 
 config ASN1
-	tristate
+	tristate "ASN1"
 	help
 	  Build a simple ASN.1 grammar compiler that produces a bytecode output
 	  that can be interpreted by the ASN.1 stream decoder and used to

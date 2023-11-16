@@ -82,6 +82,7 @@ config MIPS
 	select HAVE_LD_DEAD_CODE_DATA_ELIMINATION
 	select HAVE_MOD_ARCH_SPECIFIC
 	select HAVE_NMI
+	select HAVE_PATA_PLATFORM
 	select HAVE_PERF_EVENTS
 	select HAVE_PERF_REGS
 	select HAVE_PERF_USER_STACK_DUMP
@@ -93,6 +94,7 @@ config MIPS
 	select HAVE_VIRT_CPU_ACCOUNTING_GEN if 64BIT || !SMP
 	select IRQ_FORCED_THREADING
 	select ISA if EISA
+	select LOCK_MM_AND_FIND_VMA
 	select MODULES_USE_ELF_REL if MODULES
 	select MODULES_USE_ELF_RELA if MODULES && 64BIT
 	select PERF_USE_VMALLOC
@@ -1030,9 +1032,6 @@ config FW_ARC
 	bool
 
 config ARCH_MAY_HAVE_PC_FDC
-	bool
-
-config BOOT_RAW
 	bool
 
 config CEVT_BCM1480
@@ -3088,6 +3087,18 @@ choice
 		depends on CMDLINE_BOOL
 		bool "Extend builtin kernel arguments with bootloader arguments"
 endchoice
+
+config BOOT_RAW
+	bool "Enable the kernel to be executed from the load address"
+	default n
+	help
+	 Allow the kernel to be executed from the load address for
+	 bootloaders which cannot read the ELF format. This places
+	 a jump to start_kernel at the load address.
+
+	 If unsure, say N.
+
+
 
 endmenu
 

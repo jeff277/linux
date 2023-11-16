@@ -483,7 +483,14 @@ extern int usb_hcd_pci_probe(struct pci_dev *dev,
 extern void usb_hcd_pci_remove(struct pci_dev *dev);
 extern void usb_hcd_pci_shutdown(struct pci_dev *dev);
 
+#ifndef CONFIG_PCI_DISABLE_COMMON_QUIRKS
 extern int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *dev);
+#else
+static inline int usb_hcd_amd_remote_wakeup_quirk(struct pci_dev *dev)
+{
+	return 0;
+}
+#endif
 
 #ifdef CONFIG_PM
 extern const struct dev_pm_ops usb_hcd_pci_pm_ops;
@@ -499,6 +506,11 @@ void *hcd_buffer_alloc(struct usb_bus *bus, size_t size,
 	gfp_t mem_flags, dma_addr_t *dma);
 void hcd_buffer_free(struct usb_bus *bus, size_t size,
 	void *addr, dma_addr_t dma);
+
+void *hcd_buffer_alloc_pages(struct usb_hcd *hcd,
+		size_t size, gfp_t mem_flags, dma_addr_t *dma);
+void hcd_buffer_free_pages(struct usb_hcd *hcd,
+		size_t size, void *addr, dma_addr_t dma);
 
 /* generic bus glue, needed for host controllers that don't use PCI */
 extern irqreturn_t usb_hcd_irq(int irq, void *__hcd);

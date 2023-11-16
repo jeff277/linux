@@ -503,7 +503,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
 	}
 	write_unlock_irq(&mhi_cntrl->pm_lock);
 
-	if (pm_state != MHI_PM_SYS_ERR_DETECT || ee == mhi_cntrl->ee)
+	if (pm_state != MHI_PM_SYS_ERR_DETECT)
 		goto exit_intvec;
 
 	switch (ee) {
@@ -900,6 +900,7 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
 			switch (event) {
 			case MHI_EE_SBL:
 				st = DEV_ST_TRANSITION_SBL;
+				mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_SBL_MODE);
 				break;
 			case MHI_EE_WFW:
 			case MHI_EE_AMSS:

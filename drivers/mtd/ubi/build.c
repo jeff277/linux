@@ -468,6 +468,7 @@ static int uif_init(struct ubi_device *ubi)
 			err = ubi_add_volume(ubi, ubi->volumes[i]);
 			if (err) {
 				ubi_err(ubi, "cannot add volume %d", i);
+				ubi->volumes[i] = NULL;
 				goto out_volumes;
 			}
 		}
@@ -678,6 +679,21 @@ static int io_init(struct ubi_device *ubi, int max_beb_per1024)
 						~(ubi->hdrs_min_io_size - 1);
 		ubi->vid_hdr_shift = ubi->vid_hdr_offset -
 						ubi->vid_hdr_aloffset;
+	}
+
+	/*
+	 * Memory allocation for VID header is ubi->vid_hdr_alsize
+	 * which is described in comments in io.c.
+	 * Make sure VID header shift + UBI_VID_HDR_SIZE not exceeds
+	 * ubi->vid_hdr_alsize, so that all vid header operations
+	 * won't access memory out of bounds.
+	 */
+	if ((ubi->vid_hdr_shift + UBI_VID_HDR_SIZE) > ubi->vid_hdr_alsize) {
+		ubi_err(ubi, "Invalid VID header offset %d, VID header shift(%d)"
+			" + VID header size(%zu) > VID header aligned size(%d).",
+			ubi->vid_hdr_offset, ubi->vid_hdr_shift,
+			UBI_VID_HDR_SIZE, ubi->vid_hdr_alsize);
+		return -EINVAL;
 	}
 
 	/* Similar for the data offset */
@@ -1189,6 +1205,73 @@ static struct mtd_info * __init open_mtd_device(const char *mtd_dev)
 	return mtd;
 }
 
+/*
+ * This function tries attaching mtd partitions named either "ubi" or "data"
+ * during boot.
+ */
+static void __init ubi_auto_attach(void)
+{
+	int err;
+	struct mtd_info *mtd;
+	loff_t offset = 0;
+	size_t len;
+	char magic[4];
+
+	/* try attaching mtd device named "ubi" or "data" */
+	mtd = open_mtd_device("ubi");
+	if (IS_ERR(mtd))
+		mtd = open_mtd_device("data");
+
+	if (IS_ERR(mtd))
+		return;
+
+	/* get the first not bad block */
+	if (mtd_can_have_bb(mtd))
+		while (mtd_block_isbad(mtd, offset)) {
+			offset += mtd->erasesize;
+
+			if (offset > mtd->size) {
+				pr_err("UBI error: Failed to find a non-bad "
+				       "block on mtd%d\n", mtd->index);
+				goto cleanup;
+			}
+		}
+
+	/* check if the read from flash was successful */
+	err = mtd_read(mtd, offset, 4, &len, (void *) magic);
+	if ((err && !mtd_is_bitflip(err)) || len != 4) {
+		pr_err("UBI error: unable to read from mtd%d\n", mtd->index);
+		goto cleanup;
+	}
+
+	/* check for a valid ubi magic */
+	if (strncmp(magic, "UBI#", 4)) {
+		pr_err("UBI error: no valid UBI magic found inside mtd%d\n", mtd->index);
+		goto cleanup;
+	}
+
+	/* don't auto-add media types where UBI doesn't makes sense */
+	if (mtd->type != MTD_NANDFLASH &&
+	    mtd->type != MTD_NORFLASH &&
+	    mtd->type != MTD_DATAFLASH &&
+	    mtd->type != MTD_MLCNANDFLASH)
+		goto cleanup;
+
+	mutex_lock(&ubi_devices_mutex);
+	pr_notice("UBI: auto-attach mtd%d\n", mtd->index);
+	err = ubi_attach_mtd_dev(mtd, UBI_DEV_NUM_AUTO, 0, 0, false);
+	mutex_unlock(&ubi_devices_mutex);
+	if (err < 0) {
+		pr_err("UBI error: cannot attach mtd%d\n", mtd->index);
+		goto cleanup;
+	}
+
+	return;
+
+cleanup:
+	put_mtd_device(mtd);
+}
+
 static int __init ubi_init(void)
 {
 	int err, i, k;
@@ -1272,6 +1355,12 @@ static int __init ubi_init(void)
 				goto out_detach;
 		}
 	}
+
+	/* auto-attach mtd devices only if built-in to the kernel and no ubi.mtd
+	 * parameter was given */
+	if (IS_ENABLED(CONFIG_MTD_ROOTFS_ROOT_DEV) &&
+	    !ubi_is_module() && !mtd_devs)
+		ubi_auto_attach();
 
 	err = ubiblock_init();
 	if (err) {

@@ -307,7 +307,8 @@ static void packet_cached_dev_reset(struct packet_sock *po)
 
 static bool packet_use_direct_xmit(const struct packet_sock *po)
 {
-	return po->xmit == packet_direct_xmit;
+	/* Paired with WRITE_ONCE() in packet_setsockopt() */
+	return READ_ONCE(po->xmit) == packet_direct_xmit;
 }
 
 static u16 packet_pick_tx_queue(struct sk_buff *skb)
@@ -1861,6 +1862,7 @@ static int packet_rcv_spkt(struct sk_buff *skb, struct net_device *dev,
 {
 	struct sock *sk;
 	struct sockaddr_pkt *spkt;
+	struct packet_sock *po;
 
 	/*
 	 *	When we registered the protocol we saved the socket in the data
@@ -1868,6 +1870,7 @@ static int packet_rcv_spkt(struct sk_buff *skb, struct net_device *dev,
 	 */
 
 	sk = pt->af_packet_priv;
+	po = pkt_sk(sk);
 
 	/*
 	 *	Yank back the headers [hope the device set this
@@ -1880,7 +1883,7 @@ static int packet_rcv_spkt(struct sk_buff *skb, struct net_device *dev,
 	 *	so that this procedure is noop.
 	 */
 
-	if (skb->pkt_type == PACKET_LOOPBACK)
+	if (!(po->pkt_type & (1 << skb->pkt_type)))
 		goto out;
 
 	if (!net_eq(dev_net(dev), sock_net(sk)))
@@ -1935,10 +1938,8 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
 	/* Move network header to the right position for VLAN tagged packets */
 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
 	    eth_type_vlan(skb->protocol) &&
-	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0) {
-		if (pskb_may_pull(skb, depth))
-			skb_set_network_header(skb, depth);
-	}
+	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+		skb_set_network_header(skb, depth);
 
 	skb_probe_transport_header(skb);
 }
@@ -2034,7 +2035,7 @@ retry:
 		goto retry;
 	}
 
-	if (!dev_validate_header(dev, skb->data, len)) {
+	if (!dev_validate_header(dev, skb->data, len) || !skb->len) {
 		err = -EINVAL;
 		goto out_unlock;
 	}
@@ -2128,11 +2129,11 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
 	unsigned int snaplen, res;
 	bool is_drop_n_account = false;
 
-	if (skb->pkt_type == PACKET_LOOPBACK)
-		goto drop;
-
 	sk = pt->af_packet_priv;
 	po = pkt_sk(sk);
+
+	if (!(po->pkt_type & (1 << skb->pkt_type)))
+		goto drop;
 
 	if (!net_eq(dev_net(dev), sock_net(sk)))
 		goto drop;
@@ -2184,7 +2185,7 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
 	sll = &PACKET_SKB_CB(skb)->sa.ll;
 	sll->sll_hatype = dev->type;
 	sll->sll_pkttype = skb->pkt_type;
-	if (unlikely(po->origdev))
+	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
 		sll->sll_ifindex = orig_dev->ifindex;
 	else
 		sll->sll_ifindex = dev->ifindex;
@@ -2260,11 +2261,11 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
 	BUILD_BUG_ON(TPACKET_ALIGN(sizeof(*h.h2)) != 32);
 	BUILD_BUG_ON(TPACKET_ALIGN(sizeof(*h.h3)) != 48);
 
-	if (skb->pkt_type == PACKET_LOOPBACK)
-		goto drop;
-
 	sk = pt->af_packet_priv;
 	po = pkt_sk(sk);
+
+	if (!(po->pkt_type & (1 << skb->pkt_type)))
+		goto drop;
 
 	if (!net_eq(dev_net(dev), sock_net(sk)))
 		goto drop;
@@ -2459,7 +2460,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
 	sll->sll_hatype = dev->type;
 	sll->sll_protocol = skb->protocol;
 	sll->sll_pkttype = skb->pkt_type;
-	if (unlikely(po->origdev))
+	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
 		sll->sll_ifindex = orig_dev->ifindex;
 	else
 		sll->sll_ifindex = dev->ifindex;
@@ -2866,7 +2867,8 @@ tpacket_error:
 		packet_inc_pending(&po->tx_ring);
 
 		status = TP_STATUS_SEND_REQUEST;
-		err = po->xmit(skb);
+		/* Paired with WRITE_ONCE() in packet_setsockopt() */
+		err = READ_ONCE(po->xmit)(skb);
 		if (unlikely(err != 0)) {
 			if (err > 0)
 				err = net_xmit_errno(err);
@@ -3069,7 +3071,8 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
 		virtio_net_hdr_set_proto(skb, &vnet_hdr);
 	}
 
-	err = po->xmit(skb);
+	/* Paired with WRITE_ONCE() in packet_setsockopt() */
+	err = READ_ONCE(po->xmit)(skb);
 	if (unlikely(err != 0)) {
 		if (err > 0)
 			err = net_xmit_errno(err);
@@ -3192,6 +3195,9 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
 
 	lock_sock(sk);
 	spin_lock(&po->bind_lock);
+	if (!proto)
+		proto = po->num;
+
 	rcu_read_lock();
 
 	if (po->fanout) {
@@ -3290,7 +3296,7 @@ static int packet_bind_spkt(struct socket *sock, struct sockaddr *uaddr,
 	memcpy(name, uaddr->sa_data, sizeof(uaddr->sa_data));
 	name[sizeof(uaddr->sa_data)] = 0;
 
-	return packet_do_bind(sk, name, 0, pkt_sk(sk)->num);
+	return packet_do_bind(sk, name, 0, 0);
 }
 
 static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
@@ -3307,8 +3313,7 @@ static int packet_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len
 	if (sll->sll_family != AF_PACKET)
 		return -EINVAL;
 
-	return packet_do_bind(sk, NULL, sll->sll_ifindex,
-			      sll->sll_protocol ? : pkt_sk(sk)->num);
+	return packet_do_bind(sk, NULL, sll->sll_ifindex, sll->sll_protocol);
 }
 
 static struct proto packet_proto = {
@@ -3371,6 +3376,7 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
 	mutex_init(&po->pg_vec_lock);
 	po->rollover = NULL;
 	po->prot_hook.func = packet_rcv;
+	po->pkt_type = PACKET_MASK_ANY & ~(1 << PACKET_LOOPBACK);
 
 	if (sock->type == SOCK_PACKET)
 		po->prot_hook.func = packet_rcv_spkt;
@@ -3512,7 +3518,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
 	}
 
-	if (pkt_sk(sk)->auxdata) {
+	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
 		struct tpacket_auxdata aux;
 
 		aux.tp_status = TP_STATUS_USER;
@@ -3896,9 +3902,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
 		if (copy_from_sockptr(&val, optval, sizeof(val)))
 			return -EFAULT;
 
-		lock_sock(sk);
-		po->auxdata = !!val;
-		release_sock(sk);
+		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
 		return 0;
 	}
 	case PACKET_ORIGDEV:
@@ -3910,9 +3914,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
 		if (copy_from_sockptr(&val, optval, sizeof(val)))
 			return -EFAULT;
 
-		lock_sock(sk);
-		po->origdev = !!val;
-		release_sock(sk);
+		packet_sock_flag_set(po, PACKET_SOCK_ORIGDEV, val);
 		return 0;
 	}
 	case PACKET_VNET_HDR:
@@ -4006,7 +4008,18 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
 		if (copy_from_sockptr(&val, optval, sizeof(val)))
 			return -EFAULT;
 
-		po->xmit = val ? packet_direct_xmit : dev_queue_xmit;
+		/* Paired with all lockless reads of po->xmit */
+		WRITE_ONCE(po->xmit, val ? packet_direct_xmit : dev_queue_xmit);
+		return 0;
+	}
+	case PACKET_RECV_TYPE:
+	{
+		unsigned int val;
+		if (optlen != sizeof(val))
+			return -EINVAL;
+		if (copy_from_sockptr(&val, optval, sizeof(val)))
+			return -EFAULT;
+		po->pkt_type = val & ~BIT(PACKET_LOOPBACK);
 		return 0;
 	}
 	default:
@@ -4057,13 +4070,20 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
 
 		break;
 	case PACKET_AUXDATA:
-		val = po->auxdata;
+		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
 		break;
 	case PACKET_ORIGDEV:
-		val = po->origdev;
+		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
 		break;
 	case PACKET_VNET_HDR:
 		val = po->has_vnet_hdr;
+		break;
+	case PACKET_RECV_TYPE:
+		if (len > sizeof(unsigned int))
+			len = sizeof(unsigned int);
+		val = po->pkt_type;
+
+		data = &val;
 		break;
 	case PACKET_VERSION:
 		val = po->tp_version;

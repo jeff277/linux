@@ -212,6 +212,12 @@ static const enum gpiod_flags gpio_flags[] = {
 #define SFP_PHY_ADDR		22
 #define SFP_PHY_ADDR_ROLLBALL	17
 
+/* SFP_EEPROM_BLOCK_SIZE is the size of data chunk to read the EEPROM
+ * at a time. Some SFP modules and also some Linux I2C drivers do not like
+ * reads longer than 16 bytes.
+ */
+#define SFP_EEPROM_BLOCK_SIZE	16
+
 struct sff_data {
 	unsigned int gpios;
 	bool (*module_supported)(const struct sfp_eeprom_id *id);
@@ -389,10 +395,17 @@ static const struct sfp_quirk sfp_quirks[] = {
 
 	SFP_QUIRK_F("HALNy", "HL-GSFP", sfp_fixup_halny_gsfp),
 
+	// HG MXPD-483II-F 2.5G supports 2500Base-X, but incorrectly reports
+	// 2600MBd in their EERPOM
+	SFP_QUIRK_M("HG GENUINE", "MXPD-483II", sfp_quirk_2500basex),
+
 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
 	// their EEPROM
 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
 		  sfp_fixup_ignore_tx_fault),
+
+	// OEM SFP-GE-T is 1000Base-T module
+	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
 
 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
 	// 2500MBd NRZ in their EEPROM
@@ -1928,11 +1941,7 @@ static int sfp_sm_mod_probe(struct sfp *sfp, bool report)
 	u8 check;
 	int ret;
 
-	/* Some SFP modules and also some Linux I2C drivers do not like reads
-	 * longer than 16 bytes, so read the EEPROM in chunks of 16 bytes at
-	 * a time.
-	 */
-	sfp->i2c_block_size = 16;
+	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
 
 	ret = sfp_read(sfp, false, 0, &id.base, sizeof(id.base));
 	if (ret < 0) {
@@ -2193,6 +2202,11 @@ static void sfp_sm_module(struct sfp *sfp, unsigned int event)
 			break;
 		}
 
+		/* Force a poll to re-read the hardware signal state after
+		 * sfp_sm_mod_probe() changed state_hw_mask.
+		 */
+		mod_delayed_work(system_wq, &sfp->poll, 1);
+
 		err = sfp_hwmon_insert(sfp);
 		if (err)
 			dev_warn(sfp->dev, "hwmon probe failed: %pe\n",
@@ -2328,7 +2342,8 @@ static void sfp_sm_main(struct sfp *sfp, unsigned int event)
 			 * or t_start_up, so assume there is a fault.
 			 */
 			sfp_sm_fault(sfp, SFP_S_INIT_TX_FAULT,
-				     sfp->sm_fault_retries == N_FAULT_INIT);
+				     !sfp->tx_fault_ignore &&
+				     (sfp->sm_fault_retries == N_FAULT_INIT));
 		} else if (event == SFP_E_TIMEOUT || event == SFP_E_TX_CLEAR) {
 	init_done:
 			/* Create mdiobus and start trying for PHY */
@@ -2557,10 +2572,12 @@ static void sfp_check_state(struct sfp *sfp)
 	mutex_lock(&sfp->st_mutex);
 	state = sfp_get_state(sfp);
 	changed = state ^ sfp->state;
-	if (sfp->tx_fault_ignore)
+	if (sfp->tx_fault_ignore) {
 		changed &= SFP_F_PRESENT | SFP_F_LOS;
-	else
+		state &= ~SFP_F_TX_FAULT;
+	} else {
 		changed &= SFP_F_PRESENT | SFP_F_LOS | SFP_F_TX_FAULT;
+	}
 
 	for (i = 0; i < GPIO_MAX; i++)
 		if (changed & BIT(i))
@@ -2615,6 +2632,7 @@ static struct sfp *sfp_alloc(struct device *dev)
 		return ERR_PTR(-ENOMEM);
 
 	sfp->dev = dev;
+	sfp->i2c_block_size = SFP_EEPROM_BLOCK_SIZE;
 
 	mutex_init(&sfp->sm_mutex);
 	mutex_init(&sfp->st_mutex);

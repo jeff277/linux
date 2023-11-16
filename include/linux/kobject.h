@@ -32,6 +32,8 @@
 #define UEVENT_NUM_ENVP			64	/* number of env pointers */
 #define UEVENT_BUFFER_SIZE		2048	/* buffer for the variables */
 
+struct sk_buff;
+
 #ifdef CONFIG_UEVENT_HELPER
 /* path to the userspace helper executed on an event */
 extern char uevent_helper[];
@@ -115,7 +117,7 @@ extern void kobject_put(struct kobject *kobj);
 extern const void *kobject_namespace(struct kobject *kobj);
 extern void kobject_get_ownership(struct kobject *kobj,
 				  kuid_t *uid, kgid_t *gid);
-extern char *kobject_get_path(struct kobject *kobj, gfp_t flag);
+extern char *kobject_get_path(const struct kobject *kobj, gfp_t flag);
 
 struct kobj_type {
 	void (*release)(struct kobject *kobj);
@@ -223,5 +225,8 @@ int kobject_synth_uevent(struct kobject *kobj, const char *buf, size_t count);
 
 __printf(2, 3)
 int add_uevent_var(struct kobj_uevent_env *env, const char *format, ...);
+
+int broadcast_uevent(struct sk_buff *skb, __u32 pid, __u32 group,
+		     gfp_t allocation);
 
 #endif /* _KOBJECT_H_ */
