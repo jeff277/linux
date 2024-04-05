@@ -816,6 +816,7 @@ int inet_send_prepare(struct sock *sk)
 }
 EXPORT_SYMBOL_GPL(inet_send_prepare);
 
+// 发包路径
 int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
 {
 	struct sock *sk = sock->sk;
@@ -823,6 +824,8 @@ int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
 	if (unlikely(inet_send_prepare(sk)))
 		return -EAGAIN;
 
+	// tcp 和 udp的分叉点. tcp:tcp_sendmsg; udp:udp_sendmsg
+	// 定义 struct proto tcp_prot ；struct proto udp_prot .
 	return INDIRECT_CALL_2(sk->sk_prot->sendmsg, tcp_sendmsg, udp_sendmsg,
 			       sk, msg, size);
 }
@@ -1075,8 +1078,8 @@ const struct proto_ops inet_dgram_ops = {
 	.shutdown	   = inet_shutdown,
 	.setsockopt	   = sock_common_setsockopt,
 	.getsockopt	   = sock_common_getsockopt,
-	.sendmsg	   = inet_sendmsg,
-	.recvmsg	   = inet_recvmsg,
+	.sendmsg	   = inet_sendmsg,	//发送数据
+	.recvmsg	   = inet_recvmsg,	//接收数据
 	.mmap		   = sock_no_mmap,
 	.sendpage	   = inet_sendpage,
 	.set_peek_off	   = sk_set_peek_off,

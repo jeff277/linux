@@ -120,16 +120,17 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 
 void __qdisc_run(struct Qdisc *q);
 
+// 发包路径
 static inline void qdisc_run(struct Qdisc *q)
 {
-	if (qdisc_run_begin(q)) {
+	if (qdisc_run_begin(q)) {	// 判断是否可以开始运行队列调度器
 		/* NOLOCK qdisc must check 'state' under the qdisc seqlock
 		 * to avoid racing with dev_qdisc_reset()
 		 */
 		if (!(q->flags & TCQ_F_NOLOCK) ||
 		    likely(!test_bit(__QDISC_STATE_DEACTIVATED, &q->state)))
-			__qdisc_run(q);
-		qdisc_run_end(q);
+			__qdisc_run(q);		// 运行调度器发包
+		qdisc_run_end(q);		// 结束qdisc队列调度器的运行
 	}
 }
 

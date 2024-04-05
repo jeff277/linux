@@ -1468,10 +1468,12 @@ static void neigh_hh_init(struct neighbour *n)
 
 /* Slow and careful. */
 
+// 发包路径
 int neigh_resolve_output(struct neighbour *neigh, struct sk_buff *skb)
 {
 	int rc = 0;
 
+	// 如果邻居没有处于事件发送中，则发送邻居事件
 	if (!neigh_event_send(neigh, skb)) {
 		int err;
 		struct net_device *dev = neigh->dev;
@@ -1480,15 +1482,18 @@ int neigh_resolve_output(struct neighbour *neigh, struct sk_buff *skb)
 		if (dev->header_ops->cache && !READ_ONCE(neigh->hh.hh_len))
 			neigh_hh_init(neigh);
 
-		do {
+		do{
+			// 移动skb的网络层偏移, 即准备数据部分
 			__skb_pull(skb, skb_network_offset(skb));
+			// 获取邻居硬件地址
 			seq = read_seqbegin(&neigh->ha_lock);
 			err = dev_hard_header(skb, dev, ntohs(skb->protocol),
 					      neigh->ha, NULL, skb->len);
 		} while (read_seqretry(&neigh->ha_lock, seq));
 
+		// 如果获取硬件地址成功则继续发布, 否则丢包.
 		if (err >= 0)
-			rc = dev_queue_xmit(skb);
+			rc = dev_queue_xmit(skb);	//!!! 关键发包路径
 		else
 			goto out_kfree_skb;
 	}

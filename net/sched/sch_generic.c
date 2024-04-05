@@ -282,16 +282,17 @@ trace:
  *				false  - hardware queue frozen backoff
  *				true   - feel free to send more pkts
  */
+// 发包路径
 bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 		     struct net_device *dev, struct netdev_queue *txq,
 		     spinlock_t *root_lock, bool validate)
 {
-	int ret = NETDEV_TX_BUSY;
-	bool again = false;
+	int ret = NETDEV_TX_BUSY;  // 该值表示发包队列忙碌
+	bool again = false; 	   // 是否需要 重试一次发包 	
 
 	/* And release qdisc */
 	if (root_lock)
-		spin_unlock(root_lock);
+		spin_unlock(root_lock); 
 
 	/* Note that we validate skb (GSO, checksum, ...) outside of locks */
 	if (validate)
@@ -308,9 +309,11 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 #endif
 
 	if (likely(skb)) {
+		// 获取dev的txq锁, 因为要操作txq啦
 		HARD_TX_LOCK(dev, txq, smp_processor_id());
+		// 检查netif的xmit的txq状态
 		if (!netif_xmit_frozen_or_stopped(txq))
-			skb = dev_hard_start_xmit(skb, dev, txq, &ret);
+			skb = dev_hard_start_xmit(skb, dev, txq, &ret);   //!!! 关键发包路径
 
 		HARD_TX_UNLOCK(dev, txq);
 	} else {
@@ -323,13 +326,16 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 		spin_lock(root_lock);
 
 	if (!dev_xmit_complete(ret)) {
+		// 发包失败
 		/* Driver returned NETDEV_TX_BUSY - requeue skb */
 		if (unlikely(ret != NETDEV_TX_BUSY))
 			net_warn_ratelimited("BUG %s code %d qlen %d\n",
 					     dev->name, ret, q->q.qlen);
 
+		// 将数据包重新入队原txq, （因为本次发包失败啦, 注意是入队尾, 也就是会乱序)
 		dev_requeue_skb(skb, q);
-		return false;
+		
+		return false;		
 	}
 
 	return true;
@@ -354,6 +360,7 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
  *				>0 - queue is not empty.
  *
  */
+// 发包路径
 static inline bool qdisc_restart(struct Qdisc *q, int *packets)
 {
 	spinlock_t *root_lock = NULL;
@@ -363,6 +370,7 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
 	bool validate;
 
 	/* Dequeue packet */
+	// 从qdisc中取出一个待发送的skb
 	skb = dequeue_skb(q, &validate, packets);
 	if (unlikely(!skb))
 		return false;
@@ -370,21 +378,26 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
 	if (!(q->flags & TCQ_F_NOLOCK))
 		root_lock = qdisc_lock(q);
 
-	dev = qdisc_dev(q);
+	// 反向找到skb所属设备(dev)
+	dev = qdisc_dev(q);	
+	// 反向找到skb所属的txq. 
 	txq = skb_get_tx_queue(dev, skb);
 
+	// 发包.  最终会调用到 device的  ops->ndo_start_xmit()
 	return sch_direct_xmit(skb, q, dev, txq, root_lock, validate);
 }
 
+// 发包路径
 void __qdisc_run(struct Qdisc *q)
 {
 	int quota = dev_tx_weight;
 	int packets;
 
+	// 循环从队列中取出一个skb, 并发送
 	while (qdisc_restart(q, &packets)) {
-		quota -= packets;
+		quota -= packets;		// 减少流控令牌
 		if (quota <= 0) {
-			__netif_schedule(q);
+			__netif_schedule(q);	// 没有流控令牌了. 将队列放入网络设备的调度队列中, 以便稍后继续发包. 要schedule一次的根本原因是避免长时间持有锁和CPU。
 			break;
 		}
 	}

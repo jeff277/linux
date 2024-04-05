@@ -646,8 +646,11 @@ INDIRECT_CALLABLE_DECLARE(int inet_sendmsg(struct socket *, struct msghdr *,
 					   size_t));
 INDIRECT_CALLABLE_DECLARE(int inet6_sendmsg(struct socket *, struct msghdr *,
 					    size_t));
+// 发包路径
 static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
 {
+	// sock->ops)->sendmsg 真正的函数是 inet_sendmsg().
+        // 定义在: const struct proto_ops inet_dgram_ops
 	int ret = INDIRECT_CALL_INET(sock->ops->sendmsg, inet6_sendmsg,
 				     inet_sendmsg, sock, msg,
 				     msg_data_left(msg));
@@ -1961,7 +1964,7 @@ SYSCALL_DEFINE3(getpeername, int, fd, struct sockaddr __user *, usockaddr,
 /*
  *	Send a datagram to a given address. We move the address into kernel
  *	space and check the user space data area is readable before invoking
- *	the protocol.
+ *	the protocol. 发包路径
  */
 int __sys_sendto(int fd, void __user *buff, size_t len, unsigned int flags,
 		 struct sockaddr __user *addr,  int addr_len)
@@ -1973,35 +1976,45 @@ int __sys_sendto(int fd, void __user *buff, size_t len, unsigned int flags,
 	struct iovec iov;
 	int fput_needed;
 
+	// 将用户空间的数据区域import到内核空间，并检查数据区域是否可读。
 	err = import_single_range(WRITE, buff, len, &iov, &msg.msg_iter);
 	if (unlikely(err))
 		return err;
+
+	// 查找给定文件描述符(fd)对应的套接字(socket)，并返回该套接字的引用。
 	sock = sockfd_lookup_light(fd, &err, &fput_needed);
 	if (!sock)
 		goto out;
 
+	// 初始化 msghdr 结构体
 	msg.msg_name = NULL;
 	msg.msg_control = NULL;
 	msg.msg_controllen = 0;
 	msg.msg_namelen = 0;
 	if (addr) {
+		// 将用户空间的地址结构体拷贝到内核空间
 		err = move_addr_to_kernel(addr, addr_len, &address);
 		if (err < 0)
 			goto out_put;
-		msg.msg_name = (struct sockaddr *)&address;
+		msg.msg_name = (struct sockaddr *)&address;		// msg.msg_name 中存的是sendto时应用层指定的地址。 应用层使用send时这里为NULL.
 		msg.msg_namelen = addr_len;
 	}
+
+	// 如果套接字的文件标志包含 O_NONBLOCK 标志，将 flags 的 MSG_DONTWAIT 标志位,置为1
 	if (sock->file->f_flags & O_NONBLOCK)
 		flags |= MSG_DONTWAIT;
 	msg.msg_flags = flags;
+	// 将套接字 (sock) 和消息 (msg) 作为参数发送数据
 	err = sock_sendmsg(sock, &msg);
 
 out_put:
+	// 释放套接字的引用
 	fput_light(sock->file, fput_needed);
 out:
 	return err;
 }
 
+// 系统调用sendto()的定义
 SYSCALL_DEFINE6(sendto, int, fd, void __user *, buff, size_t, len,
 		unsigned int, flags, struct sockaddr __user *, addr,
 		int, addr_len)
@@ -2009,10 +2022,11 @@ SYSCALL_DEFINE6(sendto, int, fd, void __user *, buff, size_t, len,
 	return __sys_sendto(fd, buff, len, flags, addr, addr_len);
 }
 
+
 /*
  *	Send a datagram down a socket.
  */
-
+// 系统调用send()的定义, 可以看到内核层也是调用的sendto(),只是addr=NULL。
 SYSCALL_DEFINE4(send, int, fd, void __user *, buff, size_t, len,
 		unsigned int, flags)
 {

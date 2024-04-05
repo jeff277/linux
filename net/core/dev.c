@@ -3743,6 +3743,8 @@ static void qdisc_pkt_len_init(struct sk_buff *skb)
 	}
 }
 
+// 发包路径
+// 涉及的关键函数: sch_direct_xmit()直接发包.  dev_qdisk_enqueue()把skb加入发包队列, qdisc_run() tc发包。
 static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 				 struct net_device *dev,
 				 struct netdev_queue *txq)
@@ -3752,8 +3754,10 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 	bool contended;
 	int rc;
 
+	// 计算数据包长度, 并设置skb中的pkt_len
 	qdisc_calculate_pkt_len(skb, q);
 
+	// 尝试无锁发包
 	if (q->flags & TCQ_F_NOLOCK) {
 		rc = q->enqueue(skb, q, &to_free) & NET_XMIT_MASK;
 		qdisc_run(q);
@@ -3769,16 +3773,18 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 	 * This permits qdisc->running owner to get the lock more
 	 * often and dequeue packets faster.
 	 */
+	// 加锁发包
 	contended = qdisc_is_running(q);
 	if (unlikely(contended))
 		spin_lock(&q->busylock);
 
 	spin_lock(root_lock);
 	if (unlikely(test_bit(__QDISC_STATE_DEACTIVATED, &q->state))) {
-		__qdisc_drop(skb, &to_free);
+		__qdisc_drop(skb, &to_free); 	// 如果整个队列已经被 deactive, 直接丢包.
 		rc = NET_XMIT_DROP;
 	} else if ((q->flags & TCQ_F_CAN_BYPASS) && !qdisc_qlen(q) &&
-		   qdisc_run_begin(q)) {
+		   qdisc_run_begin(q)) {	
+		// 如果队列为空, 且可以被bypass, 则直接发包.
 		/*
 		 * This is a work-conserving queue; there are no old skbs
 		 * waiting to be sent out; and the qdisc is not running -
@@ -3798,6 +3804,7 @@ static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 		qdisc_run_end(q);
 		rc = NET_XMIT_SUCCESS;
 	} else {
+		//!!! 常见发包路径, 将数据包插入队列, 并进行发布
 		rc = q->enqueue(skb, q, &to_free) & NET_XMIT_MASK;
 		if (qdisc_run_begin(q)) {
 			if (unlikely(contended)) {
@@ -4065,6 +4072,7 @@ struct netdev_queue *netdev_core_pick_tx(struct net_device *dev,
  *      the BH enable code must have IRQs enabled so that it will not deadlock.
  *          --BLG
  */
+// 发包路径
 static int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
 {
 	struct net_device *dev = skb->dev;
@@ -4073,16 +4081,20 @@ static int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
 	int rc = -ENOMEM;
 	bool again = false;
 
+	// 重置数据包的mac头指针, 为填充硬件头部做准备
 	skb_reset_mac_header(skb);
 
+	// 数据包的时间戳处理
 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_SCHED_TSTAMP))
 		__skb_tstamp_tx(skb, NULL, skb->sk, SCM_TSTAMP_SCHED);
 
 	/* Disable soft irqs for various locks below. Also
 	 * stops preemption for RCU.
 	 */
+	// 禁止软中断, 保护下面的各种锁
 	rcu_read_lock_bh();
 
+	//更新数据包的优先级
 	skb_update_prio(skb);
 
 	qdisc_pkt_len_init(skb);
@@ -4104,12 +4116,15 @@ static int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
 	else
 		skb_dst_force(skb);
 
+	// 选择一个发送队列
 	txq = netdev_core_pick_tx(dev, skb, sb_dev);
+	// 获取设备的发送队列(qdisc)
 	q = rcu_dereference_bh(txq->qdisc);
 
 	trace_net_dev_queue(skb);
+	// 如果设备存在发送队列(q->enqueue), 则调用设备的xmit将数据包入队.
 	if (q->enqueue) {
-		rc = __dev_xmit_skb(skb, q, dev, txq);
+		rc = __dev_xmit_skb(skb, q, dev, txq); 		//!!! 关键发包路径.  发完包本流程就结束啦
 		goto out;
 	}
 
@@ -4125,6 +4140,7 @@ static int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
 	 * Check this and shot the lock. It is not prone from deadlocks.
 	 *Either shot noqueue qdisc, it is even simpler 8)
 	 */
+	// 回环, 隧道等设备(dev)，没有发送队列的情况, 直接调用硬件发送函数发包.
 	if (dev->flags & IFF_UP) {
 		int cpu = smp_processor_id(); /* ok because BHs are off */
 

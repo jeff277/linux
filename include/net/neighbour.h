@@ -197,8 +197,8 @@ struct neigh_table {
 	unsigned int		key_len;
 	__be16			protocol;
 	__u32			(*hash)(const void *pkey,
-					const struct net_device *dev,
-					__u32 *hash_rnd);
+		      const struct net_device *dev,
+		      __u32 *hash_rnd);
 	bool			(*key_eq)(const struct neighbour *, const void *pkey);
 	int			(*constructor)(struct neighbour *);
 	int			(*pconstructor)(struct pneigh_entry *);
@@ -206,7 +206,7 @@ struct neigh_table {
 	void			(*proxy_redo)(struct sk_buff *skb);
 	int			(*is_multicast)(const void *pkey);
 	bool			(*allow_add)(const struct net_device *dev,
-					     struct netlink_ext_ack *extack);
+			  struct netlink_ext_ack *extack);
 	char			*id;
 	struct neigh_parms	parms;
 	struct list_head	parms_list;
@@ -336,15 +336,15 @@ int neigh_resolve_output(struct neighbour *neigh, struct sk_buff *skb);
 int neigh_connected_output(struct neighbour *neigh, struct sk_buff *skb);
 int neigh_direct_output(struct neighbour *neigh, struct sk_buff *skb);
 struct neighbour *neigh_event_ns(struct neigh_table *tbl,
-						u8 *lladdr, void *saddr,
-						struct net_device *dev);
+				 u8 *lladdr, void *saddr,
+				 struct net_device *dev);
 
 struct neigh_parms *neigh_parms_alloc(struct net_device *dev,
 				      struct neigh_table *tbl);
 void neigh_parms_release(struct neigh_table *tbl, struct neigh_parms *parms);
 
 static inline
-struct net *neigh_parms_net(const struct neigh_parms *parms)
+	struct net *neigh_parms_net(const struct neigh_parms *parms)
 {
 	return read_pnet(&parms->net);
 }
@@ -459,12 +459,14 @@ static inline int neigh_hh_bridge(struct hh_cache *hh, struct sk_buff *skb)
 }
 #endif
 
+// 发包路径
 static inline int neigh_hh_output(const struct hh_cache *hh, struct sk_buff *skb)
 {
 	unsigned int hh_alen = 0;
 	unsigned int seq;
 	unsigned int hh_len;
 
+	// 在读取 hh_cache 前获取锁并检查数据长度
 	do {
 		seq = read_seqbegin(&hh->hh_lock);
 		hh_len = READ_ONCE(hh->hh_len);
@@ -475,8 +477,10 @@ static inline int neigh_hh_output(const struct hh_cache *hh, struct sk_buff *skb
 			 * the unaligned size but not for the aligned size:
 			 * check headroom explicitly.
 			 */
+			// 检查是否有足够的 headroom 来存放硬件头部缓存的数据
 			if (likely(skb_headroom(skb) >= HH_DATA_MOD)) {
 				/* this is inlined by gcc */
+				// 从硬件头部缓存复制数据到 sk_buff 的头部
 				memcpy(skb->data - HH_DATA_MOD, hh->hh_data,
 				       HH_DATA_MOD);
 			}
@@ -490,24 +494,29 @@ static inline int neigh_hh_output(const struct hh_cache *hh, struct sk_buff *skb
 		}
 	} while (read_seqretry(&hh->hh_lock, seq));
 
+	// 检查 headroom 是否足够来存放硬件头部缓存的数据, 如果headroom不足，释放 sk_buff，丢包。
 	if (WARN_ON_ONCE(skb_headroom(skb) < hh_alen)) {
 		kfree_skb(skb);
 		return NET_XMIT_DROP;
 	}
 
+	// 设置为下一层的数据头部
 	__skb_push(skb, hh_len);
+	// 将skb发送出去
 	return dev_queue_xmit(skb);
 }
 
+// 发包路径
 static inline int neigh_output(struct neighbour *n, struct sk_buff *skb,
 			       bool skip_cache)
 {
 	const struct hh_cache *hh = &n->hh;
 
+	// 检查邻居的状态、缓存是否有效，如果缓存有效则直接发送数据包。
 	if ((n->nud_state & NUD_CONNECTED) && hh->hh_len && !skip_cache)
-		return neigh_hh_output(hh, skb);
+		return neigh_hh_output(hh, skb);	/!!! 发包路径1 缓存有效直接发包.
 	else
-		return n->output(n, skb);
+		return n->output(n, skb);		 //!!! 发包路径2, 缓存失效: 调用邻居的输出函数（output）发送数据包
 }
 
 static inline struct neighbour *
@@ -524,7 +533,7 @@ __neigh_lookup(struct neigh_table *tbl, const void *pkey, struct net_device *dev
 
 static inline struct neighbour *
 __neigh_lookup_errno(struct neigh_table *tbl, const void *pkey,
-  struct net_device *dev)
+		     struct net_device *dev)
 {
 	struct neighbour *n = neigh_lookup(tbl, pkey, dev);
 
