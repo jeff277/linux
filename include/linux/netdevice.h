@@ -4727,12 +4727,19 @@ int __init dev_proc_init(void);
 #define dev_proc_init() 0
 #endif
 
+// 发包路径
 static inline netdev_tx_t __netdev_start_xmit(const struct net_device_ops *ops,
 					      struct sk_buff *skb, struct net_device *dev,
 					      bool more)
 {
+	// 设置当前CPU的softnet_data结构体中的xmit.more，用于告诉CPU是否还有更多的skb等待发送. 
+	// softnet_data数据结构的介绍见: git show 9b382075b2de3ac935321992bd9b7d2e03f40b96
 	__this_cpu_write(softnet_data.xmit.more, more);
-	return ops->ndo_start_xmit(skb, dev);
+
+	// 在内核根目录下搜索,经典的e1000网卡: grep -nr "static const struct net_device_ops " drivers/net | grep e1000
+	// 在内核根目录下搜索, 经典的igb网卡:  grep -nr "static const struct net_device_ops " drivers/net | grep igb
+	//!!! 关键发包路径: 数据发往网卡层
+	return ops->ndo_start_xmit(skb, dev);	// e1000:e1000_xmit_frame()   . igb: igb_xmit_frame()
 }
 
 static inline bool netdev_xmit_more(void)
@@ -4740,15 +4747,24 @@ static inline bool netdev_xmit_more(void)
 	return __this_cpu_read(softnet_data.xmit.more);
 }
 
+/*
+ * 参数说明
+ * skb: 这是要发送的 sk_buff。
+ * dev: 这是目标网络设备。
+ * txq: 这是网络设备的发送队列。
+ * more: 这是一个布尔值，用于指示是否还有更多的 sk_buff 等待发送。
+ */
+// 发包路径
 static inline netdev_tx_t netdev_start_xmit(struct sk_buff *skb, struct net_device *dev,
 					    struct netdev_queue *txq, bool more)
 {
+	// 获取dev的操作集合ops
 	const struct net_device_ops *ops = dev->netdev_ops;
 	netdev_tx_t rc;
 
-	rc = __netdev_start_xmit(ops, skb, dev, more);
+	rc = __netdev_start_xmit(ops, skb, dev, more);	//!!! 关键发包路径
 	if (rc == NETDEV_TX_OK)
-		txq_trans_update(txq);
+		txq_trans_update(txq);		// 更新发送队列的传输计数器
 
 	return rc;
 }

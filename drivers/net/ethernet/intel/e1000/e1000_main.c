@@ -827,7 +827,7 @@ static int e1000_set_features(struct net_device *netdev,
 static const struct net_device_ops e1000_netdev_ops = {
 	.ndo_open		= e1000_open,
 	.ndo_stop		= e1000_close,
-	.ndo_start_xmit		= e1000_xmit_frame,
+	.ndo_start_xmit		= e1000_xmit_frame,	//!!! 关键发包路径
 	.ndo_set_rx_mode	= e1000_set_rx_mode,
 	.ndo_set_mac_address	= e1000_set_mac,
 	.ndo_tx_timeout		= e1000_tx_timeout,
