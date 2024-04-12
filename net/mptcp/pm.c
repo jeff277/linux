@@ -12,6 +12,7 @@
 
 /* path manager command handlers */
 
+// 路径管理中的地址宣告.
 int mptcp_pm_announce_addr(struct mptcp_sock *msk,
 			   const struct mptcp_addr_info *addr,
 			   bool echo)
@@ -246,6 +247,7 @@ void mptcp_pm_data_init(struct mptcp_sock *msk)
 	mptcp_pm_nl_data_init(msk);
 }
 
+// OS启动时调用, mptcp协议栈的PM模块初始化
 void __init mptcp_pm_init(void)
 {
 	mptcp_pm_nl_init();

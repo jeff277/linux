@@ -30,6 +30,7 @@ int mptcp_is_enabled(struct net *net)
 	return mptcp_get_pernet(net)->mptcp_enabled;
 }
 
+// 5.10内核, sysctl仅支持一个全局enable
 static struct ctl_table mptcp_sysctl_table[] = {
 	{
 		.procname = "enabled",
@@ -103,6 +104,14 @@ static void __net_exit mptcp_net_exit(struct net *net)
 	mptcp_pernet_del_table(pernet);
 }
 
+//"pernet" 在 Linux 内核术语中代表 "per-network namespace"，意即“每个网络命名空间”。网络命名空间是 Linux 提供的一种虚拟化技术，允许用户创建隔离的网络环境。
+//每个网络命名空间都拥有独立的网络资源，如IP地址、路由表、防火墙规则和其他网络相关的状态。这种隔离使得运行在不同网络命名空间中的进程拥有各自独立的网络视图，从而增强了安全性和灵活性。
+//在这个上下文中，"pernet subsystem"（每个网络子系统）是指那些需要在每个网络命名空间中独立管理和配置的子系统。这意味着每当创建新的网络命名空间时，
+//这些子系统的实例也会在新的命名空间中被创建和初始化。这对于保持网络操作的隔离和一致性至关重要，尤其是在复杂的多租户环境或需要高度网络隔离的应用场景中。
+//使用 pernet 子系统的设计允许内核在网络层面上提供更细粒度的控制和灵活性。对于MPTCP这样的协议，通过 pernet 子系统注册，它可以确保MPTCP在
+//每个网络命名空间中正确地管理其连接、路径和相关的配置，而不会与其他命名空间冲突或相互干扰。这种方法强调了Linux网络栈的模块化和可扩展性，允许不同的网络技术和
+//协议独立于全局系统环境而存在和操作。
+// 大白话就是: 正常人的一台电脑就是一个namespace(一个pernet). 如果有安装VM, VM就是另外一个独立的namespace(另外一个pernet).
 static struct pernet_operations mptcp_pernet_ops = {
 	.init = mptcp_net_init,
 	.exit = mptcp_net_exit,
@@ -110,6 +119,7 @@ static struct pernet_operations mptcp_pernet_ops = {
 	.size = sizeof(struct mptcp_pernet),
 };
 
+// OS启动时调用, mptcp协议栈在内核的全局初始化.
 void __init mptcp_init(void)
 {
 	mptcp_join_cookie_init();

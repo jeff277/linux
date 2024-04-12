@@ -2766,7 +2766,7 @@ void __init mptcp_proto_init(void)
 	if (percpu_counter_init(&mptcp_sockets_allocated, 0, GFP_KERNEL))   // percpu的mptcp socket计数器
 		panic("Failed to allocate MPTCP pcpu counter\n");
 
-	// [mptcp icsk_af_ops->conn_request] 设置路径
+	// [mptcp icsk_af_ops->conn_request] 设置入口
 	mptcp_subflow_init();
 	mptcp_pm_init();
 	mptcp_token_init();

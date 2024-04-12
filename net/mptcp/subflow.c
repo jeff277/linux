@@ -1400,8 +1400,11 @@ void __init mptcp_subflow_init(void)
 	subflow_request_sock_ipv4_ops = tcp_request_sock_ipv4_ops;
 	subflow_request_sock_ipv4_ops.init_req = subflow_v4_init_req;
 
+    // 应用层在创建socket时,会直接指定MPTCP标记!    socket(AF_INET, SOCK_STREAM, IPPROTO_MPTCP)
+    // 内核看到IPPROTO_MPTCP, 会在sync中加入mptcp标记.
+
 	subflow_specific = ipv4_specific;
-	subflow_specific.conn_request = subflow_v4_conn_request;        // [mptcp icsk_af_ops->conn_request] 设置路径。
+	subflow_specific.conn_request = subflow_v4_conn_request;        // [mptcp icsk_af_ops->conn_request] 设置入口。
 	subflow_specific.syn_recv_sock = subflow_syn_recv_sock;
 	subflow_specific.sk_rx_dst_set = subflow_finish_connect;
 

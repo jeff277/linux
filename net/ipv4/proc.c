@@ -489,6 +489,7 @@ static int netstat_seq_show(struct seq_file *seq, void *v)
 
 	seq_putc(seq, '\n');
 	mptcp_seq_show(seq);
+	mptcp_seq_show(seq);
 	return 0;
 }
 

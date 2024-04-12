@@ -52,6 +52,7 @@ bool mptcp_mib_alloc(struct net *net)
 	return true;
 }
 
+// 可以在/proc/net/netstat中看到mptcp的统计信息
 void mptcp_seq_show(struct seq_file *seq)
 {
 	struct net *net = seq->private;

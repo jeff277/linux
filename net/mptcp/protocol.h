@@ -161,21 +161,21 @@ enum mptcp_pm_status {
 struct mptcp_pm_data {
 	struct mptcp_addr_info local;
 	struct mptcp_addr_info remote;
-	struct list_head anno_list;
+	struct list_head anno_list;         // 用于存储地址（可能是新增地址）的公告列表，这是一个链表头，用于管理多个地址信息
 
-	spinlock_t	lock;		/*protects the whole PM data */
+	spinlock_t	lock;		/*protects the whole PM data */ // PM 是路径管理的意思
 
 	bool		add_addr_signal;
 	bool		rm_addr_signal;
-	bool		server_side;
-	bool		work_pending;
-	bool		accept_addr;
-	bool		accept_subflow;
-	bool		add_addr_echo;
-	u8		add_addr_signaled;
-	u8		add_addr_accepted;
+	bool		server_side;        // 表示当前结构体是否处于服务器侧
+	bool		work_pending;       // 表示是否有待处理的工作
+	bool		accept_addr;        // 表示是否接受添加地址
+	bool		accept_subflow;     // 表示是否接受新的子流
+	bool		add_addr_echo;      // 表示是否应响应添加地址的echo
+	u8		add_addr_signaled;      // 累计发送地址信号的次数(为什么还和max比较?)
+	u8		add_addr_accepted;      // accepted 成功的连接数量. (和tcp的accepted含义一样？？)
 	u8		local_addr_used;
-	u8		subflows;
+	u8		subflows;               // 成功创建的子流数量
 	u8		add_addr_signal_max;
 	u8		add_addr_accept_max;
 	u8		local_addr_max;
@@ -197,38 +197,38 @@ struct mptcp_data_frag {
 struct mptcp_sock {
 	/* inet_connection_sock must be the first member */
 	struct inet_connection_sock sk;
-	u64		local_key;
-	u64		remote_key;
-	u64		write_seq;
-	u64		ack_seq;
-	u64		rcv_data_fin_seq;
-	struct sock	*last_snd;
-	int		snd_burst;
-	atomic64_t	snd_una;
-	unsigned long	timer_ival;
-	u32		token;
-	unsigned long	flags;
+	u64		local_key;          // 本地密钥，用于MPTCP连接的唯一标识符之一。
+	u64		remote_key;         // 远程密钥，远端的唯一标识符，与本地密钥配合使用来管理MPTCP连接。
+	u64		write_seq;          // 发送序列号
+	u64		ack_seq;            // 已确认的接收序列号.
+	u64		rcv_data_fin_seq;   // FIN相关
+	struct sock	*last_snd;      // 指向最后一个发送数据的子流的指针
+	int		snd_burst;          // 发送突发数据的计数器，用于控制数据发送的突发行为。
+	atomic64_t	snd_una;        // 未确认的发送数据的起始序列号，使用原子操作确保线程安全。
+	unsigned long	timer_ival;     // 定时器间隔，用于MPTCP相关定时器的配置。
+	u32		token;              // MPTCP连接的标识符，用于将子流关联到对应的MPTCP连接。
+	unsigned long	flags;      // 标志位，用于记录MPTCP连接的状态和控制信息。
 	bool		can_ack;
 	bool		fully_established;
 	bool		rcv_data_fin;
 	bool		snd_data_fin_enable;
 	bool		use_64bit_ack; /* Set when we received a 64-bit DSN */
 	spinlock_t	join_list_lock;
-	struct work_struct work;
-	struct sk_buff  *ooo_last_skb;
-	struct rb_root  out_of_order_queue;
-	struct list_head conn_list;
-	struct list_head rtx_queue;
-	struct list_head join_list;
+	struct work_struct work;                // 用于调度异步任务
+	struct sk_buff  *ooo_last_skb;          // 指向乱序接收队列中最后一个sk_buff的指针
+	struct rb_root  out_of_order_queue;     // 乱序队列
+	struct list_head conn_list;             //!!! 连接列表，用于管理MPTCP子连接
+	struct list_head rtx_queue;             // 重传队列
+	struct list_head join_list;             // 用于管理加入到MPTCP连接的请求
 	struct skb_ext	*cached_ext;	/* for the next sendmsg */
-	struct socket	*subflow; /* outgoing connect/listener/!mp_capable */
-	struct sock	*first;
-	struct mptcp_pm_data	pm;
+	struct socket	*subflow; /* outgoing connect/listener/!mp_capable */       // 指向子流的指针，用于出站连接、监听或非MP能力子流
+	struct sock	*first;                     // 指向第一个子流的指针
+	struct mptcp_pm_data	pm;             // 路径管理相关
 	struct {
-		u32	space;	/* bytes copied in last measurement window */
-		u32	copied; /* bytes copied in this measurement window */
-		u64	time;	/* start time of measurement window */
-		u64	rtt_us; /* last maximum rtt of subflows */
+		u32	space;	/* bytes copied in last measurement window */   // 上一个测量窗口中复制的字节数
+		u32	copied; /* bytes copied in this measurement window */   // 这个测量窗口中复制的字节数
+		u64	time;	/* start time of measurement window */          // 测量窗口的开始时间
+		u64	rtt_us; /* last maximum rtt of subflows */              // 子流的最后最大往返时间
 	} rcvq_space;
 };
 
