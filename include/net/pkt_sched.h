@@ -119,11 +119,12 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 
 void __qdisc_run(struct Qdisc *q);
 
+// 发包路径
 static inline void qdisc_run(struct Qdisc *q)
 {
-	if (qdisc_run_begin(q)) {
-		__qdisc_run(q);
-		qdisc_run_end(q);
+	if (qdisc_run_begin(q)) {	// 判断是否可以开始运行队列调度器
+		__qdisc_run(q);		// 运行调度器发包
+		qdisc_run_end(q);	// 结束qdisc队列调度器的运行
 	}
 }
 

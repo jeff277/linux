@@ -97,31 +97,40 @@ void ip_send_check(struct iphdr *iph)
 }
 EXPORT_SYMBOL(ip_send_check);
 
+// 发包路径
 int __ip_local_out(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	struct iphdr *iph = ip_hdr(skb);
 
+	// 设置IPv4首部的总长度字段（total length）
 	iph_set_totlen(iph, skb->len);
+
+	// 计算IPv4首部的校验和字段（checksum）
 	ip_send_check(iph);
 
 	/* if egress device is enslaved to an L3 master device pass the
 	 * skb to its handler for processing
 	 */
+	// 将skb传递给L3 master设备（例如路由器或虚拟路由器）的处理程序进行处理，例如 VLAN 网络和虚拟路由。
 	skb = l3mdev_ip_out(sk, skb);
-	if (unlikely(!skb))
+	if (unlikely(!skb))	    // 如果skb为NULL，表示已经被处理，无需继续传递，直接返回0
 		return 0;
 
+	// 设置skb的协议字段为IPv4协议（ETH_P_IP）
 	skb->protocol = htons(ETH_P_IP);
 
+	// Netfilter框架的 NF_INET_LOCAL_OUT hook点
 	return nf_hook(NFPROTO_IPV4, NF_INET_LOCAL_OUT,
 		       net, sk, skb, NULL, skb_dst(skb)->dev,
-		       dst_output);
+		       dst_output);	//!!! 关键 发包路径 dst_output
 }
 
+// 发包路径 . 本地发包 3层入口.
 int ip_local_out(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	int err;
 
+	// 调用 __ip_local_out 函数将 skb 发送到本地IP层
 	err = __ip_local_out(net, sk, skb);
 	if (likely(err == 1))
 		err = dst_output(net, sk, skb);
@@ -193,6 +202,7 @@ int ip_build_and_send_pkt(struct sk_buff *skb, const struct sock *sk,
 }
 EXPORT_SYMBOL_GPL(ip_build_and_send_pkt);
 
+// 发包路径
 static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	struct dst_entry *dst = skb_dst(skb);
@@ -202,6 +212,7 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
 	struct neighbour *neigh;
 	bool is_v6gw = false;
 
+	// 更新IPv4协议统计信息中的多播数据包或广播数据包的数量
 	if (rt->rt_type == RTN_MULTICAST) {
 		IP_UPD_PO_STATS(net, IPSTATS_MIB_OUTMCAST, skb->len);
 	} else if (rt->rt_type == RTN_BROADCAST)
@@ -210,12 +221,14 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
 	/* OUTOCTETS should be counted after fragment */
 	IP_UPD_PO_STATS(net, IPSTATS_MIB_OUT, skb->len);
 
+	// 检查是否需要扩展数据包头部空间，并进行扩展
 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
 		skb = skb_expand_head(skb, hh_len);
 		if (!skb)
 			return -ENOMEM;
 	}
 
+	// 检查是否需要进行隧道传输，并进行隧道传输处理
 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
 		int res = lwtunnel_xmit(skb);
 
@@ -224,13 +237,14 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
 	}
 
 	rcu_read_lock();
+	// 通过路由表查找下一跳的邻居，并向邻居发送数据包
 	neigh = ip_neigh_for_gw(rt, skb, &is_v6gw);
 	if (!IS_ERR(neigh)) {
 		int res;
 
 		sock_confirm_neigh(skb, neigh);
 		/* if crossing protocols, can not use the cached header */
-		res = neigh_output(neigh, skb, is_v6gw);
+		res = neigh_output(neigh, skb, is_v6gw);         //!!! 关键发包路径 调用 neigh_output 函数向邻居发送数据包
 		rcu_read_unlock();
 		return res;
 	}
@@ -290,31 +304,41 @@ static int ip_finish_output_gso(struct net *net, struct sock *sk,
 	return ret;
 }
 
+// 发包路径
 static int __ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	unsigned int mtu;
 
 #if defined(CONFIG_NETFILTER) && defined(CONFIG_XFRM)
+	// 安全相关，忽略.
 	/* Policy lookup after SNAT yielded a new policy */
 	if (skb_dst(skb)->xfrm) {
 		IPCB(skb)->flags |= IPSKB_REROUTED;
 		return dst_output(net, sk, skb);
 	}
 #endif
+	// 获取IP协议层的MTU
 	mtu = ip_skb_dst_mtu(sk, skb);
+
+	// GSO处理(可先忽略)
 	if (skb_is_gso(skb))
 		return ip_finish_output_gso(net, sk, skb, mtu);
 
+	// IP分片（UDP层感知不到这个分片, 内核自己完成IP分片和组装)
+	// 有一个风险, 网络中间盒不支持IP分片导致UDP包发送失败.
 	if (skb->len > mtu || IPCB(skb)->frag_max_size)
 		return ip_fragment(net, sk, skb, mtu, ip_finish_output2);
 
+	//!!! 关键发包路径 不满足上面的各种特殊条件, 结束IP层发包，进入邻居子系统
 	return ip_finish_output2(net, sk, skb);
 }
 
+// 发包路径
 static int ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	int ret;
 
+	// 调用BPF_CGROUP_RUN_PROG_INET_EGRESS函数进行BPF过滤
 	ret = BPF_CGROUP_RUN_PROG_INET_EGRESS(sk, skb);
 	switch (ret) {
 	case NET_XMIT_SUCCESS:
@@ -421,6 +445,7 @@ int ip_mc_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 			    !(IPCB(skb)->flags & IPSKB_REROUTED));
 }
 
+// 发包路径
 int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
@@ -428,6 +453,7 @@ int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 	skb->dev = dev;
 	skb->protocol = htons(ETH_P_IP);
 
+	// Netfilter框架的 NF_INET_POST_ROUTING hook点
 	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
 			    net, sk, skb, indev, dev,
 			    ip_finish_output,
@@ -1479,10 +1505,12 @@ out:
 	return skb;
 }
 
+// 发包路径
 int ip_send_skb(struct net *net, struct sk_buff *skb)
 {
 	int err;
 
+	// 调用ip_local_out函数将skb发送到IP层
 	err = ip_local_out(net, skb->sk, skb);
 	if (err) {
 		if (err > 0)

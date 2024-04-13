@@ -261,20 +261,20 @@ enum igb_tx_buf_type {
  * so a DMA handle can be stored along with the buffer
  */
 struct igb_tx_buffer {
-	union e1000_adv_tx_desc *next_to_watch;
-	unsigned long time_stamp;
-	enum igb_tx_buf_type type;
+	union e1000_adv_tx_desc *next_to_watch;  // 指向下一个要观察的发送描述符的指针，用于跟踪缓冲区的发送状态。
+	unsigned long time_stamp;  		// 时间戳，用于记录缓冲区最后发送的时间。
+	enum igb_tx_buf_type type;		// 缓冲区类型的枚举，表示缓冲区所包含的数据类型。
 	union {
 		struct sk_buff *skb;
-		struct xdp_frame *xdpf;
+		struct xdp_frame *xdpf;		//  XDP帧
 	};
-	unsigned int bytecount;
-	u16 gso_segs;
-	__be16 protocol;
+	unsigned int bytecount;			// 缓冲区中的字节数，表示套接字缓冲区的有效数据大小。
+	u16 gso_segs;		
+	__be16 protocol;			// 16 位网络协议类型，用于存储套接字缓冲区中的网络协议。
 
-	DEFINE_DMA_UNMAP_ADDR(dma);
-	DEFINE_DMA_UNMAP_LEN(len);
-	u32 tx_flags;
+	DEFINE_DMA_UNMAP_ADDR(dma);		// 定义 DMA 映射地址，用于存储与缓冲区相关的 DMA 地址。
+	DEFINE_DMA_UNMAP_LEN(len);		// 定义 DMA 映射长度，用于存储与缓冲区相关的 DMA 长度。
+	u32 tx_flags;				// 用于存储缓冲区的发送标志，表示缓冲区的发送属性和状态。
 };
 
 struct igb_rx_buffer {
