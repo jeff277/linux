@@ -1237,6 +1237,14 @@ INDIRECT_CALLABLE_DECLARE(void tcp_v4_send_check(struct sock *sk, struct sk_buff
  * We are working here with either a clone of the original
  * SKB, or a fresh unique copy made by the retransmit engine.
  */
+ /*
+ * 通常要发送一个TCP段都是通过tcp_transmit_skb()的。该函数会给
+ * 待发送的段构造TCP首部，然后调用网络层接口到IP层，最终
+ * 抵达网络设备。由于在成功发送到网络设备后会释放该
+ * SKB，而TCP必须要接到对应的ACK后才能真正释放数据，因此
+ * 在发送前会根据参数确定是克隆还是复制一份SKB用于发送。
+ */ 
+  //最终的tcp发送都会调用这个  clone_it表示发送发送队列的第一个SKB的时候，采用克隆skb还是直接使用skb，如果是发送应用层数据则使用克隆的，等待对方应答ack回来才把数据删除。如果是会送ack信息，则无需克隆
 static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 			      int clone_it, gfp_t gfp_mask, u32 rcv_nxt)
 {
@@ -1257,6 +1265,8 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 	prior_wstamp = tp->tcp_wstamp_ns;
 	tp->tcp_wstamp_ns = max(tp->tcp_wstamp_ns, tp->tcp_clock_cache);
 	skb->skb_mstamp_ns = tp->tcp_wstamp_ns;
+
+	//  根据参数clone_it确定是否克隆待发送的数据包。(为什么要克隆? 函数名注释处已说明)
 	if (clone_it) {
 		TCP_SKB_CB(skb)->tx.in_flight = TCP_SKB_CB(skb)->end_seq
 			- tp->snd_una;
@@ -1277,11 +1287,16 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 		skb->dev = NULL;
 	}
 
+	 /*
+	 * 获取INET层和TCP层的传输控制块、SKB中的TCP私有控制块
+	 * 以及当前TCP首部长度。
+	 */
 	inet = inet_sk(sk);
 	tcb = TCP_SKB_CB(skb);
 	memset(&opts, 0, sizeof(opts));
 
-	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
+	
+	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {	//  判断当前TCP段是不是SYN段，因为有些选项只能出现在SYN段中，需作特别处理。
         // [mptcp - syn]
 		tcp_options_size = tcp_syn_options(sk, skb, &opts, &md5);
 	} else {
@@ -1327,7 +1342,8 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 
 	skb_set_dst_pending_confirm(skb, sk->sk_dst_pending_confirm);
 
-	/* Build TCP header and checksum it. */
+	// 为要发送的数据构建TCP头
+	/* Build TCP header and checksum it. */		
 	th = (struct tcphdr *)skb->data;
 	th->source		= inet->inet_sport;
 	th->dest		= inet->inet_dport;
@@ -1339,6 +1355,10 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 	th->check		= 0;
 	th->urg_ptr		= 0;
 
+	/*
+	* 判断是否需要设置紧急指针和带外数据标志。判断条件有两个，
+	* 一是发送时是否设置了紧急方式，二是紧急指针是否在以该报文数据序号为起始的65535范围之内，其中第二个条件主要是判断紧急指针的合法性。
+	*/
 	/* The urg_mode check is necessary during a below snd_una win probe */
 	if (unlikely(tcp_urg_mode(tp) && before(tcb->seq, tp->snd_up))) {
 		if (before(tp->snd_up, tcb->seq + 0x10000)) {
@@ -1350,6 +1370,7 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 		}
 	}
 
+	// TCP首部调整完毕，开始构建TCP首部选项。
 	tcp_options_write((__be32 *)(th + 1), tp, &opts);
 	skb_shinfo(skb)->gso_type = sk->sk_gso_type;
 	if (likely(!(tcb->tcp_flags & TCPHDR_SYN))) {
@@ -1373,13 +1394,26 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 	/* BPF prog is the last one writing header option */
 	bpf_skops_write_hdr_opt(sk, skb, NULL, NULL, 0, &opts);
 
+	/*
+	* 调用IPv4执行校验和接口send_check计算校验和，并设置到TCP首部中。
+	* 在TCP中send_check接口被初始化为tcp_v4_send_check。
+	*/
 	INDIRECT_CALL_INET(icsk->icsk_af_ops->send_check,
 			   tcp_v6_send_check, tcp_v4_send_check,
 			   sk, skb);
 
+	/*
+	* 如果发送出去的段有ACK标志，则需要通知延时确认模块，递减
+	* 快速发送ACK段的数量，同时停止延时确认定时器。
+	*/
 	if (likely(tcb->tcp_flags & TCPHDR_ACK))
 		tcp_event_ack_sent(sk, tcp_skb_pcount(skb), rcv_nxt);
 
+	/*
+	* 如果发送出去的TCP段有负载，则检测拥塞窗口闲置是否超时，
+	* 并使其失效。同时记录发送TCP的时间，根据最近接受段的时间
+	* 确定本端延时确认是否进入pingpong模式。
+	*/
 	if (skb->len != tcp_header_size) {
 		tcp_event_data_sent(tp, sk);
 		tp->data_segs_out += tcp_skb_pcount(skb);
@@ -1403,6 +1437,8 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 
 	tcp_add_tx_delay(skb, tp);
 
+	// 关键发包路径
+	// 调用发送接口queue_xmit发送报文，如果失败则返回错误码。在ipv4 TCP中该接口实现函数为 ip_queue_xmit()
 	err = INDIRECT_CALL_INET(icsk->icsk_af_ops->queue_xmit,
 				 inet6_csk_xmit, ip_queue_xmit,
 				 sk, skb, &inet->cork.fl);
@@ -2594,6 +2630,8 @@ void tcp_chrono_stop(struct sock *sk, const enum tcp_chrono type)
  * Returns true, if no segments are in flight and we have queued segments,
  * but cannot send anything now because of SWS or another problem.
  */
+// tcp发包路径
+// 参数push_one表示只发送队首的SKB还是把整个发送队列SKB都发送出去
 static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
 			   int push_one, gfp_t gfp)
 {
@@ -2619,6 +2657,8 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
 	}
 
 	max_segs = tcp_tso_segs(sk, mss_now);
+
+	// 如果发送队列不为空，则准备开始发送段。 tcp_send_head()就是取发送队列的头
 	while ((skb = tcp_send_head(sk))) {
 		unsigned int limit;
 
@@ -2630,48 +2670,87 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
 			goto repair; /* Skip network transmission */
 		}
 
+		// pacing特性的处理
 		if (tcp_pacing_check(sk))
 			break;
 
+		/*
+		* 设置有关tso的信息，包括GSO类型、GSO分段的大小等。这些
+		* 信息是准备给软件TSO分段使用的。如果网络设备不支持TSO，
+		* 但又使用了TSO功能，则段在提交给网络设备之前，需进行
+		* 软分段，即由代码实现TSO分段。
+		*/
 		tso_segs = tcp_init_tso_segs(skb, mss_now);
 		BUG_ON(!tso_segs);
 
+	
+		// 检查目前是否可以发送数据, 确认当前发送窗口的大小
 		cwnd_quota = tcp_cwnd_test(tp, skb);
-		if (!cwnd_quota) {
-			if (push_one == 2)
+		if (!cwnd_quota) {	// 检测拥塞窗口的大小，如果为0，则说明拥塞窗口已满。
+			
+			if (push_one == 2)	// 强制发一个包(避免死等窗口)
 				/* Force out a loss probe pkt. */
 				cwnd_quota = 1;
 			else
 				break;
 		}
 
+		/*
+		 * 检测当前段(包括线性区和分散聚合I/O区shinfo)是否完全处在发送窗口内，如果是
+		 * 则可以发送，否则目前不能发送。
+		 */
 		if (unlikely(!tcp_snd_wnd_test(tp, skb, mss_now))) {
 			is_rwnd_limited = true;
 			break;
 		}
 
 		if (tso_segs == 1) {
+			/*
+			 * 如果无需TSO分段，则检测是否使用Nagle算法， 并确定当前能否立即发送该段。
+			 */
 			if (unlikely(!tcp_nagle_test(tp, skb, mss_now,
 						     (tcp_skb_is_last(sk, skb) ?
 						      nonagle : TCP_NAGLE_PUSH))))
 				break;
 		} else {
+			/*
+			 * 如果需要TSO分段，则检测该段是否应该延时发送, 如果是则目前不能发送。tcp_tso_should_defer()用来检测
+			 * GSO段是否需要延时发送。在段中有FIN标志，或者不处于Open拥塞状态，或者TSO段延时超过2个时钟滴答,
+			 * 或者拥塞窗口和发送窗口的最小值大于64KB,或三倍的当前有效MSS，在这些情况下会立即发送，
+			 * 而其他情况下会延时发送，这样主要为了减少软GSO分段的次数提高性能。
+			 */
 			if (!push_one &&
 			    tcp_tso_should_defer(sk, skb, &is_cwnd_limited,
 						 &is_rwnd_limited, max_segs))
 				break;
 		}
 
+		/*
+		 * 根据条件，可能需要对SKB中的段进行分段处理，分段的段包括两种:一种是普通的用MSS分段的段，另一种则是
+		 * TSO分段的段。能否发送段主要取决于两个条件:一是段需完全在发送窗口中，二是拥塞窗口未满。第一种段，
+		 * 应该不会再分段了，因为在tcp_sendmsg()中创建段的SKB时已经根据MSS处理了。而第二种段，则一般情况下都会大于MSS，
+		 * 因此通过TSO分段的段有可能大于拥塞窗口剩余空间，如果是这样，就需以发送窗口和拥塞窗口的最小值作为段长对数据包再次分段。
+		 */
+
+		// limit为再次分段的段长，初始化为当前MSS。
 		limit = mss_now;
+
+		//  判断当前段是不是TSO分段的段，如果是才处理。
 		if (tso_segs > 1 && !tcp_urg_mode(tp))
+
+			// 以发送窗口和拥塞窗口的最小值作为分段段长。也就是比较可用拥塞窗口和tcp_sendmsg中的分散聚合I/O页
 			limit = tcp_mss_split_point(sk, skb, mss_now,
 						    min_t(unsigned int,
 							  cwnd_quota,
 							  max_segs),
 						    nonagle);
 
+		/*
+		 * 得到分段段长后，如果SKB中的数据长度大于分段段长，则调用tso_fragment()根据该段长进行分段，
+		 * 如果分段失败则目前暂不发送。
+		 */
 		if (skb->len > limit &&
-		    unlikely(tso_fragment(sk, skb, limit, mss_now, gfp)))
+		    unlikely(tso_fragment(sk, skb, limit, mss_now, gfp)))	//后面新的buffer添加到了发送队列的尾部，等待下次tcp_sendmsg的时候发送
 			break;
 
 		if (tcp_small_queue_check(sk, skb, 0))
@@ -2685,16 +2764,29 @@ static bool tcp_write_xmit(struct sock *sk, unsigned int mss_now, int nonagle,
 		if (TCP_SKB_CB(skb)->end_seq == TCP_SKB_CB(skb)->seq)
 			break;
 
-		if (unlikely(tcp_transmit_skb(sk, skb, 1, gfp)))
+		/* 
+		* 使用地址族相关的af_sepcific->queue_xmit函数,
+		* 将数据转发到网络层。IPv4使用的是 ip_queue_xmit()
+		*/
+		if (unlikely(tcp_transmit_skb(sk, skb, 1, gfp)))		//!!! 发包关键路径， 数据包从这里进入3层
 			break;
 
 repair:
 		/* Advance the send_head.  This one is sent out.
 		 * This call will increment packets_out.
 		 */
+		 /* 
+		 * 处理对统计量的更新。更重要的是， 它会初始化所发送TCP信息段的重传定时器。
+		 * 不必对每个TCP分组都这样做， 该机制只用于已经确认的数据区之后的第一个分组
+         */
 		tcp_event_new_data_sent(sk, skb);
 
+		/*
+		 * 如果发送的段小于MSS，则更新最近发送的小包的最后一个字节序号。
+		 */
 		tcp_minshall_update(tp, mss_now, skb);
+
+		//更新在函数中已发送的总段数。
 		sent_pkts += tcp_skb_pcount(skb);
 
 		if (push_one)
@@ -2879,7 +2971,7 @@ void tcp_push_one(struct sock *sk, unsigned int mss_now)
 
 	BUG_ON(!skb || skb->len < mss_now);
 
-	tcp_write_xmit(sk, mss_now, TCP_NAGLE_PUSH, 1, sk->sk_allocation);
+	tcp_write_xmit(sk, mss_now, TCP_NAGLE_PUSH, 1, sk->sk_allocation);	//tcp发包路径
 }
 
 /* This function returns the amount that we can raise the

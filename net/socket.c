@@ -649,8 +649,8 @@ INDIRECT_CALLABLE_DECLARE(int inet6_sendmsg(struct socket *, struct msghdr *,
 // 发包路径
 static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
 {
-	// sock->ops)->sendmsg 真正的函数是 inet_sendmsg().
-        // 定义在: const struct proto_ops inet_dgram_ops
+	// ipv4 tcp mptcp udp中 sock->ops->sendmsg都是 inet_sendmsg().
+    // tcp定义在inet_dgram_ops中. mptcp定义在mptcp_stream_ops中. udp定义在inet_dgram_ops中.
 	int ret = INDIRECT_CALL_INET(sock->ops->sendmsg, inet6_sendmsg,
 				     inet_sendmsg, sock, msg,
 				     msg_data_left(msg));
@@ -1964,8 +1964,9 @@ SYSCALL_DEFINE3(getpeername, int, fd, struct sockaddr __user *, usockaddr,
 /*
  *	Send a datagram to a given address. We move the address into kernel
  *	space and check the user space data area is readable before invoking
- *	the protocol. 发包路径
+ *	the protocol.
  */
+// 发包路径
 int __sys_sendto(int fd, void __user *buff, size_t len, unsigned int flags,
 		 struct sockaddr __user *addr,  int addr_len)
 {
@@ -2026,7 +2027,7 @@ SYSCALL_DEFINE6(sendto, int, fd, void __user *, buff, size_t, len,
 /*
  *	Send a datagram down a socket.
  */
-// 系统调用send()的定义, 可以看到内核层也是调用的sendto(),只是addr=NULL。
+// 发包路径 系统调用send()的定义, 可以看到内核层也是调用的sendto(),只是addr=NULL。
 SYSCALL_DEFINE4(send, int, fd, void __user *, buff, size_t, len,
 		unsigned int, flags)
 {

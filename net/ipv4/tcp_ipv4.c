@@ -2193,7 +2193,8 @@ void inet_sk_rx_dst_set(struct sock *sk, const struct sk_buff *skb)
 EXPORT_SYMBOL(inet_sk_rx_dst_set);
 
 const struct inet_connection_sock_af_ops ipv4_specific = {
-	.queue_xmit	   = ip_queue_xmit,
+	.queue_xmit	   = ip_queue_xmit,				// tcp和mptcp数据包发送到3层的入口.   mptcp直接使用的ipv4_specific所以也是这里
+	.send_check	   = dccp_v4_send_check,
 	.send_check	   = tcp_v4_send_check,
 	.rebuild_header	   = inet_sk_rebuild_header,
 	.sk_rx_dst_set	   = inet_sk_rx_dst_set,
@@ -2815,7 +2816,7 @@ struct proto tcp_prot = {
 	.getsockopt		= tcp_getsockopt,
 	.keepalive		= tcp_set_keepalive,
 	.recvmsg		= tcp_recvmsg,
-	.sendmsg		= tcp_sendmsg,	  // tcp发包
+	.sendmsg		= tcp_sendmsg,	  // tcp发包. mptcp是 mptcp_sendmsg
 	.sendpage		= tcp_sendpage,
 	.backlog_rcv		= tcp_v4_do_rcv,
 	.release_cb		= tcp_release_cb,

@@ -1161,6 +1161,9 @@ static void ssk_check_wmem(struct mptcp_sock *msk)
 		mptcp_nospace(msk);
 }
 
+// mptcp发包路径.   
+// 这也是发送路径上tcp和mptcp第一次分叉.  tcp此时调用的是tcp_sendmsg()
+// 是sock_sendmsg_nosec()调用了这个函数的, 是用过sock->ops->sendmsg() => inet_sendmsg.sendmsg()
 static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 {
 	int mss_now = 0, size_goal = 0, ret = 0;
@@ -1175,6 +1178,7 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 	if (msg->msg_flags & ~(MSG_MORE | MSG_DONTWAIT | MSG_NOSIGNAL))
 		return -EOPNOTSUPP;
 
+	//在发送和接收TCP数据前都要对传输控制块上锁，以免应用程序主动发送接收和传输控制块被动接收而导致控制块中的发送或接收队列混乱。
 	lock_sock(sk);
 
 	timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
@@ -2457,7 +2461,7 @@ static struct proto mptcp_prot = {
 	.getsockopt	= mptcp_getsockopt,
 	.shutdown	= tcp_shutdown,
 	.destroy	= mptcp_destroy,
-	.sendmsg	= mptcp_sendmsg,
+	.sendmsg	= mptcp_sendmsg,		// 对应tcp的tcp_sendmsg
 	.recvmsg	= mptcp_recvmsg,
 	.release_cb	= mptcp_release_cb,
 	.hash		= mptcp_hash,

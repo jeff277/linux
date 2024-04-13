@@ -816,7 +816,7 @@ int inet_send_prepare(struct sock *sk)
 }
 EXPORT_SYMBOL_GPL(inet_send_prepare);
 
-// 发包路径
+// tcp/mptcp/udp的 发包路径
 int inet_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
 {
 	struct sock *sk = sock->sk;
