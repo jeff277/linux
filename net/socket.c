@@ -646,11 +646,12 @@ INDIRECT_CALLABLE_DECLARE(int inet_sendmsg(struct socket *, struct msghdr *,
 					   size_t));
 INDIRECT_CALLABLE_DECLARE(int inet6_sendmsg(struct socket *, struct msghdr *,
 					    size_t));
-// 发包路径
+
+// tcp/mptcp/udp 发包路径 的分叉点
 static inline int sock_sendmsg_nosec(struct socket *sock, struct msghdr *msg)
 {
 	// ipv4 tcp mptcp udp中 sock->ops->sendmsg都是 inet_sendmsg().
-    // tcp定义在inet_dgram_ops中. mptcp定义在mptcp_stream_ops中. udp定义在inet_dgram_ops中.
+    // tcp定义在inet_dgram_ops中.  mptcp定义在mptcp_stream_ops中. udp定义在inet_dgram_ops中.
 	int ret = INDIRECT_CALL_INET(sock->ops->sendmsg, inet6_sendmsg,
 				     inet_sendmsg, sock, msg,
 				     msg_data_left(msg));

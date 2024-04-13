@@ -1161,6 +1161,7 @@ static void ssk_check_wmem(struct mptcp_sock *msk)
 		mptcp_nospace(msk);
 }
 
+
 // mptcp发包路径.   
 // 这也是发送路径上tcp和mptcp第一次分叉.  tcp此时调用的是tcp_sendmsg()
 // 是sock_sendmsg_nosec()调用了这个函数的, 是用过sock->ops->sendmsg() => inet_sendmsg.sendmsg()
