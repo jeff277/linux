@@ -217,9 +217,9 @@ struct mptcp_sock {
 	struct work_struct work;                // 用于调度异步任务
 	struct sk_buff  *ooo_last_skb;          // 指向乱序接收队列中最后一个sk_buff的指针
 	struct rb_root  out_of_order_queue;     // 乱序队列
-	struct list_head conn_list;             //!!! 连接列表，用于管理MPTCP子连接
+	struct list_head conn_list;             //!!! 【重要】连接列表，用于管理MPTCP子连接
 	struct list_head rtx_queue;             // 重传队列
-	struct list_head join_list;             // 用于管理加入到MPTCP连接的请求
+	struct list_head join_list;             // 用于管理[新]加入到MPTCP连接的请求(子连接),  join_list会择机添加到conn_list.
 	struct skb_ext	*cached_ext;	/* for the next sendmsg */
 	struct socket	*subflow; /* outgoing connect/listener/!mp_capable */       // 指向子流的指针，用于出站连接、监听或非MP能力子流
 	struct sock	*first;                     // 指向第一个子流的指针
@@ -310,7 +310,7 @@ struct mptcp_subflow_context {
 		conn_finished : 1,
 		map_valid : 1,
 		mpc_map : 1,
-		backup : 1,
+		backup : 1,			// backup属性的子流. (默认不发送数据)
 		rx_eof : 1,
 		can_ack : 1;	    /* only after processing the remote a key */
 	enum mptcp_data_avail data_avail;
@@ -322,7 +322,7 @@ struct mptcp_subflow_context {
 	u8	local_id;
 	u8	remote_id;
 
-	struct	sock *tcp_sock;	    /* tcp sk backpointer */
+	struct	sock *tcp_sock;	    /* tcp sk backpointer */	// mptcp直流对应的tcp sk
 	struct	sock *conn;	    /* parent mptcp_sock */
 	const	struct inet_connection_sock_af_ops *icsk_af_ops;
 	void	(*tcp_data_ready)(struct sock *sk);

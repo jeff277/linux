@@ -90,9 +90,17 @@ struct inet_connection_sock {
 	__u32                     icsk_delack_max;
 	__u32			  icsk_pmtu_cookie;
 	const struct tcp_congestion_ops *icsk_ca_ops;
-	const struct inet_connection_sock_af_ops *icsk_af_ops;      //todo 这里mptcp是如何赋值的？
+
+    /* 
+     * 1、tcp的ops是ipv4_specific, mptcp的ops是subflow_specific
+     * 2、在mptcp_subflow_init()中定义了subflow_specific = ipv4_specific; 然后reset了三个操作符conn_request,syn_recv_sock,k_rx_dst_set 
+     *   然后重置了subflow_specific.conn_request = subflow_v4_conn_request;subflow_specific.syn_recv_sock = subflow_syn_recv_sock;
+     *   subflow_specific.sk_rx_dst_set = subflow_finish_connect;
+     * ***/
+	const struct inet_connection_sock_af_ops *icsk_af_ops;      
+
 	const struct tcp_ulp_ops  *icsk_ulp_ops;
-	void __rcu		  *icsk_ulp_data;
+	void __rcu		  *icsk_ulp_data;           // 对于mptcp子流 这里存放的是 mptcp_subflow_context*  
 	void (*icsk_clean_acked)(struct sock *sk, u32 acked_seq);
 	struct hlist_node         icsk_listen_portaddr_node;
 	unsigned int		  (*icsk_sync_mss)(struct sock *sk, u32 pmtu);

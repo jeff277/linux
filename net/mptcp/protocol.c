@@ -662,6 +662,8 @@ static void __mptcp_flush_join_list(struct mptcp_sock *msk)
 		return;
 
 	spin_lock_bh(&msk->join_list_lock);
+	// 将join_list中的元素移动到conn_list, 并且re_init join_list.
+	// 也就是把新加入的mptcp子流放到 conn_list链表
 	list_splice_tail_init(&msk->join_list, &msk->conn_list);
 	spin_unlock_bh(&msk->join_list_lock);
 }
@@ -803,8 +805,8 @@ static void mptcp_clean_una(struct sock *sk)
 	bool cleaned = false;
 	u64 snd_una;
 
-	/* on fallback we just need to ignore snd_una, as this is really
-	 * plain TCP
+	/* on fallback we just need to ignore snd_una, as this is really plain TCP
+	* snd_una 未确认的发送数据的起始序列号
 	 */
 	if (__mptcp_check_fallback(msk))
 		atomic64_set(&msk->snd_una, msk->write_seq);
@@ -902,6 +904,7 @@ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
 	 * Note: pfrag is used only !retransmission, but the compiler if
 	 * fooled into a warning if we don't init here
 	 */
+	// page cache方式的目标是实现子流之间转移要发送数据. 但是重传的skb不能这样做, 也不能做子流之间的转移。
 	pfrag = sk_page_frag(sk);
 	if (!retransmission) {
 		write_seq = &msk->write_seq;
@@ -912,11 +915,11 @@ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
 	}
 
 	/* compute copy limit */
-	mss_now = tcp_send_mss(ssk, &size_goal, msg->msg_flags);
+	mss_now = tcp_send_mss(ssk, &size_goal, msg->msg_flags);	// 计算MSS
 	*pmss_now = mss_now;
 	*ps_goal = size_goal;
 	avail_size = size_goal;
-	skb = tcp_write_queue_tail(ssk);
+	skb = tcp_write_queue_tail(ssk);	/* 从等待发送数据链表中，取最后一个skb，将要发送的数据填充到skb，等待发送 */
 	if (skb) {
 		mpext = skb_ext_find(skb, SKB_EXT_MPTCP);
 
@@ -949,6 +952,8 @@ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
 		psize = min_t(size_t, pfrag->size - offset, avail_size);
 
 		/* Copy to page */
+		// msg_data_left(msg) 获得用户数据大小(msg.msg_iter->count)
+		// 将用户要发送的数据拷贝到pfrag->page
 		pr_debug("left=%zu", msg_data_left(msg));
 		psize = copy_page_from_iter(pfrag->page, offset,
 					    min_t(size_t, msg_data_left(msg),
@@ -958,6 +963,7 @@ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
 		if (!psize)
 			return -EINVAL;
 
+		// 需判断用于输出使用的缓存 是否达到上限,一旦达到则只能等待,直到有可用输出缓存或超时为止
 		if (!sk_wmem_schedule(sk, psize + dfrag->overhead)) {
 			iov_iter_revert(&msg->msg_iter, psize);
 			return -ENOMEM;
@@ -970,6 +976,7 @@ static int mptcp_sendmsg_frag(struct sock *sk, struct sock *ssk,
 	/* tell the TCP stack to delay the push so that we can safely
 	 * access the skb after the sendpages call
 	 */
+	// 开始发包.  这是和大家熟悉的 tcp_sendmsg_locked()类似的发包函数
 	ret = do_tcp_sendpages(ssk, page, offset, psize,
 			       msg->msg_flags | MSG_SENDPAGE_NOTLAST | MSG_DONTWAIT);
 	if (ret <= 0) {
@@ -1054,6 +1061,7 @@ static void mptcp_nospace(struct mptcp_sock *msk)
 	}
 }
 
+// 判断子流是否处于可发送状态(也就是established和close_wait)
 static bool mptcp_subflow_active(struct mptcp_subflow_context *subflow)
 {
 	struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
@@ -1077,10 +1085,12 @@ struct subflow_send_info {
 	u64 ratio;
 };
 
+// 从msk.conn_list中选择一条子流sk, 用该sk发包. 
+//参数 msk.conn_list存的是ssk.  sndbuf是一个输出变量.
 static struct sock *mptcp_subflow_get_send(struct mptcp_sock *msk,
 					   u32 *sndbuf)
 {
-	struct subflow_send_info send_info[2];
+	struct subflow_send_info send_info[2];	// 结构体重仅有ssk和ratio
 	struct mptcp_subflow_context *subflow;
 	int i, nr_active = 0;
 	struct sock *ssk;
@@ -1090,25 +1100,32 @@ static struct sock *mptcp_subflow_get_send(struct mptcp_sock *msk,
 	sock_owned_by_me((struct sock *)msk);
 
 	*sndbuf = 0;
-	if (!mptcp_ext_cache_refill(msk))
+	if (!mptcp_ext_cache_refill(msk))		
 		return NULL;
 
 	if (__mptcp_check_fallback(msk)) {
 		if (!msk->first)
 			return NULL;
-		*sndbuf = msk->first->sk_sndbuf;
+		*sndbuf = msk->first->sk_sndbuf;	
 		return sk_stream_memory_free(msk->first) ? msk->first : NULL;
 	}
 
 	/* re-use last subflow, if the burst allow that */
-	if (msk->last_snd && msk->snd_burst > 0 &&
-	    sk_stream_memory_free(msk->last_snd) &&
-	    mptcp_subflow_active(mptcp_subflow_ctx(msk->last_snd))) {
-		mptcp_for_each_subflow(msk, subflow) {
-			ssk =  mptcp_subflow_tcp_sock(subflow);
+
+	// 选择方式一: 直接选择上一次发包的的子流 
+	if (msk->last_snd && 
+		msk->snd_burst > 0 &&
+	    sk_stream_memory_free(msk->last_snd) &&		/*判断子流的发送缓冲区是否够: 不够-false, 够-true*/
+	    mptcp_subflow_active(mptcp_subflow_ctx(msk->last_snd))) { /*判断子流是否处于可发送状态*/
+
+		// 遍历所有子流是为了计算sndbuf
+		mptcp_for_each_subflow(msk, subflow) {		// 遍历msk->conn_list
+			ssk =  mptcp_subflow_tcp_sock(subflow);	// 子流对应的tcp sk
 			*sndbuf = max(tcp_sk(ssk)->snd_wnd, *sndbuf);
 		}
-		return msk->last_snd;
+
+		// 直接把上次发包的子流返回了.(注意和前面的遍历没关系)
+		return msk->last_snd;	// 返回上次发包的子流ssk.
 	}
 
 	/* pick the subflow with the lower wmem/wspace ratio */
@@ -1116,22 +1133,27 @@ static struct sock *mptcp_subflow_get_send(struct mptcp_sock *msk,
 		send_info[i].ssk = NULL;
 		send_info[i].ratio = -1;
 	}
+	// 选择方式二: 遍历所有子流, 选负载最轻的2条, 放在send_info[]
+	// 为啥是2条： send_info[1] 存放的是backup状态的. send_info[0]存放的是非backup状态的.
 	mptcp_for_each_subflow(msk, subflow) {
-		ssk =  mptcp_subflow_tcp_sock(subflow);
-		if (!mptcp_subflow_active(subflow))
+		ssk =  mptcp_subflow_tcp_sock(subflow);		// 子流对应的tcp sk
+		if (!mptcp_subflow_active(subflow))			// 判断子流是否可以发送数据
 			continue;
 
 		nr_active += !subflow->backup;
+
 		*sndbuf = max(tcp_sk(ssk)->snd_wnd, *sndbuf);
-		if (!sk_stream_memory_free(subflow->tcp_sock))
+		if (!sk_stream_memory_free(subflow->tcp_sock))	/*判断子流的发送缓冲区是否够, 够-false, 够-true*/
 			continue;
 
+		// 避免分母为0
 		pace = READ_ONCE(ssk->sk_pacing_rate);
 		if (!pace)
 			continue;
 
 		ratio = div_u64((u64)READ_ONCE(ssk->sk_wmem_queued) << 32,
 				pace);
+
 		if (ratio < send_info[subflow->backup].ratio) {
 			send_info[subflow->backup].ssk = ssk;
 			send_info[subflow->backup].ratio = ratio;
@@ -1143,6 +1165,7 @@ static struct sock *mptcp_subflow_get_send(struct mptcp_sock *msk,
 		 send_info[1].ssk, send_info[1].ratio);
 
 	/* pick the best backup if no other subflow is active */
+	// nr_active = 0 表示没有active的子流. 如果没有active的子流则启用backup子流发数据.
 	if (!nr_active)
 		send_info[0].ssk = send_info[1].ssk;
 
@@ -1152,6 +1175,7 @@ static struct sock *mptcp_subflow_get_send(struct mptcp_sock *msk,
 				       sk_stream_wspace(msk->last_snd));
 		return msk->last_snd;
 	}
+
 	return NULL;
 }
 
@@ -1182,9 +1206,17 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 	//在发送和接收TCP数据前都要对传输控制块上锁，以免应用程序主动发送接收和传输控制块被动接收而导致控制块中的发送或接收队列混乱。
 	lock_sock(sk);
 
+	// 获取等待的时间，如果阻塞模式，获取超时时间，非阻塞为 0
 	timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
 
+	/*
+	* TCP只在ESTABLISHED或CLOSE_WAIT这两种状态下，接收窗口
+	* 是打开的，才能接收数据。因此如果不处于这两种
+	* 状态，则调用sk_stream_wait_connect()等待建立起连接，一旦
+	* 超时则跳转到out_err处做出错处理。
+	*/	
 	if ((1 << sk->sk_state) & ~(TCPF_ESTABLISHED | TCPF_CLOSE_WAIT)) {
+		/* 等待连接建立。 */
 		ret = sk_stream_wait_connect(sk, &timeo);
 		if (ret)
 			goto out;
@@ -1192,18 +1224,34 @@ static int mptcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 
 	pfrag = sk_page_frag(sk);
 restart:
-	mptcp_clean_una(sk);
+	// snd_una 未确认的发送数据的起始序列号. 也就是从这里开始重新发送数据
+	mptcp_clean_una(sk);	
 
+	/*
+	* 在开始分段前，先初始化错误码为EPIPE，然后判断此时套接字 是否存在错误，以及该套接字是否允许发送数据，
+	* 如果有错误 或不允许发送数据，则跳转到out处作处理。 并返回EPIPE.
+	* 则也是在对方关闭套接字后, 本地收到SIGPIPE的原因.
+	*/
 	if (sk->sk_err || (sk->sk_shutdown & SEND_SHUTDOWN)) {
 		ret = -EPIPE;
 		goto out;
 	}
 
+	// 如有新子流, 把新子流加入 msk.conn_list, 这样就可用新子流发数据了
 	__mptcp_flush_join_list(msk);
-	ssk = mptcp_subflow_get_send(msk, &sndbuf);
-	while (!sk_stream_memory_free(sk) ||
-	       !ssk ||
-	       !mptcp_page_frag_refill(ssk, pfrag)) {
+
+	// ssk是 subflow sk的意思. 也就是子流的sk.  ssk保存存在 msk.conn_list 中.   
+	// 参数sndbuf是一个输出变量
+	ssk = mptcp_subflow_get_send(msk, &sndbuf);	//选择msk的的一条子流
+
+	// 这里是一个异常的处理!!!  选出来的sk空间已不够.
+	while (!sk_stream_memory_free(sk) ||		/* 判断是否有足够的空间发包, 够-false, 够-true*/
+	       !ssk ||								/* 判断是否找到了子流 */
+	       !mptcp_page_frag_refill(ssk, pfrag)) {	/* hdr frag memory相关的判断 */
+
+		// 进入这里的while循序，就表示内存不够，等内存。
+
+		// 在等待内存之前： 确保重传计时器正在运行。 可能需要重传计时器来使对等方发送最新的 MPTCP Ack 
 		if (ssk) {
 			/* make sure retransmit timer is
 			 * running before we wait for memory.
@@ -1217,13 +1265,18 @@ restart:
 				mptcp_reset_timer(sk);
 		}
 
+		// 设置为内存不够。
 		mptcp_nospace(msk);
-		ret = sk_stream_wait_memory(sk, &timeo);
+
+		/* [进入睡眠],等待内存空闲信号唤醒。 */
+		ret = sk_stream_wait_memory(sk, &timeo);	
 		if (ret)
 			goto out;
 
+		// 这个CPU睡眠过了，其他CPU可能发过包了，所以重新计算una.
 		mptcp_clean_una(sk);
-
+		
+		// 重新选择子流
 		ssk = mptcp_subflow_get_send(msk, &sndbuf);
 		if (list_empty(&msk->conn_list)) {
 			ret = -ENOTCONN;
