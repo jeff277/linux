@@ -307,7 +307,10 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
 	pr_debug("subflow=%p synack seq=%x", subflow, subflow->ssn_offset);
 
 	mptcp_get_options(skb, &mp_opt);
+
 	if (subflow->request_mptcp) {
+
+        // 发起mptcp主连接,且三次握手完成了.  比如mptcp的connect()
 		if (!mp_opt.mp_capable) {
 			MPTCP_INC_STATS(sock_net(sk),
 					MPTCP_MIB_MPCAPABLEACTIVEFALLBACK);
@@ -323,6 +326,8 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
 			 subflow->remote_key);
 		mptcp_finish_connect(sk);
 	} else if (subflow->request_join) {
+
+        // 正在发起mptcp子连接,且三次握手完成了.
 		u8 hmac[SHA256_DIGEST_SIZE];
 
 		if (!mp_opt.mp_join)
@@ -344,6 +349,7 @@ static void subflow_finish_connect(struct sock *sk, const struct sk_buff *skb)
 				      hmac);
 		memcpy(subflow->hmac, hmac, MPTCPOPT_HMAC_LEN);
 
+        //
 		if (!mptcp_finish_join(sk))
 			goto do_reset;
 
@@ -1077,6 +1083,7 @@ int __mptcp_subflow_connect(struct sock *sk, const struct mptcp_addr_info *loc,
 	if (!mptcp_is_fully_established(sk))
 		return -ENOTCONN;
 
+    // 开始创建子流-3   sf => subflow
 	err = mptcp_subflow_create_socket(sk, &sf);
 	if (err)
 		return err;
@@ -1106,6 +1113,8 @@ int __mptcp_subflow_connect(struct sock *sk, const struct mptcp_addr_info *loc,
 		addrlen = sizeof(struct sockaddr_in6);
 #endif
 	ssk->sk_bound_dev_if = loc->ifindex;
+
+    // 在内核中新建一个socket client (bind)
 	err = kernel_bind(sf, (struct sockaddr *)&addr, addrlen);
 	if (err)
 		goto failed;
@@ -1120,6 +1129,7 @@ int __mptcp_subflow_connect(struct sock *sk, const struct mptcp_addr_info *loc,
 	subflow->request_bkup = !!(loc->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
 	mptcp_info2sockaddr(remote, &addr);
 
+    // 开始创建子流-7: 在内核中新建一个socket client (connect)
 	err = kernel_connect(sf, (struct sockaddr *)&addr, addrlen, O_NONBLOCK);
 	if (err && err != -EINPROGRESS)
 		goto failed;
@@ -1166,7 +1176,8 @@ int mptcp_subflow_create_socket(struct sock *sk, struct socket **new_sock)
 
 	// 采用TCP ULP 在内核中实现mptcp v1协议.  这是和mptcp v0不一样的一个关键点。
 	// Upper Layer Protocol (ULP) that runs over TCP.  资料 https://blog.csdn.net/dog250/article/details/78231773
-	// [mptcp icsk_af_ops->conn_request] 设置路径： 这是per sock 设置的入口. 也就是应用层路径管理(PM)的挂载入口.
+	// [mptcp icsk_af_ops->conn_request] 会走到这里.  这是per sock 设置的入口.
+    // 开始创建子流-4
 	err = tcp_set_ulp(sf->sk, "mptcp");
 
 	release_sock(sf->sk);
@@ -1209,6 +1220,7 @@ static struct mptcp_subflow_context *subflow_create_ctx(struct sock *sk,
 	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
 	INIT_LIST_HEAD(&ctx->node);
 
+    // 开始创建子流-7
 	pr_debug("subflow=%p", ctx);
 
 	ctx->tcp_sock = sk;
@@ -1265,6 +1277,7 @@ static void subflow_state_change(struct sock *sk)
 	}
 }
 
+// 每socket创建时都会到这里的. MPtcp 依托 ULP架构
 static int subflow_ulp_init(struct sock *sk)
 {
 	struct inet_connection_sock *icsk = inet_csk(sk);
@@ -1280,6 +1293,7 @@ static int subflow_ulp_init(struct sock *sk)
 		goto out;
 	}
 
+    // 开始创建子流-6
 	ctx = subflow_create_ctx(sk, GFP_KERNEL);
 	if (!ctx) {
 		err = -ENOMEM;

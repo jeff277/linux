@@ -137,7 +137,8 @@ static int __tcp_set_ulp(struct sock *sk, const struct tcp_ulp_ops *ulp_ops)
 		goto out_err;
 
 	 // [mptcp icsk_af_ops->conn_request] 的设置入口
-	err = ulp_ops->init(sk);
+    // ulp_ops->init() = subflow_ulp_init()
+	err = ulp_ops->init(sk);        // 开始创建子流-5
 	if (err)
 		goto out_err;
 

@@ -14,10 +14,10 @@
 #define MPTCP_SUPPORTED_VERSION	1
 
 /* MPTCP option bits */
-#define OPTION_MPTCP_MPC_SYN	BIT(0)
+#define OPTION_MPTCP_MPC_SYN	BIT(0)   /*MPC = MP_CAPABLE, 比如新建主连接的syn中会有该option*/
 #define OPTION_MPTCP_MPC_SYNACK	BIT(1)
 #define OPTION_MPTCP_MPC_ACK	BIT(2)
-#define OPTION_MPTCP_MPJ_SYN	BIT(3)
+#define OPTION_MPTCP_MPJ_SYN	BIT(3)  /*MPJ = MP_JOIN， 新建子流的syn中会有该option*/
 #define OPTION_MPTCP_MPJ_SYNACK	BIT(4)
 #define OPTION_MPTCP_MPJ_ACK	BIT(5)
 #define OPTION_MPTCP_ADD_ADDR	BIT(6)
@@ -152,10 +152,10 @@ struct mptcp_addr_info {
 };
 
 enum mptcp_pm_status {
-	MPTCP_PM_ADD_ADDR_RECEIVED,
-	MPTCP_PM_RM_ADDR_RECEIVED,
-	MPTCP_PM_ESTABLISHED,
-	MPTCP_PM_SUBFLOW_ESTABLISHED,
+	MPTCP_PM_ADD_ADDR_RECEIVED,     // BIT(0) = 1
+	MPTCP_PM_RM_ADDR_RECEIVED,      // BIT(1) = 2
+	MPTCP_PM_ESTABLISHED,           // BIT(2) = 4       mptcp主连接 完成三次握手?
+	MPTCP_PM_SUBFLOW_ESTABLISHED,   // BIT(3) = 8       mptcp子流 完成三次握手?
 };
 
 struct mptcp_pm_data {
@@ -174,11 +174,11 @@ struct mptcp_pm_data {
 	bool		add_addr_echo;      // 表示是否应响应添加地址的echo
 	u8		add_addr_signaled;      // 累计发送地址信号的次数(为什么还和max比较?)
 	u8		add_addr_accepted;      // accepted 成功的连接数量. (和tcp的accepted含义一样？？)
-	u8		local_addr_used;
+	u8		local_addr_used;        // 已经使用的地址数量
 	u8		subflows;               // 成功创建的子流数量
 	u8		add_addr_signal_max;
 	u8		add_addr_accept_max;
-	u8		local_addr_max;
+	u8		local_addr_max;         // 主机上所有的地址数量(ip mptcp e 中list的地址数量)
 	u8		subflows_max;
 	u8		status;
 	u8		rm_id;
@@ -300,8 +300,8 @@ struct mptcp_subflow_context {
 	u32	map_subflow_seq;
 	u32	ssn_offset;
 	u32	map_data_len;
-	u32	request_mptcp : 1,  /* send MP_CAPABLE */
-		request_join : 1,   /* send MP_JOIN */
+	u32	request_mptcp : 1,  /* send MP_CAPABLE 发起mptcp主连接 */
+		request_join : 1,   /* send MP_JOIN  发起mptcp子连接*/
 		request_bkup : 1,
 		mp_capable : 1,	    /* remote is MPTCP capable */
 		mp_join : 1,	    /* remote is JOINing */

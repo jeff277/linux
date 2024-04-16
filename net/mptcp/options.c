@@ -28,6 +28,19 @@ static void mptcp_parse_option(const struct sk_buff *skb,
 	u8 version;
 	u8 flags;
 
+    /* 这些option在数据包中只会存在一个：MP_CAPABLE、MP_JOIN、DSS、ADD_ADDR、RM_ADDR
+     * ① MP_CAPABLE： 创建MPtcp主连含该字段. (还有其他时候也会, 但创建子流时不会)
+     * ② MP_JOIN: 创建MPtcp子流时含该字段.
+     * ③ DSS:  为了确保数据在可能随时出现和消失的子流上可靠、有序地传输，MPTCP使用一个64位的数据序列号（DSN）来编号通过MPTCP连接发送的所有数据。每个子流都有自己的32位序列号空间，利用常规的TCP序列号头，和一个MPTCP选项映射子流序列空间到数据序列空间。这样，在失败的情况下，数据可以在不同的子流上重传（映射到相同的DSN）。
+     *       数据序列信号（DSS）携带数据序列映射。数据序列映射由子流序列号、数据序列号和此映射有效的长度组成。
+     *       1、DSS 携带对收到DSN的连接级别确认（"数据ACK"）.
+     *       2、DSS 携带"数据FIN"
+     *       3、DSS 携带选项
+     * ④ ADD_ADDR: 用于宣告可通过附加地址（和可选的端口）到达主机的能力。
+     *              !!!该选项可以在连接的任何时候使用，具体取决于发送方希望何时启用多路径和/或何时可用路径。
+     * ⑤ RM_ADDR： ADD_ADDR的反操作,期望取消某路径.
+     * */
+
 	switch (subtype) {
 	case MPTCPOPT_MP_CAPABLE:
 		/* strict size checking */
@@ -412,6 +425,7 @@ static bool mptcp_established_options_mp(struct sock *sk, struct sk_buff *skb,
 		return false;
 
 	if (subflow->mp_capable) {
+        // 对于客户端 connect 主连接会走到这里
 		mpext = mptcp_get_ext(skb);
 		data_len = mpext ? mpext->data_len : 0;
 
@@ -440,6 +454,8 @@ static bool mptcp_established_options_mp(struct sock *sk, struct sk_buff *skb,
 
 		return true;
 	} else if (subflow->mp_join) {
+
+        // 对于客户端 connect 子流会走到这里
 		opts->suboptions = OPTION_MPTCP_MPJ_ACK;
 		memcpy(opts->hmac, subflow->hmac, MPTCPOPT_HMAC_LEN);
 		*size = TCPOLEN_MPTCP_MPJ_ACK;

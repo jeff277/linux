@@ -1761,7 +1761,7 @@ static void pm_work(struct mptcp_sock *msk)
 	pr_debug("msk=%p status=%x", msk, pm->status);
 	if (pm->status & BIT(MPTCP_PM_ADD_ADDR_RECEIVED)) {
 		pm->status &= ~BIT(MPTCP_PM_ADD_ADDR_RECEIVED);
-		mptcp_pm_nl_add_addr_received(msk);
+		mptcp_pm_nl_add_addr_received(msk);     // 开始创建子流-1
 	}
 	if (pm->status & BIT(MPTCP_PM_RM_ADDR_RECEIVED)) {
 		pm->status &= ~BIT(MPTCP_PM_RM_ADDR_RECEIVED);
@@ -1773,7 +1773,7 @@ static void pm_work(struct mptcp_sock *msk)
 	}
 	if (pm->status & BIT(MPTCP_PM_SUBFLOW_ESTABLISHED)) {
 		pm->status &= ~BIT(MPTCP_PM_SUBFLOW_ESTABLISHED);
-		mptcp_pm_nl_subflow_established(msk);
+		mptcp_pm_nl_subflow_established(msk);    // 一条子流创建完成
 	}
 
 	spin_unlock_bh(&msk->pm.lock);
@@ -2468,8 +2468,11 @@ bool mptcp_finish_join(struct sock *sk)
 	if (!mptcp_is_fully_established(parent))
 		return false;
 
+    //!!! MPtcp客户端从这里退出了, 子流创建完成.
 	if (!msk->pm.server_side)
 		return true;
+
+    //!!! 下面是MPtcp服务端的逻辑
 
 	if (!mptcp_pm_allow_new_subflow(msk))
 		return false;

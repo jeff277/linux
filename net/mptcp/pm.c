@@ -55,6 +55,7 @@ void mptcp_pm_new_connection(struct mptcp_sock *msk, int server_side)
 	WRITE_ONCE(pm->server_side, server_side);
 }
 
+// 服务端逻辑
 bool mptcp_pm_allow_new_subflow(struct mptcp_sock *msk)
 {
 	struct mptcp_pm_data *pm = &msk->pm;
@@ -95,6 +96,7 @@ static bool mptcp_pm_schedule_work(struct mptcp_sock *msk,
 	return true;
 }
 
+// 表示一个MPTCP主连接已经建立成功？
 void mptcp_pm_fully_established(struct mptcp_sock *msk)
 {
 	struct mptcp_pm_data *pm = &msk->pm;
